@@ -1,0 +1,5 @@
+export const carTable = 'public.cars'
+export const evaluationTable = 'public.evaluation'
+export const studentTable = 'public.student'
+export const studentsGroupTable = 'public.students_group'
+export const subjectTable = 'public.subject'

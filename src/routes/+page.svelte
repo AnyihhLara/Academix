@@ -1,8 +1,8 @@
-<script>
+<!-- <script>
     import {onMount} from 'svelte'
     import {goto} from '$app/navigation'
 
     onMount(() => {
         goto('/ui');
     });
-</script>
+</script> -->

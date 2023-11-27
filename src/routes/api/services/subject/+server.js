@@ -1,13 +1,13 @@
 import sequelize from '$lib/database/db.js'
-import {error, json} from '@sveltejs/kit'
-import {carTable as table} from '$lib/database/dbTables.js'
+import { error, json } from '@sveltejs/kit'
+import { subjectTable as table } from '$lib/database/dbTables.js'
 
 export async function GET({ url }) {
     const { searchParams: params } = url //query parameters
     const limit = params.get('limit')
     const result = await sequelize
         .transaction(async (t) => {
-            const result = await sequelize.query(`SELECT * FROM cars_view LIMIT ${limit}`, {
+            const result = await sequelize.query(`SELECT * FROM subject_view LIMIT ${limit}`, {
                 type: sequelize.QueryTypes.SELECT,
                 transaction: t,
             })
@@ -21,11 +21,11 @@ export async function GET({ url }) {
 }
 
 export async function POST({ request }) {
-    const body = await request.json() //new car
+    const body = await request.json() //new subject
     const result = await sequelize.transaction(async (t) => {
         try {
             await sequelize.query(
-                `SELECT create_car(:car_fleet, :licence_plate, :id_brand)`,
+                `SELECT create_subject(:subject_name, :planned_hours, :year_id)`,
                 {
                     replacements: body,
                     type: sequelize.QueryTypes.SELECT,
@@ -33,7 +33,7 @@ export async function POST({ request }) {
                 }
             )
             return await sequelize.query(
-                `SELECT * FROM ${table} ORDER BY id_car DESC LIMIT 1`,
+                `SELECT * FROM ${table} ORDER BY subject_id DESC LIMIT 1`,
                 {
                     type: sequelize.QueryTypes.SELECT,
                     transaction: t,

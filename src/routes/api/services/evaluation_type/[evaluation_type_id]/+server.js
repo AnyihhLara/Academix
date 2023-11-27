@@ -1,16 +1,16 @@
 import sequelize from '$lib/db'
 import { error, json } from '@sveltejs/kit'
-import { carTable as table } from '$lib/database/dbTables.js'
+import { evaluationTypeTable as table } from '$lib/database/dbTables.js'
 export async function GET({ params }) {
-  const { id_car } = params
+  const { evaluation_type_id } = params
   const result = await sequelize
     .transaction(async (t) => {
       let result = await sequelize.query(
-        `SELECT * FROM ${table} WHERE id_car = :identifier and disable=FALSE`,
+        `SELECT * FROM ${table} WHERE evaluation_type_id = :evaluation_type_id and disable=FALSE`,
         {
           type: sequelize.QueryTypes.SELECT,
           transaction: t,
-          replacements: { identifier },
+          replacements: { evaluation_type_id },
         }
       )
       return result
@@ -21,19 +21,19 @@ export async function GET({ params }) {
 
   if (result.length == 0)
     throw error(404, {
-      message: `Car with id ${identifier} not found`,
+      message: `Tipo de evaluación con id ${evaluation_type_id} no encontrada`,
     })
   return json(result[0])
 }
 
 export async function DELETE({ params }) {
-  const { identifier } = params
+  const { evaluation_type_id } = params
   const result = await sequelize
     .transaction(async (t) => {
       const result = await sequelize.query(
-        `DELETE FROM ${table} WHERE id_car = :identifier`,
+        `DELETE FROM ${table} WHERE evaluation_type_id = :evaluation_type_id`,
         {
-          replacements: { identifier },
+          replacements: { evaluation_type_id },
           type: sequelize.QueryTypes.DELETE,
           transaction: t,
         }
@@ -46,32 +46,32 @@ export async function DELETE({ params }) {
   return json(result)
 }
 
-export async function PUT({ params, request }) {
-  const { identifier } = params
-  const body = await request.json() //new attribute values for car
+export async function PUT({ params, request }) { 
+  const { evaluation_type_id } = params
+  const body = await request.json() //new attribute values for evaluation_type
   const result = await sequelize.transaction(async (t) => {
     await sequelize.query(
-      `SELECT update_car(:identifier,null,null,null,:id_driver)`,
+      `SELECT update_evaluation_type(:evaluation_type_id, :evaluation_type_name, :evaluation_numerical_value)`,
       {
         type: sequelize.QueryTypes.SELECT,
         transaction: t,
         replacements: {
           ...body,
-          identifier,
+          evaluation_type_id,
         },
       }
     )
     return await sequelize.query(
-      `SELECT * FROM ${table} WHERE id_car = :identifier`,
+      `SELECT * FROM ${table} WHERE evaluation_type_id = :evaluation_type_id`,
       {
         type: sequelize.QueryTypes.SELECT,
         transaction: t,
-        replacements: { identifier },
+        replacements: { evaluation_type_id },
       }
     )
   })
 
   if (result.length === 0)
-    throw new error(404, { message: `Car with plate ${identifier} not found` })
+    throw new error(404, { message: `Tipo de evaluación con id ${evaluation_type_id} no encontrada` })
   return json(result[0])
 }

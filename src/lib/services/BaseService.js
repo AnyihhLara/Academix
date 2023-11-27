@@ -3,17 +3,21 @@ import { popup, loading } from '$lib/stores/stores.js';
 class BaseService {
     constructor() {
         if (new.target === BaseService) {
-            throw new Error('Cannot instantiate abstract class');
+            throw new Error('No se puede instanciar una clase abstracta');
         }
         this.service = '';
     }
 
     url(extra) {
         const SERVICES_PROXY_BASE = `/api/services`;
-        if (!extra) return SERVICES_PROXY_BASE + this.service;
+        let result;
+        if (!extra)
+            result = SERVICES_PROXY_BASE + this.service;
         else if (extra.startsWith('?'))
-            return SERVICES_PROXY_BASE + this.service + extra;
-        else return SERVICES_PROXY_BASE + this.service + '/' + extra;
+            result = SERVICES_PROXY_BASE + this.service + extra;
+        else
+            result = SERVICES_PROXY_BASE + this.service + '/' + extra;
+        return result;
     }
 
     makeParams(params) {
@@ -67,12 +71,14 @@ class BaseService {
     parseError(error) {
         console.error(error);
         let message = '';
-        if (error.message) message = error.message;
-        else if (error.original?.hint) message = error.original.hint;
+        if (error.message)
+            message = error.message;
+        else if (error.original?.hint)
+            message = error.original.hint;
         else if (error.parent?.code === '23503')
-            message =
-                'this item cant be deleted now, because is referenced in another place';
-        else if (error.errors[0]?.message) message = error.errors[0].message;
+            message = 'Este elemento no se puede eliminar ahora porque es referenciado en otro lugar.';
+        else if (error.errors[0]?.message)
+            message = error.errors[0].message;
         popup.update(() => ({
             type: 'error',
             message,

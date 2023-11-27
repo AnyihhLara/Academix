@@ -2,7 +2,7 @@
     import {onMount} from "svelte";
     import CarService from "$lib/services/CarService.js";
     import Table from "$lib/components/tables/Table.svelte";
-    import CreateCar from "$lib/components/modals/car/CreateCar.svelte";
+    // import CreateCar from "$lib/components/modals/car/CreateCar.svelte";
 
     const carService = CarService.getInstance();
     let items;
@@ -17,7 +17,7 @@
     let car_fleet = '';
     let licence_plate = '';
     let brand_name = '';
-    export let error;
+    // export let error;
 
     onMount(async () => {
         items = await carService.getCars();

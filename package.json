@@ -28,6 +28,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"pg": "^8.11.3",
 		"sequelize": "^6.35.1"
 	}
 }

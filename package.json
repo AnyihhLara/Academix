@@ -18,6 +18,7 @@
 		"eslint-plugin-svelte": "^2.30.0",
 		"flowbite": "^2.2.0",
 		"flowbite-svelte": "^0.44.20",
+		"flowbite-svelte-icons": "^0.4.5",
 		"postcss": "^8.4.31",
 		"prettier": "^3.0.0",
 		"prettier-plugin-svelte": "^3.0.0",
@@ -25,5 +26,9 @@
 		"tailwindcss": "^3.3.5",
 		"vite": "^4.4.2"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"pg": "^8.11.3",
+		"sequelize": "^6.35.1"
+	}
 }

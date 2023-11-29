@@ -1,16 +1,16 @@
 import sequelize from '$lib/db'
 import { error, json } from '@sveltejs/kit'
-import { evaluationTypeTable as table } from '$lib/database/dbTables.js'
+import { yearTable as table } from '$lib/database/dbTables.js'
 export async function GET({ params }) {
-  const { evaluation_type_id } = params
+  const { year_id } = params
   const result = await sequelize
     .transaction(async (t) => {
       let result = await sequelize.query(
-        `SELECT read_evaluation_type(:evaluation_type_id)`,
+        `SELECT read_year(:year_id)`,
         {
           type: sequelize.QueryTypes.SELECT,
           transaction: t,
-          replacements: { evaluation_type_id },
+          replacements: { year_id },
         }
       )
       return result
@@ -21,19 +21,19 @@ export async function GET({ params }) {
 
   if (result.length == 0)
     throw error(404, {
-      message: `Tipo de evaluación con id ${evaluation_type_id} no encontrada`,
+      message: `Año con id ${year_id} no encontrado`,
     })
   return json(result[0])
 }
 
 export async function DELETE({ params }) {
-  const { evaluation_type_id } = params
+  const { year_id } = params
   const result = await sequelize
     .transaction(async (t) => {
       const result = await sequelize.query(
-        `SELECT delete_evaluation_type(:evaluation_type_id)`,
+        `SELECT delete_year(:year_id)`,
         {
-          replacements: { evaluation_type_id },
+          replacements: { year_id },
           type: sequelize.QueryTypes.DELETE,
           transaction: t,
         }
@@ -46,32 +46,32 @@ export async function DELETE({ params }) {
   return json(result)
 }
 
-export async function PUT({ params, request }) { 
-  const { evaluation_type_id } = params
-  const body = await request.json() //new attribute values for evaluation_type
+export async function PUT({ params, request }) {
+  const { year_id } = params
+  const body = await request.json() //new attribute values for subject
   const result = await sequelize.transaction(async (t) => {
     await sequelize.query(
-      `SELECT update_evaluation_type(:evaluation_type_id, :evaluation_type_name, :evaluation_numerical_value)`,
+      `SELECT update_year(:year_id, :year, :school_year)`,
       {
         type: sequelize.QueryTypes.SELECT,
         transaction: t,
         replacements: {
           ...body,
-          evaluation_type_id,
+          year_id,
         },
       }
     )
     return await sequelize.query(
-      `SELECT read_evaluation_type(:evaluation_type_id)`,
+        `SELECT read_year(:year_id)`,
       {
         type: sequelize.QueryTypes.SELECT,
         transaction: t,
-        replacements: { evaluation_type_id },
+        replacements: { year_id },
       }
     )
   })
 
   if (result.length === 0)
-    throw new error(404, { message: `Tipo de evaluación con id ${evaluation_type_id} no encontrada` })
+    throw new error(404, { message: `Año con id ${year_id} no encontrado` })
   return json(result[0])
 }

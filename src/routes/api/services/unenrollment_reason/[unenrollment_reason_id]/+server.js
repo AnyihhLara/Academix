@@ -6,7 +6,7 @@ export async function GET({ params }) {
   const result = await sequelize
     .transaction(async (t) => {
       let result = await sequelize.query(
-        `SELECT * FROM ${table} WHERE unenrollment_reason_id = :unenrollment_reason_id and disable=FALSE`,
+        `SELECT read_unenrollment_reason(:unenrollment_reason_id)`,
         {
           type: sequelize.QueryTypes.SELECT,
           transaction: t,
@@ -31,7 +31,7 @@ export async function DELETE({ params }) {
   const result = await sequelize
     .transaction(async (t) => {
       const result = await sequelize.query(
-        `DELETE FROM ${table} WHERE unenrollment_reason_id = :unenrollment_reason_id`,
+        `SELECT delete_unenrollment_reason(:unenrollment_reason_id)`,
         {
           replacements: { unenrollment_reason_id },
           type: sequelize.QueryTypes.DELETE,
@@ -62,7 +62,7 @@ export async function PUT({ params, request }) {
       }
     )
     return await sequelize.query(
-      `SELECT * FROM ${table} WHERE unenrollment_reason_id = :unenrollment_reason_id`,
+      `SELECT read_unenrollment_reason(:unenrollment_reason_id)`,
       {
         type: sequelize.QueryTypes.SELECT,
         transaction: t,

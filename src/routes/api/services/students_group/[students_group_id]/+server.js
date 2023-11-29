@@ -6,7 +6,7 @@ export async function GET({ params }) {
   const result = await sequelize
     .transaction(async (t) => {
       let result = await sequelize.query(
-        `SELECT * FROM ${table} WHERE students_group_id = :students_group_id and disable=FALSE`,
+        `SELECT read_students_group(:students_group_id)`,
         {
           type: sequelize.QueryTypes.SELECT,
           transaction: t,
@@ -31,7 +31,7 @@ export async function DELETE({ params }) {
   const result = await sequelize
     .transaction(async (t) => {
       const result = await sequelize.query(
-        `DELETE FROM ${table} WHERE students_group_id = :students_group_id`,
+        `SELECT delete_students_group(:students_group_id)`,
         {
           replacements: { students_group_id },
           type: sequelize.QueryTypes.DELETE,
@@ -62,7 +62,7 @@ export async function PUT({ params, request }) {
       }
     )
     return await sequelize.query(
-      `SELECT * FROM ${table} WHERE students_group_id = :students_group_id`,
+      `SELECT read_students_group(:students_group_id)`,
       {
         type: sequelize.QueryTypes.SELECT,
         transaction: t,

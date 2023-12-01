@@ -48,7 +48,7 @@ export async function DELETE({ params }) {
 
 export async function PUT({ params, request }) {
   const { student_id } = params
-  const body = await request.json() //new attribute values for subject
+  const body = await request.json() //new attribute values for student
   const result = await sequelize.transaction(async (t) => {
     await sequelize.query(
       `SELECT update_student(:student_id, :student_name, :student_lastname, :student_sex, :municipality,  :student_code, :academic_situation_id, :group_id, :year_id, :unenrollment_reason_id)`,

@@ -1,5 +1,12 @@
 <script>
-    import '../app.css';
+	import '../app.css';
+    import NavBar from '$lib/components/shared/NavBar.svelte';
 </script>
 
-<slot/>
+<NavBar />
+<div
+	class="min-h-screen bg-gradient-to-tl from-rose-300 via-rose-200 to-rose-100
+dark:from-primary-950 dark:to-primary-900"
+>
+	<slot />
+</div>

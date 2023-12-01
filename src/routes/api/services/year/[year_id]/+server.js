@@ -48,7 +48,7 @@ export async function DELETE({ params }) {
 
 export async function PUT({ params, request }) {
   const { year_id } = params
-  const body = await request.json() //new attribute values for subject
+  const body = await request.json() //new attribute values for year
   const result = await sequelize.transaction(async (t) => {
     await sequelize.query(
       `SELECT update_year(:year_id, :year, :school_year)`,

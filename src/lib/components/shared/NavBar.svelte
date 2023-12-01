@@ -1,8 +1,7 @@
 <script>
     import { Navbar, NavBrand } from 'flowbite-svelte';
-    import { BuildingSolid } from 'flowbite-svelte-icons';
+    import { BuildingSolid, SunSolid, MoonSolid } from 'flowbite-svelte-icons';
     import { DarkMode } from 'flowbite-svelte';
-    import { SunSolid, MoonSolid } from 'flowbite-svelte-icons';
 </script>
 
 <Navbar class="shadow-xl">

@@ -21,7 +21,7 @@ export async function GET({ url }) {
 }
 
 export async function POST({ request }) {
-    const body = await request.json() //new subject
+    const body = await request.json() //new student
     const result = await sequelize.transaction(async (t) => {
         try {
             await sequelize.query(

@@ -1,7 +1,7 @@
 <script>
-	import UserInput from '$lib/components/login/UserInput.svelte';
-	import PasswordInput from '$lib/components/login/PasswordInput.svelte';
-  import { Button } from 'flowbite-svelte'
+	import UserInput from '$lib/components/forms/login/UserInput.svelte';
+	import PasswordInput from '$lib/components/forms/login/PasswordInput.svelte';
+	import { Button } from 'flowbite-svelte';
 </script>
 
 <form class="space-y-6" action="#" on:submit|preventDefault>
@@ -10,5 +10,3 @@
 	<PasswordInput />
 	<Button type="submit" class="w-full">Ingrese a su cuenta</Button>
 </form>
-
-

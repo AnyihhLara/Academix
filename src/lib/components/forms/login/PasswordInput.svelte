@@ -7,7 +7,7 @@
 
 <InputWrapper forLabel="show-password" classLabel="space-y-2">
 	Contraseña
-	<Input id="show-password" type={show ? 'text' : 'password'} placeholder="tu contraseña aquí" size="lg">
+	<Input id="show-password" type={show ? 'text' : 'password'} placeholder="••••••••" size="lg">
 		<button slot="left" on:click={() => (show = !show)} class="pointer-events-auto">
 			{#if show}
 				<EyeOutline class="w-6 h-6" />

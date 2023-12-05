@@ -1,6 +1,6 @@
 <script>
 	import { Helper, Input } from "flowbite-svelte";
-	import InputWrapper from '$lib/components/shared/InputWrapper.svelte';
+	import InputWrapper from './InputWrapper.svelte';
   export let placeholderInput;
 </script>
 

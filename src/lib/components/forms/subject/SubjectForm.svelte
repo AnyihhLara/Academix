@@ -13,8 +13,8 @@
 	//
 	export let subject = {
 		name: '',
-		plannedHours: '',
-		year: ''
+		plannedHours: 0,
+		year: 0
 	};
 </script>
 
@@ -36,7 +36,6 @@
 		>Horas planificadas
 		<NumberInput
 			id="plannedHours"
-			placeholder="Cantidad de horas planificadas para la asignatura"
 			class={defaultClass}
 			bind:value={subject.plannedHours}
 			required

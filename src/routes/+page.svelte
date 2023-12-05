@@ -1,14 +1,16 @@
+
 <!-- <script>
-	import CreateStudent from "$lib/components/forms/student/CreateStudent.svelte";
-    import UpdateStudent from "$lib/components/forms/student/UpdateStudent.svelte";
+	import Table from '$lib/components/tables/Table.svelte';
+
+	let list = [
+		{ name: 'Excelente', numericalValue: 5 },
+		{ name: 'Bien', numericalValue: 4 },
+		{ name: 'Aprobado', numericalValue: 3 }
+	];
 </script>
 
-<CreateStudent />
-<UpdateStudent /> -->
 
-
-
-
+<Table items={list} tableName="tipo de evaluación"></Table> -->
 
 
 <!-- <script>
@@ -19,5 +21,3 @@
         goto('/');
     });
 </script> -->
-
-

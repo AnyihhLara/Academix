@@ -8,7 +8,7 @@
 		TableHeadCell
 	} from 'flowbite-svelte';
 	import { tables } from '$lib/stores/stores.js';
-	export let tableName, items;
+	export let tableName, items, object;
 	let tableInfo = $tables.find((table) => table.name === tableName);
 	let createComponent = null,
 		updateComponent = null,
@@ -22,7 +22,7 @@
 </script>
 
 <div class="mt-6 mx-3">
-	<h2 class="m-3 font-medium block text-green-900 dark:text-teal-100 text-xl">
+	<h2 class="m-3 font-bold block text-secondary-950 dark:text-secondary-100 text-xl">
 		{tableName}
 	</h2>
 	<Table hoverable={true} shadow={true}>
@@ -31,10 +31,11 @@
 				{#each tableColumns as column}
 					<TableHeadCell padding={defaultClass} scope="col">{column.label}</TableHeadCell>
 				{/each}
+				<TableHeadCell padding={defaultClass} scope="col"></TableHeadCell>
 			{/if}
 		</TableHead>
 		<TableBody>
-			<!-- {#if items}
+			{#if items}
 				{#each items as item}
 					<TableBodyRow>
 						{#if tableColumns}
@@ -44,17 +45,17 @@
 						{/if}
 						{#if updateComponent}
 							<TableBodyCell tdClass={defaultClass}
-								><svelte:component this={updateComponent} /></TableBodyCell
+								><svelte:component this={updateComponent} {item} /></TableBodyCell
 							>
 						{/if}
 					</TableBodyRow>
 				{/each}
-			{/if} -->
+			{/if}
 		</TableBody>
 	</Table>
 	<div>
 		{#if createComponent}
-			<svelte:component this={createComponent} />
+			<svelte:component this={createComponent} {object} />
 		{/if}
 	</div>
 </div>

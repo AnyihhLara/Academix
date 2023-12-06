@@ -16,7 +16,7 @@
 		<Input
 			type="text"
 			id="name"
-			placeholder="Nombre de la evaluación"
+			placeholder="Nombre del tipo de evaluación"
 			class={defaultClass}
 			bind:value={evaluationType.name}
 			required
@@ -25,10 +25,9 @@
 </div>
 <div>
 	<InputWrapper forLabel="numericalValue"
-		>Horas planificadas
+		>Valor numérico
 		<NumberInput
 			id="numericalValue"
-			placeholder="Valor numérico de la evaluación"
 			class={defaultClass}
 			bind:value={evaluationType.numericalValue}
 			required

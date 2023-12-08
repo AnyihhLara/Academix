@@ -1,7 +1,9 @@
 <script>
 	import { Input, Label } from 'flowbite-svelte';
 	import { EyeOutline, EyeSlashOutline } from 'flowbite-svelte-icons';
+
 	let show = false;
+	export let password;
 </script>
 
 <Label for="show-password" class="space-y-2">
@@ -12,6 +14,7 @@
 		placeholder="••••••••"
 		size="lg"
 		required
+		bind:value={password}
 	>
 		<button slot="left" on:click={() => (show = !show)} class="pointer-events-auto">
 			{#if show}

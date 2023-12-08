@@ -1,6 +1,24 @@
 <script>
 	import Table from '$lib/components/shared/Table.svelte';
-	let academicSituations = [];
+    import {browser} from "$app/environment";
+    import {page} from "$app/stores";
+    import {goto} from "$app/navigation";
+    import authService from "$lib/services/AuthService.js";
+    import {view} from "$lib/stores/stores.js";
+    import {onMount} from "svelte";
+
+    onMount(() => {
+        let authServ = authService.getInstance();
+        let routes = [];
+        if (browser) {
+            routes = authServ.getAuthorizedRoutes();
+            if (!routes.includes($page.url.pathname)) {
+                $view = routes[0];
+                goto($view);
+            }
+        }
+    });
+    let academicSituations = [];
 </script>
 
 <Table tableName="Situaciones académicas" items={academicSituations} />

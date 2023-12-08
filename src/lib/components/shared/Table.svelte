@@ -8,14 +8,15 @@
 		TableHeadCell
 	} from 'flowbite-svelte';
 	import { tables } from '$lib/stores/stores.js';
-	export let tableName, items, object;
+	export let tableName, items;
+	// let object;
 	let tableInfo = $tables.find((table) => table.name === tableName);
-	let createComponent = null,
-		updateComponent = null,
-		tableColumns = null;
+	// let createComponent = null,
+	// 	updateComponent = null,
+	let	tableColumns = null;
 	if (tableInfo) {
-		createComponent = tableInfo.createComponent;
-		updateComponent = tableInfo.updateComponent;
+		// createComponent = tableInfo.createComponent;
+		// updateComponent = tableInfo.updateComponent;
 		tableColumns = tableInfo.tableColumns;
 	}
 	let defaultClass = 'px-4 py-3';
@@ -31,7 +32,7 @@
 				{#each tableColumns as column}
 					<TableHeadCell padding={defaultClass} scope="col">{column.label}</TableHeadCell>
 				{/each}
-				<TableHeadCell padding={defaultClass} scope="col"></TableHeadCell>
+				<!-- <TableHeadCell padding={defaultClass} scope="col"></TableHeadCell> -->
 			{/if}
 		</TableHead>
 		<TableBody>
@@ -43,19 +44,19 @@
 								<TableBodyCell tdClass={defaultClass}>{item[column.key]}</TableBodyCell>
 							{/each}
 						{/if}
-						{#if updateComponent}
+						<!-- {#if updateComponent}
 							<TableBodyCell tdClass={defaultClass}
 								><svelte:component this={updateComponent} {item} /></TableBodyCell
 							>
-						{/if}
+						{/if} -->
 					</TableBodyRow>
 				{/each}
 			{/if}
 		</TableBody>
 	</Table>
-	<div>
+	<!-- <div>
 		{#if createComponent}
 			<svelte:component this={createComponent} {object} />
 		{/if}
-	</div>
+	</div> -->
 </div>

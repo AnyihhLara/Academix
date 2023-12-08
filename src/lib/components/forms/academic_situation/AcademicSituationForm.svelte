@@ -10,7 +10,7 @@
 </script>
 
 <div>
-	<InputWrapper forLabel="name"
+	<InputWrapper forLabel="name" classLabel="" colorLabel=""
 		>Nombre
 		<Input
 			type="text"

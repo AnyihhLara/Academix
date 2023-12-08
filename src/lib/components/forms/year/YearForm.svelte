@@ -5,7 +5,7 @@
 	let defaultClass = 'mt-2';
 
 	export let year = {
-		year: 0,
+		academicYear: 0,
 		schoolYear: ''
 	};
 </script>

@@ -5,12 +5,12 @@
 	import { Button } from 'flowbite-svelte';
 
 	export let tableName,
-		handleSubmit,
+		
 		openModal = false;
 	let defaultName = `Añadir ${tableName}`;
 </script>
 
-<DefaultForm tittle={defaultName} nameModalBtn="Añadir" {openModal} on:submit={handleSubmit} >
+<DefaultForm tittle={defaultName} nameModalBtn="Añadir" {openModal}>
 	<svelte:fragment slot="icon-btn"><PlusOutline class="w-4 h-4"/></svelte:fragment>
 	<slot />
 	<svelte:fragment slot="btn">

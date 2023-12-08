@@ -26,7 +26,7 @@
 		municipality: '',
 		academicSituation: '',
 		unenrollmentReason:'',
-		year: 0,
+		academicYear: 0,
 		group: ''
 	};
 </script>

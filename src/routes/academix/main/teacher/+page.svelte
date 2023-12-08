@@ -1,6 +1,7 @@
 <script>
 	import Card from '$lib/components/shared/Card.svelte';
 	let defaultClass = 'flex-row space-y-5';
+	let btnText = 'Ver más';
 </script>
 
 <section class="px-4 pt-3 pb-4">
@@ -12,9 +13,11 @@
 			<div class={defaultClass}>
 				<Card>
 					<span slot="tittle">Listado de estudiantes</span>
+					<span slot="btn-text">{btnText}</span>
 				</Card>
 				<Card>
 					<span slot="tittle">Listado de asignaturas</span>
+					<span slot="btn-text">{btnText}</span>
 				</Card>
 			</div>
 			<div>
@@ -23,6 +26,7 @@
 					<div class="flex justify-center">
 						<img src="/reports.jpg" alt="Reportes" class="mb-1.5 h-36 w-96" />
 					</div>
+					<span slot="btn-text">{btnText}</span>
 				</Card>
 			</div>
 		</div>

@@ -9,12 +9,13 @@
 	let years;
 	function createItem() {}
 	function updateItem() {}
+	function deleteItem() {}
 	function resetForm() {
 		studentsGroup = { year: 0, number: 0 };
 	}
 </script>
 
-<GenericForm {action} {tableName} {createItem} {updateItem} {resetForm}>
+<GenericForm {action} {tableName} {createItem} {updateItem} {deleteItem} {resetForm}>
 	<div>
 		<Label
 			>Año

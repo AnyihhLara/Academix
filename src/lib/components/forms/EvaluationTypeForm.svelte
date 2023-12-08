@@ -8,12 +8,13 @@
 		evaluationType = { name: '', numericalValue: 0 };
 	function createItem() {}
 	function updateItem() {}
+	function deleteItem() {}
 	function resetForm() {
 		evaluationType = { name: '', numericalValue: 0 };
 	}
 </script>
 
-<GenericForm {action} {tableName} {createItem} {updateItem} {resetForm}>
+<GenericForm {action} {tableName} {createItem} {updateItem} {deleteItem} {resetForm}>
 	<div>
 		<Label for="name"
 			>Nombre

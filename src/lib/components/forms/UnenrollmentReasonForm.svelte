@@ -8,12 +8,13 @@
 		unenrollmentReason = { name: '' };
 	function createItem() {}
 	function updateItem() {}
+	function deleteItem() {}
 	function resetForm() {
 		unenrollmentReason = { name: '' };
 	}
 </script>
 
-<GenericForm {action} {tableName} {createItem} {updateItem} {resetForm}>
+<GenericForm {action} {tableName} {createItem} {updateItem} {deleteItem} {resetForm}>
 	<div>
 		<Label for="name"
 			>Nombre

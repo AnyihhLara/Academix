@@ -31,6 +31,7 @@
 					<TableHeadCell padding={defaultClass} scope="col">{column.label}</TableHeadCell>
 				{/each}
 				<TableHeadCell padding={defaultClass} scope="col"></TableHeadCell>
+				<TableHeadCell padding={defaultClass} scope="col"></TableHeadCell>
 			{/if}
 		</TableHead>
 		<TableBody>
@@ -45,6 +46,9 @@
 						{#if component}
 							<TableBodyCell tdClass={defaultClass}
 								><svelte:component this={component} action="Update" /></TableBodyCell
+							>
+							<TableBodyCell tdClass={defaultClass}
+								><svelte:component this={component} action="Delete" /></TableBodyCell
 							>
 						{/if}
 					</TableBodyRow>

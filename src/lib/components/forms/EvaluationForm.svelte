@@ -10,12 +10,13 @@
 	
 	function createItem() {}
 	function updateItem() {}
+	function deleteItem() {}
 	function resetForm() {
 		evaluation = { evaluationType: '', student: '', subject: '', evaluationDate: new Date() };
 	}
 </script>
 
-<GenericForm {action} {tableName} {createItem} {updateItem} {resetForm}>
+<GenericForm {action} {tableName} {createItem} {updateItem} {deleteItem} {resetForm}>
 	<div>
 		<Label
 			>Tipo de Evaluación

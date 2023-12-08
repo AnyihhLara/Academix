@@ -8,12 +8,13 @@
 		year = { academicYear: 0, schoolYear: '' };
 	function createItem() {}
 	function updateItem() {}
+	function deleteItem() {}
 	function resetForm() {
 		year = { academicYear: 0, schoolYear: '' };
 	}
 </script>
 
-<GenericForm {action} {tableName} {createItem} {updateItem} {resetForm}>
+<GenericForm {action} {tableName} {createItem} {updateItem} {deleteItem} {resetForm}>
 	<div>
 		<Label for="year"
 			>Año

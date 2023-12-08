@@ -30,6 +30,8 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@macfja/svelte-persistent-store": "^2.4.1",
+		"crypto-js": "^4.2.0",
 		"pg": "^8.11.3",
 		"sequelize": "^6.35.1"
 	}

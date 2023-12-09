@@ -4,7 +4,8 @@
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
 	import authService from '$lib/services/AuthService.js';
-	import { view } from '$lib/stores/stores.js';
+    import evaluationTypeService from "$lib/services/EvaluationTypeService.js";
+    import {tables, view} from '$lib/stores/stores.js';
 	import { onMount } from 'svelte';
 
 	onMount(() => {
@@ -17,9 +18,29 @@
 				goto($view);
 			}
 		}
+        refreshItems();
 	});
 
-	let evaluationTypes = [];
+	let evaluationTypes = [],
+		filters = [],
+		isFilterable = false;
+    let tableName = "Tipos de evaluaciones";
+    let evaluationTypeServ = evaluationTypeService.getInstance();
+
+    const refreshItems = () => {
+        let tableColumns = $tables.find((table) => table.name === tableName).tableColumns
+        evaluationTypeServ.getEvaluationTypes().then((i) => {
+            i.forEach((evaluation) => {
+                let myObject = {}
+                tableColumns.forEach((column) => {
+                    myObject[column.key] = evaluation[column.key]
+                })
+                evaluationTypes.push(myObject)
+                evaluationTypes = evaluationTypes
+            })
+        })
+    }
+
 </script>
 
-<Table tableName="Tipos de evaluaciones" items={evaluationTypes} />
+<Table {tableName} items={evaluationTypes} {filters} {isFilterable} />

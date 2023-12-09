@@ -19,8 +19,8 @@
 
 	let tableInfo = $tables.find((table) => table.name === tableName),
 		component = null,
-		tableColumns = null,
-		filteredItems = items;
+		tableColumns = null;
+	$: filteredItems = items;
 	if (tableInfo) {
 		component = tableInfo.component;
 		tableColumns = tableInfo.tableColumns;

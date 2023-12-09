@@ -39,8 +39,8 @@ export const tables = readable([
     },
     {
         name: 'Tipos de evaluaciones', component: EvaluationTypeForm, tableColumns: [
-            { label: 'Nombre', key: 'name' },
-            { label: 'Valor numérico', key: 'numericalValue' }]
+            { label: 'Nombre', key: 'evaluation_type_name' },
+            { label: 'Valor numérico', key: 'evaluation_numerical_value' }]
     },
     {
         name: 'Estudiantes', component: StudentForm, tableColumns: [

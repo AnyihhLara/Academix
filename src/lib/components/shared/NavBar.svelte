@@ -6,7 +6,6 @@
 		DropdownItem,
 		Navbar,
 		NavBrand,
-		NavHamburger
 	} from 'flowbite-svelte';
 	import { BuildingSolid, SunSolid, MoonSolid } from 'flowbite-svelte-icons';
 	import { DarkMode } from 'flowbite-svelte';

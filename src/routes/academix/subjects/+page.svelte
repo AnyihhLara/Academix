@@ -4,7 +4,7 @@
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
 	import authService from '$lib/services/AuthService.js';
-	import { view } from '$lib/stores/stores.js';
+	import { view, loggedUser } from '$lib/stores/stores.js';
 	import { onMount } from 'svelte';
 
 	onMount(() => {
@@ -19,8 +19,23 @@
 		}
 	});
 	let subjects = [],
-		filters = [],
-		isFilterable;
+		filters = [{ name: 'Años', key: 'academicYear', options: [], selectedOptions: [] }],
+		isFilterable = true,
+		isCreatable = false,
+		isUpdatable = false,
+		isDeletable = false;
 </script>
 
-<Table tableName="Asignaturas" items={subjects} {filters} {isFilterable} />
+{#if $loggedUser.role_name === 'Secretario'}
+	<Table tableName="Asignaturas" items={subjects} {filters} {isFilterable} />
+{:else}
+	<Table
+		tableName="Asignaturas"
+		items={subjects}
+		{filters}
+		{isFilterable}
+		{isCreatable}
+		{isUpdatable}
+		{isDeletable}
+	/>
+{/if}

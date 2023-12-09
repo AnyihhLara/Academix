@@ -19,9 +19,7 @@
 		}
 	});
 
-	let evaluationTypes = [],
-		filters = [],
-		isFilterable = false;
+	let evaluationTypes = [];
 </script>
 
-<Table tableName="Tipos de evaluaciones" items={evaluationTypes} {filters} {isFilterable} />
+<Table tableName="Tipos de evaluaciones" items={evaluationTypes} />

@@ -1,7 +1,9 @@
 <script>
 	import { Card, Button } from 'flowbite-svelte';
 	import { ArrowRightOutline } from 'flowbite-svelte-icons';
-	export let divClass, cardClass, divBtnClass;
+	export let divClass = '',
+		cardClass = '',
+		divBtnClass = '';
 </script>
 
 <Card class="min-w-[400px] {cardClass}">

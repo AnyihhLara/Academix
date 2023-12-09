@@ -9,7 +9,13 @@
 	} from 'flowbite-svelte';
 	import { tables } from '$lib/stores/stores.js';
 	import Filter from './Filter.svelte';
-	export let tableName, items, filters, isFilterable;
+	export let tableName = '',
+		items = [],
+		filters = [],
+		isFilterable = false,
+		isCreatable = true,
+		isUpdatable = true,
+		isDeletable = true;
 
 	let tableInfo = $tables.find((table) => table.name === tableName),
 		component = null,
@@ -47,8 +53,12 @@
 				{#each tableColumns as column}
 					<TableHeadCell padding={defaultClass} scope="col">{column.label}</TableHeadCell>
 				{/each}
-				<TableHeadCell padding={defaultClass} scope="col"></TableHeadCell>
-				<TableHeadCell padding={defaultClass} scope="col"></TableHeadCell>
+				{#if isUpdatable}
+					<TableHeadCell padding={defaultClass} scope="col" />
+				{/if}
+				{#if isDeletable}
+					<TableHeadCell padding={defaultClass} scope="col" />
+				{/if}
 			{/if}
 		</TableHead>
 		<TableBody>
@@ -61,12 +71,16 @@
 							{/each}
 						{/if}
 						{#if component}
-							<TableBodyCell tdClass={defaultClass}
-								><svelte:component this={component} action="Update" /></TableBodyCell
-							>
-							<TableBodyCell tdClass={defaultClass}
-								><svelte:component this={component} action="Delete" /></TableBodyCell
-							>
+							{#if isUpdatable}
+								<TableBodyCell tdClass={defaultClass}
+									><svelte:component this={component} action="Update" /></TableBodyCell
+								>
+							{/if}
+							{#if isDeletable}
+								<TableBodyCell tdClass={defaultClass}
+									><svelte:component this={component} action="Delete" /></TableBodyCell
+								>
+							{/if}
 						{/if}
 					</TableBodyRow>
 				{/each}
@@ -74,7 +88,7 @@
 		</TableBody>
 	</Table>
 	<div class="mt-4">
-		{#if component}
+		{#if component && isCreatable}
 			<svelte:component this={component} action="Create" />
 		{/if}
 	</div>

@@ -1,5 +1,5 @@
 <script>
-	import { Input, Label, NumberInput, Select } from 'flowbite-svelte';
+	import { Input, Label, Select } from 'flowbite-svelte';
 	import GenericForm from './GenericForm.svelte';
 	import PasswordInput from './login/PasswordInput.svelte';
 
@@ -11,7 +11,7 @@
 		{ value: 'Administrador', name: 'Administrador' },
 		{ value: 'Estudiante', name: 'Estudiante' },
 		{ value: 'Profesor', name: 'Profesor' },
-		{ value: 'Secretaria', name: 'Secretaria' }
+		{ value: 'Secretario', name: 'Secretario' }
 	];
 	function createItem() {}
 	function updateItem() {}

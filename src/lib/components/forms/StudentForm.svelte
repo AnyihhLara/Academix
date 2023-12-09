@@ -100,7 +100,7 @@
 	<div>
 		<Label
 			>Año
-			<Select class={defaultClass} items={years} bind:value={student.year} required />
+			<Select class={defaultClass} items={years} bind:value={student.academicYear} required />
 		</Label>
 	</div>
 	<div>

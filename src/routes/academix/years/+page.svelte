@@ -18,9 +18,7 @@
 			}
 		}
 	});
-	let years = [],
-		filters = [],
-		isFilterable;
+	let years = [];
 </script>
 
-<Table tableName="Años" items={years} {filters} {isFilterable} />
+<Table tableName="Años" items={years} />

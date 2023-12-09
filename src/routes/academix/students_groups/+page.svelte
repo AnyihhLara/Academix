@@ -19,8 +19,8 @@
 		}
 	});
 	let studentsGroups = [],
-		filters = [],
-		isFilterable;
+		filters = [{ name: 'Años', key: 'academicYear', options: [], selectedOptions: [] }],
+		isFilterable = true;
 </script>
 
 <Table tableName="Grupos de estudiantes" items={studentsGroups} {filters} {isFilterable} />

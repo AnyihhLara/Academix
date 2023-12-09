@@ -21,12 +21,12 @@
 	let defaultClass = 'flex-row space-y-5';
 	let btnText = 'Ver más';
 
-	// const gotoStudents = () => {
-	// 	goto('/academix/students');
-	// };
-	// const gotoSubjects = () => {
-	// 	goto('/academix/subjects');
-	// };
+	const gotoStudents = () => {
+		goto('/academix/students');
+	};
+	const gotoSubjects = () => {
+		goto('/academix/subjects');
+	};
 	const gotoEvaluations = () => {
 		goto('/academix/evaluations');
 	};
@@ -42,11 +42,11 @@
 	<div class="{defaultClass} justify-center items-center">
 		<div class="flex gap-5 justify-center">
 			<div class={defaultClass}>
-				<Card>
+				<Card on:click={gotoStudents}>
 					<span slot="tittle">Listado de estudiantes</span>
 					<span slot="btn-text">{btnText}</span>
 				</Card>
-				<Card>
+				<Card on:click={gotoSubjects}>
 					<span slot="tittle">Listado de asignaturas</span>
 					<span slot="btn-text">{btnText}</span>
 				</Card>

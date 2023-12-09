@@ -19,8 +19,11 @@
 		}
 	});
 	let evaluations = [],
-		filters = [],
-		isFilterable = false;
+		filters = [
+			{ name: 'Asignaturas', key: 'subject', options: [], selectedOptions: [] },
+			{ name: 'Tipo de evaluación', key: 'evaluationType', options: [], selectedOptions: [] }
+		],
+		isFilterable = true;
 </script>
 
 <Table tableName="Evaluaciones" items={evaluations} {filters} {isFilterable} />

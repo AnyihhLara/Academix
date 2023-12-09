@@ -48,7 +48,7 @@ class AuthService extends BaseService {
                     users
                 ]
                 break
-            case 'Secretaria':
+            case 'Secretario':
                 authorized_routes = [
                     secretaryMain,
                     academic_situations,

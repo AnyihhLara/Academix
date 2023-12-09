@@ -4,7 +4,7 @@
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
 	import authService from '$lib/services/AuthService.js';
-	import { view } from '$lib/stores/stores.js';
+	import { view, loggedUser } from '$lib/stores/stores.js';
 	import { onMount } from 'svelte';
 
 	onMount(() => {
@@ -87,15 +87,26 @@
 			// }
 		],
 		filters = [
-			// { name: 'Años', key: 'academicYear', options: [1, 2, 3, 4], selectedOptions: [] },
-			// { name: 'Sexo', key: 'sex', options: ['F', 'M'], selectedOptions: [] }
+			{ name: 'Situaciones Académicas', key: 'academicSituation', options: [], selectedOptions: [] },
+			{ name: 'Años', key: 'academicYear', options: [], selectedOptions: [] },
+			{ name: 'Grupos', key: 'group', options: [], selectedOptions: [] }
 		],
-		isFilterable = false;
-	//test data students
-	//
-	//test data filters
-	// { name: 'Años', key: 'academicYear', options: [1, 2, 3, 4], selectedOptions: [] },
-	// { name: 'Sexo', key: 'sex', options: ['F', 'M'], selectedOptions: [] }
+		isFilterable = true,
+		isCreatable = false,
+		isUpdatable = false,
+		isDeletable = false;
 </script>
 
-<Table tableName="Estudiantes" items={students} {filters} {isFilterable} />
+{#if $loggedUser.role_name === 'Secretario'}
+	<Table tableName="Estudiantes" items={students} {filters} {isFilterable} {isDeletable} />
+{:else}
+	<Table
+		tableName="Estudiantes"
+		items={students}
+		{filters}
+		{isFilterable}
+		{isCreatable}
+		{isUpdatable}
+		{isDeletable}
+	/>
+{/if}

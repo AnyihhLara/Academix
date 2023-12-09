@@ -8,6 +8,7 @@ import SubjectForm from "$lib/components/forms/SubjectForm.svelte";
 import UnenrollmentReasonForm from "$lib/components/forms/UnenrollmentReasonForm.svelte";
 import YearForm from "$lib/components/forms/YearForm.svelte";
 import UserForm from "$lib/components/forms/UserForm.svelte";
+import RoleForm from "$lib/components/forms/RoleForm.svelte"
 import { createLocalStorage, createSessionStorage, persist } from '@macfja/svelte-persistent-store'
 
 export const loggedUser = persist(
@@ -83,4 +84,8 @@ export const tables = readable([
             { label: 'Contraseña', key: 'password' },
             { label: 'Rol', key: 'role' }]
     },
+    {
+        name: 'Roles', component: RoleForm, tableColumns: [
+            { label: 'Nombre', key: 'name' }]
+    }
 ]);

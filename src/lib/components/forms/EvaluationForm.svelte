@@ -5,14 +5,14 @@
 	export let action;
 	let tableName = 'evaluación',
 		defaultClass = 'mt-2',
-		evaluation = { evaluationType: '', student: '', subject: '', evaluationDate: new Date() };
+		evaluation = { evaluationType: '', student: '', subject: '', evaluationDate: '' };
 	let evaluationTypes, students, subjects;
-	
+
 	function createItem() {}
 	function updateItem() {}
 	function deleteItem() {}
 	function resetForm() {
-		evaluation = { evaluationType: '', student: '', subject: '', evaluationDate: new Date() };
+		evaluation = { evaluationType: '', student: '', subject: '', evaluationDate: '' };
 	}
 </script>
 

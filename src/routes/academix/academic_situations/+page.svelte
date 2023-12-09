@@ -18,9 +18,7 @@
 			}
 		}
 	});
-	let academicSituations = [],
-		filters = [],
-		isFilterable = false;
+	let academicSituations = [];
 </script>
 
-<Table tableName="Situaciones académicas" items={academicSituations} {filters} {isFilterable} />
+<Table tableName="Situaciones académicas" items={academicSituations} />

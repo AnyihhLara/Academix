@@ -6,13 +6,14 @@
 	export let password;
 </script>
 
-<Label for="show-password" class="space-y-2">
+<Label for="show-password">
 	Contraseña
 	<Input
 		id="show-password"
 		type={show ? 'text' : 'password'}
 		placeholder="••••••••"
 		size="lg"
+		class="mt-2"
 		required
 		bind:value={password}
 	>

@@ -15,7 +15,7 @@
 			academicSituation: '',
 			unenrollmentReason: '',
 			academicYear: 0,
-			group: ''
+			group: 0
 		};
 	let sexes, years, groups, academicSituations, unenrollmentReasons;
 
@@ -32,7 +32,7 @@
 			academicSituation: '',
 			unenrollmentReason: '',
 			academicYear: 0,
-			group: ''
+			group: 0
 		};
 	}
 </script>

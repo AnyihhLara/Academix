@@ -8,22 +8,39 @@
 		TableHeadCell
 	} from 'flowbite-svelte';
 	import { tables } from '$lib/stores/stores.js';
-	export let tableName, items;
+	import Filter from './Filter.svelte';
+	export let tableName, items, filters, isFilterable;
 
 	let tableInfo = $tables.find((table) => table.name === tableName),
 		component = null,
-		tableColumns = null;
+		tableColumns = null,
+		filteredItems = items;
 	if (tableInfo) {
 		component = tableInfo.component;
 		tableColumns = tableInfo.tableColumns;
 	}
 	let defaultClass = 'px-4 py-3';
+	function applyFilters() {
+		filteredItems = items;
+		filters.forEach((filter) => {
+			if (filter.selectedOptions && filter.selectedOptions.length > 0) {
+				filteredItems = filteredItems.filter((item) =>
+					filter.selectedOptions.includes(item[filter.key])
+				);
+			}
+		});
+	}
 </script>
 
 <section class="mt-6 mx-3">
-	<h2 class="m-3 font-bold block text-secondary-950 dark:text-secondary-100 text-xl">
-		{tableName}
-	</h2>
+	<div class="flex justify-between items-center">
+		<h2 class="font-bold block mb-3 ml-3 text-secondary-950 dark:text-secondary-100 text-xl">
+			{tableName}
+		</h2>
+		{#if isFilterable}
+			<div class="mb-3 mr-3"><Filter {filters} on:change={applyFilters} /></div>
+		{/if}
+	</div>
 	<Table hoverable={true} shadow={true}>
 		<TableHead>
 			{#if tableColumns}
@@ -35,8 +52,8 @@
 			{/if}
 		</TableHead>
 		<TableBody>
-			{#if items}
-				{#each items as item}
+			{#if filteredItems}
+				{#each filteredItems as item}
 					<TableBodyRow>
 						{#if tableColumns}
 							{#each tableColumns as column}

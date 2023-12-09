@@ -1,11 +1,11 @@
 <script>
 	import Card from '$lib/components/shared/Card.svelte';
-	import {browser} from "$app/environment";
-	import {page} from "$app/stores";
-	import {goto} from "$app/navigation";
-	import authService from "$lib/services/AuthService.js";
-	import {view} from "$lib/stores/stores.js";
-	import {onMount} from "svelte";
+	import { browser } from '$app/environment';
+	import { page } from '$app/stores';
+	import { goto } from '$app/navigation';
+	import authService from '$lib/services/AuthService.js';
+	import { view } from '$lib/stores/stores.js';
+	import { onMount } from 'svelte';
 
 	onMount(() => {
 		let authServ = authService.getInstance();
@@ -20,6 +20,19 @@
 	});
 	let defaultClass = 'flex-row space-y-5';
 	let btnText = 'Ver más';
+
+	// const gotoStudents = () => {
+	// 	goto('/academix/students');
+	// };
+	// const gotoSubjects = () => {
+	// 	goto('/academix/subjects');
+	// };
+	const gotoEvaluations = () => {
+		goto('/academix/evaluations');
+	};
+	const gotoReports = () => {
+		goto('/academix/reports');
+	};
 </script>
 
 <section class="px-4 pt-3 pb-4">
@@ -37,12 +50,16 @@
 					<span slot="tittle">Listado de asignaturas</span>
 					<span slot="btn-text">{btnText}</span>
 				</Card>
+				<Card on:click={gotoEvaluations}>
+					<span slot="tittle">Listado de evaluaciones</span>
+					<span slot="btn-text">{btnText}</span>
+				</Card>
 			</div>
 			<div>
-				<Card>
+				<Card on:click={gotoReports}>
 					<span slot="tittle">Reportes</span>
 					<div class="flex justify-center">
-						<img src="/reports.jpg" alt="Reportes" class="mb-1.5 h-36 w-96" />
+						<img src="/reports.jpg" alt="Reportes" class="mb-3 h-72" />
 					</div>
 					<span slot="btn-text">{btnText}</span>
 				</Card>

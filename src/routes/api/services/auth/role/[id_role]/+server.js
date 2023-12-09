@@ -23,7 +23,7 @@ export async function GET({params}) {
     //   })
 
     // const roleName = result[0].role_name;
-    const role_name = 'teacher';
+    const role_name = 'Secretaria';
 
     return json(role_name);
 }

@@ -8,7 +8,7 @@
 	dark:from-primary-950 dark:to-primary-900"
 >
 	<slot />
-	<div class="absolute bottom-0 w-full">
+	<div class="fixed bottom-0 w-full">
 		<Footer>
 			<FooterCopyright href="/" by="Academix™" year={2023} />
 		</Footer>

@@ -13,6 +13,7 @@
 		<slot />
 	</div>
 	<div class={divBtnClass}>
+		<slot name="div-btn" />
 		<Button class="w-fit" on:click>
 			<slot name="btn-text" /><ArrowRightOutline class="w-3.5 h-3.5 ms-2 text-white" />
 		</Button>

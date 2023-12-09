@@ -1,6 +1,6 @@
 import BaseService from "$lib/services/BaseService.js";
-import {loggedUser} from "$lib/stores/stores.js";
-import {get} from "svelte/store";
+import { loggedUser } from "$lib/stores/stores.js";
+import { get } from "svelte/store";
 
 class AuthService extends BaseService {
     constructor() {
@@ -38,17 +38,17 @@ class AuthService extends BaseService {
         const secretaryMain = '/academix/main/secretary';
         const studentMain = '/academix/main/student';
         const teacherMain = '/academix/main/teacher';
-
+        const reports = '/academix/reports';
 
         const role = get(loggedUser).role_name
         switch (role) {
-            case 'administrator':
+            case 'Administrador':
                 authorized_routes = [
                     administratorMain,
-                    users,
+                    users
                 ]
                 break
-            case 'secretary':
+            case 'Secretaria':
                 authorized_routes = [
                     secretaryMain,
                     academic_situations,
@@ -57,21 +57,24 @@ class AuthService extends BaseService {
                     students_groups,
                     subjects,
                     unenrollment_reasons,
-                    years
+                    years,
+                    reports
                 ]
                 break
-            case 'student':
+            case 'Estudiante':
                 authorized_routes = [
                     studentMain,
-                    evaluations
+                    evaluations,
+                    reports
                 ]
                 break
-            case 'teacher':
+            case 'Profesor':
                 authorized_routes = [
                     teacherMain,
                     evaluations,
                     students,
-                    subjects
+                    subjects,
+                    reports
                 ]
                 break
             default:

@@ -53,7 +53,7 @@
 	</Modal>
 {:else}
 	<Modal {tittle} bind:open={openModal} class="min-w-full">
-		<form on:submit|preventDefault={handleSubmit}>
+		<form on:submit|preventDefault={handleSubmit} autocomplete="off">
 			<div class="grid gap-4 mb-4">
 				<slot />
 			</div>

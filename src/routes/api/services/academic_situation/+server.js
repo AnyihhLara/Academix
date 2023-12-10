@@ -1,18 +1,20 @@
 import sequelize from '$lib/database/db.js'
-import { error, json } from '@sveltejs/kit'
-import { academicSituationTable as table } from '$lib/database/dbTables.js'
+import {error, json} from '@sveltejs/kit'
+import {academicSituationTable as table} from '$lib/database/dbTables.js'
 
 export async function GET({ url }) {
     const { searchParams: params } = url //query parameters
     const limit = params.get('limit')
     const result = await sequelize
         .transaction(async (t) => {
-            const result = await sequelize.query(`SELECT * FROM academic_situation_view LIMIT ${limit}`, {
+            return await sequelize.query(
+                `SELECT * 
+                    FROM ${table} 
+                    LIMIT ${limit}`,
+                {
                 type: sequelize.QueryTypes.SELECT,
                 transaction: t,
-            })
-
-            return result;
+            });
         })
         .catch((err) => {
             throw error(400, { message: err.message })

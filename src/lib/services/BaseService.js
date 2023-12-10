@@ -1,5 +1,3 @@
-import { popup, loading } from '$lib/stores/stores.js';
-
 class BaseService {
     constructor() {
         if (new.target === BaseService) {
@@ -47,7 +45,6 @@ class BaseService {
         r.method = method;
 
         return await new Promise((resolve, reject) => {
-            loading.update(() => true);
             fetch(route + queryparams, r)
                 .then(async (response) => {
                     if (response.status >= 400) {
@@ -57,13 +54,10 @@ class BaseService {
                     } else return response.json();
                 })
                 .then((responseData) => {
-                    loading.update(() => false);
                     resolve(responseData);
                 })
                 .catch((err) => {
                     console.error(err.message);
-                    loading.update(() => false);
-                    reject(popup);
                 });
         });
     }
@@ -79,10 +73,6 @@ class BaseService {
             message = 'Este elemento no se puede eliminar ahora porque es referenciado en otro lugar.';
         else if (error.errors[0]?.message)
             message = error.errors[0].message;
-        popup.update(() => ({
-            type: 'error',
-            message,
-        }));
     }
 }
 

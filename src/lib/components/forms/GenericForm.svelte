@@ -18,15 +18,15 @@
 		tittle = `Modificar ${tableName}`;
 		nameBtnModal = 'Eliminar';
 	}
-	function handleSubmit() {
+	async function handleSubmit() {
 		if (action === 'Create') {
-			createItem();
+			await createItem();
 			openModal = false;
 		} else if (action === 'Update') {
-			updateItem();
+			await updateItem();
 			openModal = false;
 		}
-		resetForm();
+		await resetForm();
 	}
 	function handleDelete() {
 		deleteItem();

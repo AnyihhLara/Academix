@@ -6,6 +6,7 @@
 	import authService from '$lib/services/AuthService.js';
 	import { view } from '$lib/stores/stores.js';
 	import { onMount } from 'svelte';
+    import academicSituationService from "$lib/services/AcademicSituationService.js";
 
 	onMount(() => {
 		let authServ = authService.getInstance();
@@ -17,8 +18,18 @@
 				goto($view);
 			}
 		}
+        refreshItems();
 	});
+
 	let academicSituations = [];
+    let tableName = "Situaciones académicas";
+    let academicSituationServ = academicSituationService.getInstance();
+
+    const refreshItems = () => {
+        academicSituationServ.getAcademicSituations().then((i) => {
+            academicSituations = i;
+        })
+    }
 </script>
 
-<Table tableName="Situaciones académicas" items={academicSituations} />
+<Table {tableName} items={academicSituations} {refreshItems}/>

@@ -2,7 +2,7 @@
     import {Input, Label, NumberInput} from 'flowbite-svelte';
     import GenericForm from './GenericForm.svelte';
     import evaluationTypeService from "$lib/services/EvaluationTypeService.js";
-    import {createEventDispatcher} from "svelte";
+    import {createEventDispatcher, onMount} from "svelte";
 
     export let action;
     export let item = null;
@@ -12,13 +12,22 @@
     let evaluationTypeServ = evaluationTypeService.getInstance();
     const dispatch = createEventDispatcher();
 
+    onMount(() => resetForm());
+
     async function createItem() {
-        await evaluationTypeServ.createEvaluationType(evaluationType.name, evaluationType.numericalValue);
+        await evaluationTypeServ.createEvaluationType(
+            evaluationType.name,
+            evaluationType.numericalValue
+        );
         dispatch('created');
     }
 
     async function updateItem() {
-        await evaluationTypeServ.updateEvaluationType(item.evaluation_type_id, evaluationType.name, evaluationType.numericalValue);
+        await evaluationTypeServ.updateEvaluationType(
+            item.evaluation_type_id,
+            evaluationType.name,
+            evaluationType.numericalValue
+        );
         dispatch('updated');
     }
 
@@ -27,8 +36,23 @@
         dispatch('deleted');
     }
 
-    function resetForm() {
-        evaluationType = {name: '', numericalValue: 0};
+    async function resetForm() {
+        console.log('reset')
+        if (item) {
+            let {
+                evaluation_type_id,
+                evaluation_type_name,
+                evaluation_numerical_value
+            } = await evaluationTypeServ.getEvaluationType(item.evaluation_type_id);
+            item.evaluation_type_id = evaluation_type_id;
+            item.evaluation_type_name = evaluation_type_name;
+            item.evaluation_numerical_value = evaluation_numerical_value;
+            console.log(item)
+            evaluationType.name = item.evaluation_type_name;
+            evaluationType.numericalValue = item.evaluation_numerical_value;
+        } else {
+            evaluationType = {name: '', numericalValue: 0};
+        }
     }
 </script>
 
@@ -58,3 +82,7 @@
         </Label>
     </div>
 </GenericForm>
+
+{#if item}
+    <h1>{item.evaluation_type_id}</h1>
+{/if}

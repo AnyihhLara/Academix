@@ -27,7 +27,7 @@ export const loading = writable(false)
 export const tables = readable([
     {
         name: 'Situaciones académicas', component: AcademicSituationForm, tableColumns: [
-            { label: 'Nombre', key: 'name' }]
+            { label: 'Nombre', key: 'academic_situation_name' }]
     },
     {
         name: 'Evaluaciones', component: EvaluationForm, tableColumns: [
@@ -44,9 +44,11 @@ export const tables = readable([
     },
     {
         name: 'Estudiantes', component: StudentForm, tableColumns: [
-            { label: 'Código', key: 'code' }, { label: 'Nombre', key: 'name' },
+            { label: 'Código', key: 'student_code' },
+            { label: 'Nombre', key: 'student_name' },
             { label: 'Apellidos', key: 'lastname' },
-            { label: 'Sexo', key: 'sex' }, { label: 'Municipio', key: 'municipality' },
+            { label: 'Sexo', key: 'sex' },
+            { label: 'Municipio', key: 'municipality' },
             { label: 'Situación académica', key: 'academicSituation' },
             { label: 'Causa de baja', key: 'unenrollmentReason' },
             { label: 'Año académico', key: 'academicYear' },

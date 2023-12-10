@@ -1,4 +1,4 @@
-import BaseService from './BaseService';
+import BaseService from '$lib/services/BaseService.js';
 
 class AcademicSituationService extends BaseService {
     constructor() {
@@ -14,7 +14,7 @@ class AcademicSituationService extends BaseService {
     }
 
     async getAcademicSituations(limit = 'ALL') {
-        const queryParams = this.makeParams({ limit });
+        const queryParams = this.makeParams({limit});
         return await this.handleReq(undefined, queryParams, 'GET');
     }
 
@@ -37,7 +37,11 @@ class AcademicSituationService extends BaseService {
         );
     }
 
-    async updateAcademicSituation(academic_situation_id, academic_situation) {
+    async updateAcademicSituation(academic_situation_id, academic_situation_name) {
+        const academic_situation = {
+            academic_situation_name: academic_situation_name
+        }
+
         return await this.handleReq(
             this.url(academic_situation_id.toString()),
             undefined,

@@ -20,6 +20,7 @@ export async function GET({url}) {
         .catch((err) => {
             throw error(400, {message: err.message})
         })
+
     return json(result)
 }
 

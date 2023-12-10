@@ -2,28 +2,32 @@ import sequelize from '$lib/database/db.js'
 import {error, json} from '@sveltejs/kit'
 import {evaluationTypeTable as table} from '$lib/database/dbTables.js'
 
-export async function GET({ url }) {
-    const { searchParams: params } = url //query parameters
+export async function GET({url}) {
+    const {searchParams: params} = url //query parameters
     const limit = params.get('limit')
     const result = await sequelize
         .transaction(async (t) => {
-            return await sequelize.query(`SELECT * FROM ${table} LIMIT ${limit}`, {
-                type: sequelize.QueryTypes.SELECT,
-                transaction: t,
-            });
+            return await sequelize.query(
+                `SELECT * 
+                    FROM ${table} 
+                    ORDER BY evaluation_numerical_value DESC
+                    LIMIT ${limit}`,
+                {
+                    type: sequelize.QueryTypes.SELECT,
+                    transaction: t,
+                });
         })
         .catch((err) => {
-            throw error(400, { message: err.message })
+            throw error(400, {message: err.message})
         })
-    console.log(result)
     return json(result)
 }
 
-export async function POST({ request }) {
+export async function POST({request}) {
     const body = await request.json() //new evaluation_type
     const result = await sequelize.transaction(async (t) => {
         try {
-            await sequelize.query(      
+            await sequelize.query(
                 `SELECT create_evaluation_type(:evaluation_type_name, :evaluation_numerical_value)`,
                 {
                     replacements: body,
@@ -32,7 +36,10 @@ export async function POST({ request }) {
                 }
             )
             return await sequelize.query(
-                `SELECT * FROM ${table} ORDER BY evaluation_type_id DESC LIMIT 1`,
+                `SELECT * 
+                    FROM ${table} 
+                    ORDER BY evaluation_type_id 
+                    DESC LIMIT 1`,
                 {
                     type: sequelize.QueryTypes.SELECT,
                     transaction: t,

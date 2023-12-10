@@ -38,7 +38,12 @@ class EvaluationTypeService extends BaseService {
         );
     }
 
-    async updateEvaluationType(evaluation_type_id, evaluation_type) {
+    async updateEvaluationType(evaluation_type_id, evaluation_type_name, evaluation_numerical_value) {
+        const evaluation_type = {
+            evaluation_type_name: evaluation_type_name,
+            evaluation_numerical_value: evaluation_numerical_value
+        }
+
         return await this.handleReq(
             this.url(evaluation_type_id.toString()),
             undefined,

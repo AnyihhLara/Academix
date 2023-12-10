@@ -5,7 +5,7 @@
 	import { goto } from '$app/navigation';
 	import authService from '$lib/services/AuthService.js';
     import evaluationTypeService from "$lib/services/EvaluationTypeService.js";
-    import {tables, view} from '$lib/stores/stores.js';
+    import {view} from '$lib/stores/stores.js';
 	import { onMount } from 'svelte';
 
 	onMount(() => {
@@ -28,19 +28,11 @@
     let evaluationTypeServ = evaluationTypeService.getInstance();
 
     const refreshItems = () => {
-        let tableColumns = $tables.find((table) => table.name === tableName).tableColumns
         evaluationTypeServ.getEvaluationTypes().then((i) => {
-            i.forEach((evaluation) => {
-                let myObject = {}
-                tableColumns.forEach((column) => {
-                    myObject[column.key] = evaluation[column.key]
-                })
-                evaluationTypes.push(myObject)
-                evaluationTypes = evaluationTypes
-            })
+            evaluationTypes = i;
         })
     }
 
 </script>
 
-<Table {tableName} items={evaluationTypes} {filters} {isFilterable} />
+<Table {tableName} items={evaluationTypes} {filters} {isFilterable} {refreshItems}/>

@@ -20,10 +20,10 @@
 	}
 	function handleSubmit() {
 		if (action === 'Create') {
-			updateItem();
+			createItem();
 			openModal = false;
 		} else if (action === 'Update') {
-			createItem();
+			updateItem();
 			openModal = false;
 		}
 		resetForm();

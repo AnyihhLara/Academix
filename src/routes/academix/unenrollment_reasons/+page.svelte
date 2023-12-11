@@ -1,26 +1,36 @@
 <script>
-	import Table from '$lib/components/shared/Table.svelte';
-	import { browser } from '$app/environment';
-	import { page } from '$app/stores';
-	import { goto } from '$app/navigation';
-	import authService from '$lib/services/AuthService.js';
-	import { view } from '$lib/stores/stores.js';
-	import { onMount } from 'svelte';
+    import Table from '$lib/components/shared/Table.svelte';
+    import {browser} from '$app/environment';
+    import {page} from '$app/stores';
+    import {goto} from '$app/navigation';
+    import authService from '$lib/services/AuthService.js';
+    import {view} from '$lib/stores/stores.js';
+    import {onMount} from 'svelte';
+    import unenrollmentReasonService from "$lib/services/UnenrollmentReasonService.js";
 
-	onMount(() => {
-		let authServ = authService.getInstance();
-		let routes = [];
-		if (browser) {
-			routes = authServ.getAuthorizedRoutes();
-			if (!routes.includes($page.url.pathname)) {
-				$view = routes[0];
-				goto($view);
-			}
-		}
-	});
-	let unenrollmentReasons = [],
-		filters = [],
-		isFilterable;
+    onMount(() => {
+        let authServ = authService.getInstance();
+        let routes = [];
+        if (browser) {
+            routes = authServ.getAuthorizedRoutes();
+            if (!routes.includes($page.url.pathname)) {
+                $view = routes[0];
+                goto($view);
+            }
+        }
+        refreshItems();
+    });
+    let unenrollmentReasons = [],
+        filters = [],
+        isFilterable;
+    let tableName = "Causas de baja";
+    let unenrollmentReasonServ = unenrollmentReasonService.getInstance();
+
+    const refreshItems = () => {
+        unenrollmentReasonServ.getUnenrollmentReasons().then((i) => {
+            unenrollmentReasons = i;
+        })
+    }
 </script>
 
-<Table tableName="Causas de baja" items={unenrollmentReasons} {filters} {isFilterable} />
+<Table {tableName} items={unenrollmentReasons} {filters} {isFilterable} {refreshItems}/>

@@ -18,7 +18,7 @@ class StudentService extends BaseService {
         return await this.handleReq(undefined, queryParams, 'GET');
     }
 
-    async createStudent(student_name, student_lastname, student_sex, municipality,  student_code, academic_situation_id, group_id, year_id, unenrollment_reason_id) {
+    async createStudent(student_name, student_lastname, student_sex, municipality,  student_code, academic_situation_id, group_id, year_id, unenrollment_reason_id, user_id) {
         const student = {
             student_name: student_name, 
             student_lastname: student_lastname, 
@@ -28,8 +28,8 @@ class StudentService extends BaseService {
             academic_situation_id: academic_situation_id, 
             group_id: group_id, 
             year_id: year_id, 
-            unenrollment_reason_id: unenrollment_reason_id
-            
+            unenrollment_reason_id: unenrollment_reason_id,
+            user_id: user_id
         }
         return await this.handleReq(undefined, undefined, 'POST', student);
     }
@@ -46,7 +46,19 @@ class StudentService extends BaseService {
         );
     }
 
-    async updateStudent(student_id, student) {
+    async updateStudent(student_id, student_name, student_lastname, student_sex, municipality,  student_code, academic_situation_id, group_id, year_id, unenrollment_reason_id, user_id) {
+        const student = {
+            student_name: student_name,
+            student_lastname: student_lastname,
+            student_sex: student_sex,
+            municipality: municipality,
+            student_code: student_code,
+            academic_situation_id: academic_situation_id,
+            group_id: group_id,
+            year_id: year_id,
+            unenrollment_reason_id: unenrollment_reason_id,
+            user_id: user_id
+        }
         return await this.handleReq(
             this.url(student_id.toString()),
             undefined,

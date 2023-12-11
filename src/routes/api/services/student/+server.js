@@ -1,6 +1,6 @@
 import sequelize from '$lib/database/db.js'
 import {error, json} from '@sveltejs/kit'
-import {studentTable as table} from '$lib/database/dbTables.js'
+import {studentTable, academicSituationTable, unenrollmentReasonTable, yearTable, studentsGroupTable} from '$lib/database/dbTables.js'
 
 export async function GET({ url }) {
     const { searchParams: params } = url //query parameters
@@ -8,9 +8,23 @@ export async function GET({ url }) {
     const result = await sequelize
         .transaction(async (t) => {
             return await sequelize.query(
-                `SELECT * 
-                    FROM ${table}
-                    LIMIT ${limit}`,
+                `SELECT student_id,
+                           student_code,
+                           student_name,
+                           lastname,
+                           sex,
+                           municipality,
+                           academic_situation_name AS academic_situation,
+                           COALESCE(unenrollment_reason_name, '-') AS unenrollment_reason,
+                           year,
+                           group_number
+                    FROM ${studentTable} s
+                        JOIN ${academicSituationTable} ast ON ast.academic_situation_id = s.academic_situation_id
+                        LEFT JOIN ${unenrollmentReasonTable} ur ON ur.unenrollment_reason_id = s.unenrollment_reason_id
+                        JOIN ${yearTable} y ON y.year_id = s.year_id
+                        JOIN ${studentsGroupTable} sg ON s.group_id = sg.group_id
+                    ORDER BY lastname
+                    LIMIT ${limit};`,
                 {
                 type: sequelize.QueryTypes.SELECT,
                 transaction: t,
@@ -27,7 +41,17 @@ export async function POST({ request }) {
     const result = await sequelize.transaction(async (t) => {
         try {
             await sequelize.query(
-                `SELECT create_student(:student_name, :student_lastname, :student_sex, :municipality,  :student_code, :academic_situation_id, :group_id, :year_id, :unenrollment_reason_id)`,
+                `SELECT create_student(
+                                            :student_code, 
+                                            :student_name, 
+                                            :student_lastname, 
+                                            :student_sex, 
+                                            :municipality, 
+                                            :academic_situation_id, 
+                                            :unenrollment_reason_id, 
+                                            :year_id, 
+                                            :group_id, 
+                                            :user_id)`,
                 {
                     replacements: body,
                     type: sequelize.QueryTypes.SELECT,
@@ -35,7 +59,7 @@ export async function POST({ request }) {
                 }
             )
             return await sequelize.query(
-                `SELECT * FROM ${table} ORDER BY student_id DESC LIMIT 1`,
+                `SELECT * FROM ${studentTable} ORDER BY student_id DESC LIMIT 1`,
                 {
                     type: sequelize.QueryTypes.SELECT,
                     transaction: t,

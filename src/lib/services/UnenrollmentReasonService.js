@@ -14,7 +14,7 @@ class UnenrollmentReasonService extends BaseService {
     }
 
     async getUnenrollmentReasons(limit = 'ALL') {
-        const queryParams = this.makeParams({ limit });
+        const queryParams = this.makeParams({limit});
         return await this.handleReq(undefined, queryParams, 'GET');
     }
 
@@ -37,7 +37,10 @@ class UnenrollmentReasonService extends BaseService {
         );
     }
 
-    async updateUnenrollmentReason(unenrollment_reason_id, unenrollment_reason) {
+    async updateUnenrollmentReason(unenrollment_reason_id, unenrollment_reason_name) {
+        const unenrollment_reason = {
+            unenrollment_reason_name: unenrollment_reason_name,
+        }
         return await this.handleReq(
             this.url(unenrollment_reason_id.toString()),
             undefined,

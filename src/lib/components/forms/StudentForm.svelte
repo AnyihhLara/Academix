@@ -1,8 +1,11 @@
 <script>
 	import { Input, Label, Select } from 'flowbite-svelte';
 	import GenericForm from './GenericForm.svelte';
+	import studentService from "$lib/services/StudentService.js";
+	import {createEventDispatcher} from "svelte";
 
 	export let action;
+	export let item = null;
 
 	let tableName = 'estudiante',
 		defaultClass = 'mt-2',
@@ -18,10 +21,45 @@
 			group: 0
 		};
 	let sexes, years, groups, academicSituations, unenrollmentReasons;
+	let studentServ = studentService.getInstance();
+	const dispatch = createEventDispatcher();
 
-	function createItem() {}
-	function updateItem() {}
-	function deleteItem() {}
+	async function createItem() {
+		console.log('create')
+		await studentServ.createStudent(
+				student.name,
+				student.lastname,
+				'F',  // student.sex,
+				student.municipality,
+				student.code,
+				2,  // student.academicSituation,
+				5,  // student.group,
+				3,  // student.academicYear,
+				null,  //student.unenrollmentReason
+				null  //user_id
+		);
+		dispatch('created');
+	}
+	async function updateItem() {
+		await studentServ.updateStudent(
+				item.student_id,
+				student.name,
+				student.lastname,
+				'F',  // student.sex,
+				student.municipality,
+				student.code,
+				2,  // student.academicSituation,
+				5,  // student.group,
+				3,  // student.academicYear,
+				null,  //student.unenrollmentReason
+				null  //user_id
+		);
+		dispatch('updated');
+	}
+	async function deleteItem() {
+		await studentServ.deleteStudent(item.student_id);
+		dispatch('deleted');
+	}
 	function resetForm() {
 		student = {
 			code: '',
@@ -35,6 +73,8 @@
 			group: 0
 		};
 	}
+
+	//TODO: Put the ''required'' in the inputs that need it too
 </script>
 
 <GenericForm {action} {tableName} {createItem} {updateItem} {deleteItem} {resetForm}>
@@ -81,7 +121,7 @@
 	<div>
 		<Label
 			>Sexo
-			<Select class="mt-2" items={sexes} bind:value={student.sex} required />
+			<Select class="mt-2" items={sexes} bind:value={student.sex} />
 		</Label>
 	</div>
 	<div>
@@ -100,13 +140,13 @@
 	<div>
 		<Label
 			>Año
-			<Select class={defaultClass} items={years} bind:value={student.academicYear} required />
+			<Select class={defaultClass} items={years} bind:value={student.academicYear} />
 		</Label>
 	</div>
 	<div>
 		<Label
 			>Grupo
-			<Select class={defaultClass} items={groups} bind:value={student.group} required />
+			<Select class={defaultClass} items={groups} bind:value={student.group} />
 		</Label>
 	</div>
 	<div>
@@ -116,7 +156,6 @@
 				class={defaultClass}
 				items={academicSituations}
 				bind:value={student.academicSituation}
-				required
 			/>
 		</Label>
 	</div>
@@ -127,7 +166,6 @@
 				class={defaultClass}
 				items={unenrollmentReasons}
 				bind:value={student.unenrollmentReason}
-				required
 			/>
 		</Label>
 	</div>

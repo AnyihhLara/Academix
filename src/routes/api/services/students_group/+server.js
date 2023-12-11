@@ -1,27 +1,30 @@
 import sequelize from '$lib/database/db.js'
-import { error, json } from '@sveltejs/kit'
-import { studentsGroupTable as table } from '$lib/database/dbTables.js'
+import {error, json} from '@sveltejs/kit'
+import {studentsGroupTable, yearTable} from '$lib/database/dbTables.js'
 
-export async function GET({ url }) {
-    const { searchParams: params } = url //query parameters
+export async function GET({url}) {
+    const {searchParams: params} = url //query parameters
     const limit = params.get('limit')
     const result = await sequelize
         .transaction(async (t) => {
-            const result = await sequelize.query(`SELECT * FROM students_group_view LIMIT ${limit}`, {
-                type: sequelize.QueryTypes.SELECT,
-                transaction: t,
-            })
-
-            return result;
+            return await sequelize.query(
+                `SELECT group_id, group_number, sg.year_id, year
+                    FROM ${studentsGroupTable} sg
+                    JOIN ${yearTable} y ON y.year_id = sg.year_id 
+                    LIMIT ${limit}`,
+                {
+                    type: sequelize.QueryTypes.SELECT,
+                    transaction: t,
+                });
         })
         .catch((err) => {
-            throw error(400, { message: err.message })
+            throw error(400, {message: err.message})
         })
     return json(result)
 }
 
-export async function POST({ request }) {
-    const body = await request.json() //new students_group 
+export async function POST({request}) {
+    const body = await request.json() //new students_group
     const result = await sequelize.transaction(async (t) => {
         try {
             await sequelize.query(
@@ -33,7 +36,10 @@ export async function POST({ request }) {
                 }
             )
             return await sequelize.query(
-                `SELECT * FROM ${table} ORDER BY students_group_id DESC LIMIT 1`,
+                `SELECT * 
+                    FROM ${studentsGroupTable} 
+                    ORDER BY group_id DESC 
+                    LIMIT 1`,
                 {
                     type: sequelize.QueryTypes.SELECT,
                     transaction: t,

@@ -24,6 +24,9 @@
 		evaluations = [],
 		filters = [],
 		isFilterable = false;
+	const gotoReports = () => {
+		goto('/academix/reports');
+	};
 </script>
 
 <section class="py-2 pb-2 pt-4 grid justify-center w-full">
@@ -34,6 +37,7 @@
 		divClass="flex gap-5 items-start justify-center"
 		cardClass="max-w-full"
 		divBtnClass="flex justify-between mt-1"
+		on:click={gotoReports}
 	>
 		<svelte:fragment slot="avatar-slot">
 			<Avatar size="xl" />

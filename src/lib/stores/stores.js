@@ -1,5 +1,4 @@
-import { readable, writable } from 'svelte/store';
-import AcademicSituationForm from "$lib/components/forms/AcademicSituationForm.svelte";
+import { readable, writable } from 'svelte/store'; import AcademicSituationForm from "$lib/components/forms/AcademicSituationForm.svelte";
 import EvaluationForm from "$lib/components/forms/EvaluationForm.svelte";
 import EvaluationTypeForm from "$lib/components/forms/EvaluationTypeForm.svelte";
 import StudentForm from "$lib/components/forms/StudentForm.svelte";
@@ -89,5 +88,79 @@ export const tables = readable([
     {
         name: 'Roles', component: RoleForm, tableColumns: [
             { label: 'Nombre', key: 'name' }]
+    },
+    {
+        name: 'Reporte 1', component: null, tableColumns: [
+            { label: 'Número de orden', key: 'order_number' },
+            { label: 'Nombre', key: 'student_name' },
+            { label: 'Apellidos', key: 'lastname' },
+            { label: 'Código', key: 'student_code' }]
+    },
+    {
+        name: 'Reporte 2', component: null, tableColumns: [
+            { label: 'Nombre', key: 'name' },
+            { label: 'Cantidad de horas planificadas', key: 'plannedHours' }]
+    },
+    {
+        name: 'Reporte 3', component: null, tableColumns: [
+            { label: 'Número de orden', key: 'order_number' },
+            { label: 'Nombre', key: 'student_name' },
+            { label: 'Apellidos', key: 'lastname' },
+            { label: 'Evaluación', key: 'evaluation' }]
+    },
+    {
+        name: 'Reporte 4', component: null, tableColumns: [
+            { label: 'Número de orden', key: 'order_number' },]
+    },
+    {
+        name: 'Reporte 5', component: null, tableColumns: [
+            { label: 'Número de escalafón', key: 'rank' },
+            { label: 'Nombre', key: 'student_name' },
+            { label: 'Apellidos', key: 'lastname' },
+            { label: 'Promedio', key: 'average' },
+            { label: 'Número de orden', key: 'order_number' },
+            { label: 'Sexo', key: 'sex' },
+            { label: 'Municipio', key: 'municipality' }
+        ]
+    },
+    {
+        name: 'Reporte 6', component: null, tableColumns: [
+            { label: 'Asignatura', key: 'subject' },
+            { label: 'Calificación', key: 'grade' },
+            { label: 'Promedio', key: 'average' },
+        ]
+    },
+    {
+        name: 'Reporte 7', component: null, tableColumns: [
+            { label: 'Número de orden', key: 'order_number' },
+            { label: 'Nombre', key: 'student_name' },
+            { label: 'Apellidos', key: 'lastname' },
+            { label: 'Asignaturas desaprobadas', key: 'failed_subjects' }
+        ]
+    },
+    {
+        name: 'Reporte 8 por año', component: null, tableColumns: [
+            { label: 'Número de orden', key: 'order_number' },
+            { label: 'Nombre', key: 'student_name' },
+            { label: 'Apellidos', key: 'lastname' },
+            { label: 'Grupo', key: 'students_group' },
+            { label: 'Causa de baja', key: 'unenrollment_reason' },
+        ]
+    },
+    {
+        name: 'Reporte 8 por grupo', component: null, tableColumns: [
+            { label: 'Número de orden', key: 'order_number' },
+            { label: 'Nombre', key: 'student_name' },
+            { label: 'Apellidos', key: 'lastname' },
+            { label: 'Causa de baja', key: 'unenrollment_reason' },
+        ]
+    },
+    {
+        name: 'Reporte 9', component: null, tableColumns: [
+            { label: 'Número de orden', key: 'order_number' },
+            { label: 'Nombre', key: 'student_name' },
+            { label: 'Apellidos', key: 'lastname' },
+            { label: 'Grupo', key: 'students_group' }
+        ]
     }
 ]);

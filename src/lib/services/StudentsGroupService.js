@@ -14,7 +14,7 @@ class StudentsGroupService extends BaseService {
     }
 
     async getStudentsGroups(limit = 'ALL') {
-        const queryParams = this.makeParams({ limit });
+        const queryParams = this.makeParams({limit});
         return await this.handleReq(undefined, queryParams, 'GET');
     }
 
@@ -30,7 +30,8 @@ class StudentsGroupService extends BaseService {
         return await this.handleReq(this.url(students_group_id.toString()), undefined, 'GET');
     }
 
-    async deleteStudentsGroup(students_group_id) {
+    async deleteStudentsGroup(year_id, group_id) {
+        const students_group_id = year_id.toString() + '-' + group_id.toString();
         return await this.handleReq(
             this.url(students_group_id.toString()),
             undefined,
@@ -38,9 +39,13 @@ class StudentsGroupService extends BaseService {
         );
     }
 
-    async updateStudentsGroup(students_group_id, students_group) {
+    async updateStudentsGroup(group_id, year_id, group_number) {
+        const students_group = {
+            year_id: year_id,
+            group_number: group_number
+        }
         return await this.handleReq(
-            this.url(students_group_id.toString()),
+            this.url(group_id.toString()),
             undefined,
             'PUT',
             students_group

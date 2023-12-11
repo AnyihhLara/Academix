@@ -14,7 +14,7 @@ class SubjectService extends BaseService {
     }
 
     async getSubjects(limit = 'ALL') {
-        const queryParams = this.makeParams({ limit });
+        const queryParams = this.makeParams({limit});
         return await this.handleReq(undefined, queryParams, 'GET');
     }
 
@@ -39,7 +39,12 @@ class SubjectService extends BaseService {
         );
     }
 
-    async updateSubject(subject_id, subject) {
+    async updateSubject(subject_id, subject_name, planned_hours, year_id) {
+        const subject = {
+            subject_name: subject_name,
+            planned_hours: planned_hours,
+            year_id: year_id
+        }
         return await this.handleReq(
             this.url(subject_id.toString()),
             undefined,

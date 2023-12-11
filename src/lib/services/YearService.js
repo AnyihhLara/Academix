@@ -14,16 +14,16 @@ class YearService extends BaseService {
     }
 
     async getYears(limit = 'ALL') {
-        const queryParams = this.makeParams({ limit });
+        const queryParams = this.makeParams({limit});
         return await this.handleReq(undefined, queryParams, 'GET');
     }
 
     async createYear(year, school_year) {
-        const year = {
-            year: year, 
+        const newYear = {
+            year: year,
             school_year: school_year
         }
-        return await this.handleReq(undefined, undefined, 'POST', year);
+        return await this.handleReq(undefined, undefined, 'POST', newYear);
     }
 
     async getYear(year_id) {
@@ -38,12 +38,16 @@ class YearService extends BaseService {
         );
     }
 
-    async updateYear(year_id, year) {
+    async updateYear(year_id, year, school_year) {
+        const newYear = {
+            year: year,
+            school_year: school_year
+        }
         return await this.handleReq(
             this.url(year_id.toString()),
             undefined,
             'PUT',
-            year
+            newYear
         );
     }
 }

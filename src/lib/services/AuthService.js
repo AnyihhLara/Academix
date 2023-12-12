@@ -39,6 +39,15 @@ class AuthService extends BaseService {
         const studentMain = '/academix/main/student';
         const teacherMain = '/academix/main/teacher';
         const reports = '/academix/reports';
+        const report1 = '/academix/reports/1';
+        const report2 = '/academix/reports/2';
+        const report3 = '/academix/reports/3';
+        const report4 = '/academix/reports/4';
+        const report5 = '/academix/reports/5';
+        const report6 = '/academix/reports/6';
+        const report7 = '/academix/reports/7';
+        const report8 = '/academix/reports/8';
+        const report9 = '/academix/reports/9';
 
         const role = get(loggedUser).role_name
         switch (role) {
@@ -58,14 +67,25 @@ class AuthService extends BaseService {
                     subjects,
                     unenrollment_reasons,
                     years,
-                    reports
+                    reports,
+                    report1,
+                    report2,
+                    report3,
+                    report4,
+                    report5,
+                    report6,
+                    report7,
+                    report8,
+                    report9
                 ]
                 break
             case 'Estudiante':
                 authorized_routes = [
                     studentMain,
                     evaluations,
-                    reports
+                    reports,
+                    report4,
+                    report5,
                 ]
                 break
             case 'Profesor':
@@ -74,7 +94,16 @@ class AuthService extends BaseService {
                     evaluations,
                     students,
                     subjects,
-                    reports
+                    reports,
+                    report1,
+                    report2,
+                    report3,
+                    report4,
+                    report5,
+                    report6,
+                    report7,
+                    report8,
+                    report9
                 ]
                 break
             default:

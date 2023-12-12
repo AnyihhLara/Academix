@@ -28,6 +28,12 @@
 		component = tableInfo.component;
 		tableColumns = tableInfo.tableColumns;
 	}
+	$: if (tableName !== tableInfo.name) {
+		tableInfo = $tables.find((table) => table.name === tableName);
+		component = tableInfo.component;
+		tableColumns = tableInfo.tableColumns;
+	}
+
 	let defaultClass = 'px-4 py-3';
 
 	function applyFilters() {
@@ -42,18 +48,21 @@
 	}
 </script>
 
-<section class="mt-6 mx-3">
+<section class="mt-4 mx-3">
 	<div class="flex justify-between items-center">
 		{#if isNamed}
 			<h2 class="font-bold block mb-3 ml-3 text-secondary-950 dark:text-secondary-100 text-xl">
 				{tableName}
 			</h2>
 		{/if}
-		{#if isFilterable}
-			<div class="mb-3 mr-3">
+		<div class="flex gap-3 mb-2 mr-3">
+			{#if component && isCreatable}
+				<svelte:component this={component} action="Create" on:created={refreshItems} />
+			{/if}
+			{#if isFilterable}
 				<Filter {filters} on:change={applyFilters} />
-			</div>
-		{/if}
+			{/if}
+		</div>
 	</div>
 	<Table hoverable={true} shadow={true}>
 		<TableHead>
@@ -105,9 +114,4 @@
 			{/if}
 		</TableBody>
 	</Table>
-	<div class="mt-4 pb-4">
-		{#if component && isCreatable}
-			<svelte:component this={component} action="Create" on:created={refreshItems} />
-		{/if}
-	</div>
 </section>

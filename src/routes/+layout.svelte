@@ -10,7 +10,7 @@
 	<slot />
 	<div class="fixed bottom-0 w-full">
 		<Footer>
-			<FooterCopyright href="/" by="Academix™" year={2023} />
+			<FooterCopyright spanClass="block mb-1 text-sm font-semibold sm:text-center text-primary-950 dark:text-primary-100" href="/" by="Academix™" year={2023} />
 		</Footer>
 	</div>
 </div>

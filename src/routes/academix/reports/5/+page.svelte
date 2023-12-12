@@ -68,16 +68,21 @@
 	function refreshItems() {}
 </script>
 
-<section>
-	<h1 class="text-center text-2xl mb-4 pt-3 font-semibold text-primary-950 dark:text-primary-100">
-		Escalafón
-	</h1>
-	<div class="flex justify-center mx-5">
-		<Select placeholder="Seleccione una opción:" items={options} bind:value={selectedOption} />
+<section class="px-2 pt-6 pb-8">
+	<div class="flex items-center justify-between mx-6 gap-4">
+		<h1 class="text-center text-2xl font-semibold text-primary-950 dark:text-primary-100">
+			Escalafón
+		</h1>
+		<Select
+			placeholder="Seleccione una opción:"
+			items={options}
+			bind:value={selectedOption}
+			class="w-96 h-10 mt-1"
+		/>
 	</div>
 	{#if selectedOption === 'Por año' && dataByYear}
 		{#each dataByYear as schoolYearData}
-			<section class="mt-6 mx-3" key={schoolYearData.schoolYear}>
+			<section class="mt-4 mx-3" key={schoolYearData.schoolYear}>
 				<h2 class="font-bold block mb-3 ml-3 text-secondary-950 dark:text-secondary-100 text-xl">
 					Curso: {schoolYearData.schoolYear}
 				</h2>
@@ -105,7 +110,7 @@
 		{/each}
 	{:else if selectedOption === 'Por grupo' && dataByGroup}
 		{#each dataByGroup as schoolYearData}
-			<section class="mt-6 mx-3" key={schoolYearData.schoolYear}>
+			<section class="mt-4 mx-3" key={schoolYearData.schoolYear}>
 				<h2 class="font-bold block mb-3 ml-3 text-secondary-950 dark:text-secondary-100 text-xl">
 					Curso: {schoolYearData.schoolYear}
 				</h2>

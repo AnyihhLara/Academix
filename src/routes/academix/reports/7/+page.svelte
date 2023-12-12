@@ -40,9 +40,9 @@
 
 <section>
 	<h1 class="text-center text-2xl mb-4 pt-3 font-semibold text-primary-950 dark:text-primary-100">
-		Listado de Evaluaciones por grupo en cada asignatura
+		Listado de estudiantes desaprobados por grupo en un rango de fecha
 	</h1>
-	<div class="mx-5 space-y-5">
+	<div class="flex mx-5 gap-5">
 		<Label for="start-date">
 			Fecha Inicial
 			<Input id="start-date" type="date" bind:value={startDate} />

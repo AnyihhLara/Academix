@@ -95,17 +95,20 @@
 	function refreshItems() {}
 </script>
 
-<section>
-	<h1 class="text-center text-2xl mb-4 pt-3 font-semibold text-primary-950 dark:text-primary-100">
-		Listado de los estudiantes que causan baja en un curso
-	</h1>
-	<div class="flex justify-center mx-5">
-		<Select
-			placeholder="Seleccione una opción:"
-			items={options}
-			bind:value={selectedOption}
-			on:change={setTableName}
-		/>
+<section class="px-2 pt-6 pb-8">
+	<div class="flex items-center justify-between mx-6 gap-4">
+		<h1 class="text-center text-2xl font-semibold text-primary-950 dark:text-primary-100">
+			Listado de los estudiantes que causan baja en un curso
+		</h1>
+		<div class="flex justify-center mx-5">
+			<Select
+				placeholder="Seleccione una opción:"
+				items={options}
+				bind:value={selectedOption}
+				class="w-96 h-10 mt-1"
+				on:change={setTableName}
+			/>
+		</div>
 	</div>
 	{#if selectedOption === 'Por año' && dataByYear}
 		{#each dataByYear as schoolYearData}

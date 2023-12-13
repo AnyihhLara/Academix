@@ -4,6 +4,7 @@
     import {goto} from '$app/navigation';
     import Table from '$lib/components/shared/Table.svelte';
     import studentService from "$lib/services/StudentService.js";
+    import evaluationService from "$lib/services/EvaluationService.js";
     import {onMount} from "svelte";
 
     onMount(() => {
@@ -26,7 +27,10 @@
         },
         evaluations = [],
         filters = [],
-        isFilterable = false;
+        isFilterable = false,
+        isUpdatable = false,
+        isDeletable = false,
+        isCreatable = false;
     let tableName = "Evaluaciones del estudiante";
     let studentServ = studentService.getInstance();
 
@@ -37,6 +41,12 @@
     const refreshItems = () => {
         studentServ.getStudentByUser(data.id_user).then((i) => {
             student = i;
+
+            let evaluationServ = evaluationService.getInstance();
+            // TODO: Create evaluations for a student with user
+            evaluationServ.getEvaluationsOfStudent(student.student_id).then((j) => {
+                evaluations = j;
+            })
         })
     };
 </script>
@@ -77,11 +87,6 @@
 		</span>
         <span slot="btn-text">Reportes</span>
     </Card>
-    <Table {filters} {isFilterable} items={evaluations} {refreshItems} {tableName}/>
+    <Table {filters} {isCreatable} {isDeletable} {isFilterable} {isUpdatable}
+           items={evaluations} {refreshItems} {tableName}/>
 </section>
-
-<div class="">
-    {#if student.academicSituation === 'Baja'}
-        <Label>Causa de baja:</Label>
-    {/if}
-</div>

@@ -85,9 +85,9 @@ export const tables = readable([
 		name: 'Evaluaciones del estudiante',
 		component: null,
 		tableColumns: [
-			{ label: 'Asignatura', key: 'subject' },
-			{ label: 'Tipo', key: 'evaluationType' },
-			{ label: 'Fecha', key: 'evaluationDate' }
+			{ label: 'Asignatura', key: 'subject_name' },
+			{ label: 'Nota', key: 'evaluation_numerical_value' },
+			{ label: 'Fecha', key: 'evaluation_date' }
 		]
 	},
 	{

@@ -1,6 +1,4 @@
 import BaseService from "$lib/services/BaseService.js";
-import { loggedUser } from "$lib/stores/stores.js";
-import { get } from "svelte/store";
 
 class AuthService extends BaseService {
     constructor() {
@@ -16,16 +14,17 @@ class AuthService extends BaseService {
     }
 
     async login(login) {
-        return await this.handleReq(this.url('login'), undefined, 'POST', login)
+        return await this.handleReq(this.url('login'), undefined, 'POST', login);
     }
 
     async getRoleName(id_role) {
         return await this.handleReq(this.url('role/' + id_role), undefined, 'GET')
     }
 
-    getAuthorizedRoutes() {
-        let authorized_routes = [];
+    getAuthorizedRoutes(role) {
+        let authorized_routes;
         const users = '/academix/users';
+        const roles = '/academix/roles'
         const academic_situations = '/academix/academic_situations';
         const evaluation_types = '/academix/evaluation_types';
         const evaluations = '/academix/evaluations';
@@ -49,67 +48,73 @@ class AuthService extends BaseService {
         const report8 = '/academix/reports/8';
         const report9 = '/academix/reports/9';
 
-        const role = get(loggedUser).role_name
-        switch (role) {
-            case 'Administrador':
-                authorized_routes = [
-                    administratorMain,
-                    users
-                ]
-                break
-            case 'Secretario':
-                authorized_routes = [
-                    secretaryMain,
-                    academic_situations,
-                    evaluation_types,
-                    students,
-                    students_groups,
-                    subjects,
-                    unenrollment_reasons,
-                    years,
-                    reports,
-                    report1,
-                    report2,
-                    report3,
-                    report4,
-                    report5,
-                    report6,
-                    report7,
-                    report8,
-                    report9
-                ]
-                break
-            case 'Estudiante':
-                authorized_routes = [
-                    studentMain,
-                    evaluations,
-                    reports,
-                    report4,
-                    report5,
-                ]
-                break
-            case 'Profesor':
-                authorized_routes = [
-                    teacherMain,
-                    evaluations,
-                    students,
-                    subjects,
-                    reports,
-                    report1,
-                    report2,
-                    report3,
-                    report4,
-                    report5,
-                    report6,
-                    report7,
-                    report8,
-                    report9
-                ]
-                break
-            default:
-                authorized_routes = ['/auth/login']
+        if (role) {
+            switch (role) {
+                case 'Administrador':
+                    authorized_routes = [
+                        administratorMain,
+                        users,
+                        roles
+                    ];
+                    break
+                case 'Secretario':
+                    authorized_routes = [
+                        secretaryMain,
+                        academic_situations,
+                        evaluation_types,
+                        students,
+                        students_groups,
+                        subjects,
+                        unenrollment_reasons,
+                        years,
+                        reports,
+                        report1,
+                        report2,
+                        report3,
+                        report4,
+                        report5,
+                        report6,
+                        report7,
+                        report8,
+                        report9
+                    ];
+                    break
+                case 'Estudiante':
+                    authorized_routes = [
+                        studentMain,
+                        evaluations,
+                        reports,
+                        report4,
+                        report5
+                    ];
+                    break
+                case 'Profesor':
+                    authorized_routes = [
+                        teacherMain,
+                        evaluations,
+                        students,
+                        subjects,
+                        reports,
+                        report1,
+                        report2,
+                        report3,
+                        report4,
+                        report5,
+                        report6,
+                        report7,
+                        report8,
+                        report9
+                    ];
+                    break
+                default:
+                    authorized_routes = ['/auth/login'];
+            }
         }
-        return authorized_routes
+        else {
+            authorized_routes = ['/auth/login'];
+        }
+
+        return authorized_routes;
     }
 }
 

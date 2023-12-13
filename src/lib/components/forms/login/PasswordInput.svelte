@@ -17,7 +17,7 @@
 		required
 		bind:value={password}
 	>
-		<button slot="left" on:click|preventDefault={() => (show = !show)} class="pointer-events-auto">
+		<button type="button" slot="left" on:click={() => (show = !show)} class="pointer-events-auto">
 			{#if show}
 				<EyeOutline class="w-6 h-6" />
 			{:else}

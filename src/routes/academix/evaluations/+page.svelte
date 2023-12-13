@@ -1,29 +1,25 @@
 <script>
-	import Table from '$lib/components/shared/Table.svelte';
-	import { browser } from '$app/environment';
-	import { page } from '$app/stores';
-	import { goto } from '$app/navigation';
-	import authService from '$lib/services/AuthService.js';
-	import { view } from '$lib/stores/stores.js';
-	import { onMount } from 'svelte';
+    import Table from '$lib/components/shared/Table.svelte';
+    import {onMount} from 'svelte';
+    import evaluationService from "$lib/services/EvaluationService.js";
 
-	onMount(() => {
-		let authServ = authService.getInstance();
-		let routes = [];
-		if (browser) {
-			routes = authServ.getAuthorizedRoutes();
-			if (!routes.includes($page.url.pathname)) {
-				$view = routes[0];
-				goto($view);
-			}
-		}
-	});
-	let evaluations = [],
-		filters = [
-			{ name: 'Asignaturas', key: 'subject', options: [], selectedOptions: [] },
-			{ name: 'Tipo de evaluación', key: 'evaluationType', options: [], selectedOptions: [] }
-		],
-		isFilterable = true;
+    onMount(() => {
+        refreshItems();
+    });
+    let evaluations = [],
+        filters = [
+            {name: 'Asignaturas', key: 'subject', options: [], selectedOptions: []},
+            {name: 'Tipo de evaluación', key: 'evaluationType', options: [], selectedOptions: []}
+        ],
+        isFilterable = true;
+    let tableName = "Evaluaciones";
+    let evaluationServ = evaluationService.getInstance();
+
+    const refreshItems = () => {
+        evaluationServ.getEvaluations().then((i) => {
+            evaluations = i;
+        })
+    }
 </script>
 
-<Table tableName="Evaluaciones" items={evaluations} {filters} {isFilterable} />
+<Table {filters} {isFilterable} items={evaluations} {refreshItems} {tableName}/>

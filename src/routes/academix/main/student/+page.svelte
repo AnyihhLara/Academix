@@ -1,76 +1,87 @@
 <script>
-	import Card from '$lib/components/shared/Card.svelte';
-	import { Avatar, Label } from 'flowbite-svelte';
-	import { browser } from '$app/environment';
-	import { page } from '$app/stores';
-	import { goto } from '$app/navigation';
-	import authService from '$lib/services/AuthService.js';
-	import { view } from '$lib/stores/stores.js';
-	import { onMount } from 'svelte';
-	import Table from '$lib/components/shared/Table.svelte';
+    import Card from '$lib/components/shared/Card.svelte';
+    import {Avatar, Label} from 'flowbite-svelte';
+    import {goto} from '$app/navigation';
+    import Table from '$lib/components/shared/Table.svelte';
+    import studentService from "$lib/services/StudentService.js";
+    import {onMount} from "svelte";
 
-	onMount(() => {
-		let authServ = authService.getInstance();
-		let routes = [];
-		if (browser) {
-			routes = authServ.getAuthorizedRoutes();
-			if (!routes.includes($page.url.pathname)) {
-				$view = routes[0];
-				goto($view);
-			}
-		}
-	});
-	let student,
-		evaluations = [],
-		filters = [],
-		isFilterable = false;
-	const gotoReports = () => {
-		goto('/academix/reports');
-	};
+    onMount(() => {
+        refreshItems();
+    });
+
+    export let data;
+    let student = {
+            student_id: '',
+            student_code: '',
+            student_name: '',
+            lastname: '',
+            sex: '',
+            municipality: '',
+            user_id: data.user_id,
+            year: '',
+            group_number: '',
+            academic_situation: '',
+            unenrollment_reason: null
+        },
+        evaluations = [],
+        filters = [],
+        isFilterable = false;
+    let tableName = "Evaluaciones del estudiante";
+    let studentServ = studentService.getInstance();
+
+    const gotoReports = () => {
+        goto('/academix/reports');
+    };
+
+    const refreshItems = () => {
+        studentServ.getStudentByUser(data.id_user).then((i) => {
+            student = i;
+        })
+    };
 </script>
 
 <section class="py-2 pb-2 pt-4 grid justify-center w-full">
-	<h1 class="text-center text-2xl mb-4 font-semibold text-primary-950 dark:text-primary-100">
-		Perfil de estudiante
-	</h1>
-	<Card
-		divClass="flex gap-5 items-start justify-center"
-		cardClass="max-w-full"
-		divBtnClass="flex justify-between mt-1"
-		on:click={gotoReports}
-	>
-		<svelte:fragment slot="avatar-slot">
-			<Avatar size="xl" />
-		</svelte:fragment>
-		<div class="flex gap-5">
-			<div class="grid gap-5 mb-4">
-				<Label>Código:<span class="mx-2">03111466770</span></Label>
-				<Label>Nombre:<span class="mx-2">Anyeleni</span></Label>
-				<Label>Apellidos:<span class="mx-2">Lara Santana</span></Label>
-				<Label>Año académico:<span class="mx-2">4</span></Label>
-			</div>
-			<div class="grid gap-5 mb-4">
-				<Label>Grupo:<span class="mx-2">42</span></Label>
-				<Label>Sexo:<span class="mx-2">Femenino</span></Label>
-				<Label>Municipio:<span class="mx-2">Plaza de la Revolución</span></Label>
-				<Label>Situación académica:<span class="mx-2">Baja</span></Label>
-			</div>
-		</div>
-		<img src="/reports.jpg" alt="reportes" class="w-52 h-32" />
-		<span slot="div-btn">
-			<!-- {#if student.academicSituation === 'Baja'} -->
+    <h1 class="text-center text-2xl mb-4 font-semibold text-primary-950 dark:text-primary-100">
+        Perfil de estudiante
+    </h1>
+    <Card
+            cardClass="max-w-full"
+            divBtnClass="flex justify-between mt-1"
+            divClass="flex gap-5 items-start justify-center"
+            on:click={gotoReports}
+    >
+        <svelte:fragment slot="avatar-slot">
+            <Avatar size="xl"/>
+        </svelte:fragment>
+        <div class="flex gap-5">
+            <div class="grid gap-5 mb-4">
+                <Label>Código:<span class="mx-2">{student.student_code}</span></Label>
+                <Label>Nombre:<span class="mx-2">{student.student_name}</span></Label>
+                <Label>Apellidos:<span class="mx-2">{student.lastname}</span></Label>
+                <Label>Año académico:<span class="mx-2">{student.year}</span></Label>
+            </div>
+            <div class="grid gap-5 mb-4">
+                <Label>Grupo:<span class="mx-2">{student.group_number}</span></Label>
+                <Label>Sexo:<span class="mx-2">{student.sex}</span></Label>
+                <Label>Municipio:<span class="mx-2">{student.municipality}</span></Label>
+                <Label>Situación académica:<span class="mx-2">{student.academic_situation}</span></Label>
+            </div>
+        </div>
+        <img alt="reportes" class="w-52 h-32" src="/reports.jpg"/>
+        <span slot="div-btn">
+			{#if student.unenrollment_reason}
 			<Label class="ml-[184px]"
-				>Causa de baja:<span class="mx-2">Culminación de estudios</span></Label
-			>
-			<!-- {/if} -->
+            >Causa de baja:<span class="mx-2">{student.unenrollment_reason}</span></Label>
+            {/if}
 		</span>
-		<span slot="btn-text">Reportes</span>
-	</Card>
-	<Table tableName="Evaluaciones del estudiante" items={evaluations} {filters} {isFilterable} />
+        <span slot="btn-text">Reportes</span>
+    </Card>
+    <Table {filters} {isFilterable} items={evaluations} {refreshItems} {tableName}/>
 </section>
 
-<!-- <div class="">
-	{#if student.academicSituation === 'Baja'}
-	<Label>Causa de baja:</Label>
-	{/if}
-</div> -->
+<div class="">
+    {#if student.academicSituation === 'Baja'}
+        <Label>Causa de baja:</Label>
+    {/if}
+</div>

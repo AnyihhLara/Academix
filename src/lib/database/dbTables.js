@@ -6,5 +6,5 @@ export const studentsGroupTable = 'public.students_group';
 export const subjectTable = 'public.subject';
 export const unenrollmentReasonTable = 'public.unenrollment_reason';
 export const yearTable = 'public.year';
-export const usersTable = 'public.user';
+export const usersTable = 'public.users';
 export const rolesTable = 'public.role';

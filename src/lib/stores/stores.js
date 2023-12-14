@@ -119,8 +119,8 @@ export const tables = readable([
 		name: 'Reporte 2',
 		component: null,
 		tableColumns: [
-			{ label: 'Nombre', key: 'name' },
-			{ label: 'Cantidad de horas planificadas', key: 'plannedHours' }
+			{ label: 'Nombre', key: 'subject_name' },
+			{ label: 'Cantidad de horas planificadas', key: 'planned_hours' }
 		]
 	},
 	{
@@ -129,17 +129,17 @@ export const tables = readable([
 		tableColumns: [
 			{ label: 'Número de orden', key: 'order_number' },
 			{ label: 'Nombre', key: 'student_name' },
-			{ label: 'Apellidos', key: 'lastname' },
-			{ label: 'Evaluación', key: 'evaluation' }
+			{ label: 'Apellidos', key: 'student_lastname' },
+			{ label: 'Evaluación', key: 'evaluation_type_name' }
 		]
 	},
 	{
 		name: 'Reporte 4',
 		component: null,
 		tableColumns: [
-			{ label: 'Número de orden', key: 'order_number' },
+			{ label: 'Número de orden', key: 'student_order' },
 			{ label: 'Nombre', key: 'student_name' },
-			{ label: 'Apellidos', key: 'lastname' },
+			{ label: 'Apellidos', key: 'student_lastname' },
 			{ label: 'Promedio', key: 'average' }
 		]
 	},

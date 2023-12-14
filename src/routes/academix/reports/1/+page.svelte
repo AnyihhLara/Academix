@@ -9,48 +9,7 @@
 
     let tableName = 'Reporte 1';
     let service = reportService.getInstance();
-
-    let dataBySchoolYear = [
-        {
-            schoolYear: '2022-2023',
-            years: [
-                {
-                    year: 1,
-                    studentsGroups: [
-                        {
-                            studentsGroup: 1,
-                            students: []
-                        },
-                        {
-                            studentsGroup: 2,
-                            students: []
-                        },
-                        {
-                            studentsGroup: 3,
-                            students: []
-                        }
-                    ]
-                },
-                {
-                    year: 2,
-                    studentsGroups: [
-                        {
-                            studentsGroup: 1,
-                            students: []
-                        },
-                        {
-                            studentsGroup: 2,
-                            students: []
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            schoolYear: '2023-2024',
-            years: []
-        }
-    ];
+    let dataBySchoolYear = [];
 
     const refreshItems = () => {
         service.report1().then((i) => {

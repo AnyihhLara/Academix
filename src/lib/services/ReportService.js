@@ -20,42 +20,42 @@ class ReportService extends BaseService {
 
 	async report2(limit = 'ALL') {
 		const queryParams = this.makeParams({ limit });
-		return await this.handleReq('2', queryParams, 'GET');
+		return await this.handleReq(this.url('2'), queryParams, 'GET');
 	}
 
 	async report3(limit = 'ALL') {
 		const queryParams = this.makeParams({ limit });
-		return await this.handleReq('3', queryParams, 'GET');
+		return await this.handleReq(this.url('3'), queryParams, 'GET');
 	}
 
-	async report4(limit = 'ALL') {
-		const queryParams = this.makeParams({ limit });
-		return await this.handleReq('4', queryParams, 'GET');
+	async report4(average_type = 'Acumulado', limit = 'ALL') {
+		const queryParams = this.makeParams({ average_type, limit });
+		return await this.handleReq(this.url('4'), queryParams, 'GET');
 	}
 
 	async report5(limit = 'ALL') {
 		const queryParams = this.makeParams({ limit });
-		return await this.handleReq('5', queryParams, 'GET');
+		return await this.handleReq(this.url('5'), queryParams, 'GET');
 	}
 
 	async report6(limit = 'ALL') {
 		const queryParams = this.makeParams({ limit });
-		return await this.handleReq('6', queryParams, 'GET');
+		return await this.handleReq(this.url('6'), queryParams, 'GET');
 	}
 
 	async report7(limit = 'ALL') {
 		const queryParams = this.makeParams({ limit });
-		return await this.handleReq('7', queryParams, 'GET');
+		return await this.handleReq(this.url('7'), queryParams, 'GET');
 	}
 
 	async report8(limit = 'ALL') {
 		const queryParams = this.makeParams({ limit });
-		return await this.handleReq('8', queryParams, 'GET');
+		return await this.handleReq(this.url('8'), queryParams, 'GET');
 	}
 
 	async report9(limit = 'ALL') {
 		const queryParams = this.makeParams({ limit });
-		return await this.handleReq('9', queryParams, 'GET');
+		return await this.handleReq(this.url('9'), queryParams, 'GET');
 	}
 }
 

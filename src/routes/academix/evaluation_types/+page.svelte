@@ -17,7 +17,7 @@
         evaluationTypeServ.getEvaluationTypes().then((i) => {
             evaluationTypes = i;
         })
-    }
+    };
 
 </script>
 

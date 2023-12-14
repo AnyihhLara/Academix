@@ -9,8 +9,9 @@ import UnenrollmentReasonForm from '$lib/components/forms/UnenrollmentReasonForm
 import YearForm from '$lib/components/forms/YearForm.svelte';
 import UserForm from '$lib/components/forms/UserForm.svelte';
 import RoleForm from '$lib/components/forms/RoleForm.svelte';
-import { createLocalStorage, persist } from '@macfja/svelte-persistent-store';
+import { createLocalStorage, createSessionStorage, persist } from '@macfja/svelte-persistent-store';
 
+export const loggedIn = persist(writable(false), createSessionStorage(), 'L');
 export const view = persist(writable('/'), createLocalStorage(), 'V');
 export const tables = readable([
 	{
@@ -110,7 +111,7 @@ export const tables = readable([
 		tableColumns: [
 			{ label: 'Número de orden', key: 'order_number' },
 			{ label: 'Nombre', key: 'student_name' },
-			{ label: 'Apellidos', key: 'lastname' },
+			{ label: 'Apellidos', key: 'student_lastname' },
 			{ label: 'Código', key: 'student_code' }
 		]
 	},

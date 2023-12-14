@@ -2,12 +2,12 @@
     import Table from '$lib/components/shared/Table.svelte';
     import {onMount} from 'svelte';
     import subjectService from "$lib/services/SubjectService.js";
+    import {page} from "$app/stores";
 
     onMount(() => {
         refreshItems();
     });
 
-    export let data;
     let subjects = [],
         filters = [{name: 'Años', key: 'academicYear', options: [], selectedOptions: []}],
         isFilterable = true,
@@ -24,7 +24,7 @@
     }
 </script>
 
-{#if data.role === 'Secretario'}
+{#if $page.data.user.role === 'Secretario'}
     <Table {tableName} items={subjects} {filters} {isFilterable} {refreshItems}/>
 {:else}
     <Table

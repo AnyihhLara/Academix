@@ -2,12 +2,12 @@
     import Table from '$lib/components/shared/Table.svelte';
     import {onMount} from 'svelte';
     import studentService from "$lib/services/StudentService.js";
+    import {page} from '$app/stores'
 
     onMount(() => {
         refreshItems();
     });
 
-    export let data;
     let students = [],
         filters = [
             {name: 'Situaciones Académicas', key: 'academicSituation', options: [], selectedOptions: []},
@@ -29,7 +29,7 @@
     }
 </script>
 
-{#if data.role === 'Secretario'}
+{#if $page.data.user.role === 'Secretario'}
     <Table {tableName} items={students} {filters} {isFilterable} {isDeletable} {refreshItems}/>
 {:else}
     <Table

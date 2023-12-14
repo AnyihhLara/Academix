@@ -1,6 +1,11 @@
 import sequelize from '$lib/database/db.js';
 import { error, json } from '@sveltejs/kit';
-import { evaluationTable, evaluationTypeTable, subjectTable } from '$lib/database/dbTables.js';
+import {
+	evaluationTable,
+	evaluationTypeTable,
+	studentTable,
+	subjectTable
+} from '$lib/database/dbTables.js';
 
 export async function GET({ url }) {
 	const { searchParams: params } = url; //query parameters

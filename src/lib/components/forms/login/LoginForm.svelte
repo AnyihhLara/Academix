@@ -4,7 +4,7 @@
     import {Button} from 'flowbite-svelte';
     import {goto} from '$app/navigation';
     import authService from '$lib/services/AuthService.js';
-    import {view} from '$lib/stores/stores.js';
+    import {loggedIn, view} from '$lib/stores/stores.js';
 
     let form;
     let login = {
@@ -25,8 +25,10 @@
             }
         }
         let routes = authServ.getAuthorizedRoutes(role_name);
-        if (routes.length > 0) $view = routes[0];
-        else {
+        if (routes.length > 0) {
+            $view = routes[0];
+            $loggedIn = true;
+        } else {
             $view = '/auth/login';
         }
         await goto($view);

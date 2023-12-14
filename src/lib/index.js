@@ -1,1 +1,8 @@
-// place files you want to import through the `$lib` alias in this folder.
+export const getCookieSettings = (opts) => ({
+	httpOnly: true,
+	path: '/',
+	sameSite: true,
+	secure: true,
+	maxAge: 60 * 60 * 24,
+	...opts
+});

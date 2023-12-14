@@ -6,12 +6,12 @@
     import studentService from "$lib/services/StudentService.js";
     import evaluationService from "$lib/services/EvaluationService.js";
     import {onMount} from "svelte";
+    import {page} from '$app/stores';
 
     onMount(() => {
         refreshItems();
     });
 
-    export let data;
     let student = {
             student_id: '',
             student_code: '',
@@ -19,7 +19,7 @@
             lastname: '',
             sex: '',
             municipality: '',
-            user_id: data.user_id,
+            user_id: $page.data.user.user_id,
             year: '',
             group_number: '',
             academic_situation: '',
@@ -39,7 +39,7 @@
     };
 
     const refreshItems = () => {
-        studentServ.getStudentByUser(data.id_user).then((i) => {
+        studentServ.getStudentByUser($page.data.user.user_id).then((i) => {
             student = i;
 
             let evaluationServ = evaluationService.getInstance();

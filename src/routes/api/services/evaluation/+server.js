@@ -16,14 +16,15 @@ export async function GET({ url }) {
 		.transaction(async (t) => {
 			return await sequelize.query(
 				`SELECT e.evaluation_id,
-                            e.student_id,
+                            s.student_name,
                             e.evaluation_date,
                             sub.subject_name,
                             et.evaluation_numerical_value
                     FROM ${evaluationTable} e
                         JOIN ${subjectTable} sub ON sub.subject_id = e.subject_id
                         JOIN ${evaluationTypeTable} et ON et.evaluation_type_id = e.evaluation_type_id
-                    ${where} 
+						JOIN ${studentTable} s ON e.student_id = s.student_id
+					${where} 
                     ORDER BY e.evaluation_date DESC
                     LIMIT ${limit}`,
 				{

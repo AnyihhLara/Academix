@@ -22,10 +22,10 @@ export const tables = readable([
 		name: 'Evaluaciones',
 		component: EvaluationForm,
 		tableColumns: [
-			{ label: 'Asignatura', key: 'subject' },
-			{ label: 'Estudiante', key: 'student' },
-			{ label: 'Tipo', key: 'evaluationType' },
-			{ label: 'Fecha', key: 'evaluationDate' }
+			{ label: 'Asignatura', key: 'subject_name' },
+			{ label: 'Estudiante', key: 'student_name' },
+			{ label: 'Nota', key: 'evaluation_numerical_value' },
+			{ label: 'Fecha', key: 'evaluation_date' }
 		]
 	},
 	{

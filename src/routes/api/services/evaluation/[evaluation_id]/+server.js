@@ -1,4 +1,4 @@
-import sequelize from '$lib/db'
+import sequelize from "$lib/database/db.js";
 import { error, json } from '@sveltejs/kit'
 import { evaluationTable as table } from '$lib/database/dbTables.js'
 export async function GET({ params }) {

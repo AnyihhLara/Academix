@@ -24,14 +24,12 @@ class EvaluationService extends BaseService {
 	}
 
 	async createEvaluation(
-		evaluation_name,
 		evaluation_type_id,
 		student_id,
 		subject_id,
 		evaluation_date
 	) {
 		const evaluation = {
-			evaluation_name: evaluation_name,
 			evaluation_type_id: evaluation_type_id,
 			student_id: student_id,
 			subject_id: subject_id,

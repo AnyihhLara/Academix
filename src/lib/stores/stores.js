@@ -177,7 +177,7 @@ export const tables = readable([
 	},
 	{
 		name: 'Reporte 8 por año',
-		component: null,
+		component: StudentForm,
 		tableColumns: [
 			{ label: 'Número de orden', key: 'order_number' },
 			{ label: 'Nombre', key: 'student_name' },
@@ -188,7 +188,7 @@ export const tables = readable([
 	},
 	{
 		name: 'Reporte 8 por grupo',
-		component: null,
+		component: StudentForm,
 		tableColumns: [
 			{ label: 'Número de orden', key: 'order_number' },
 			{ label: 'Nombre', key: 'student_name' },

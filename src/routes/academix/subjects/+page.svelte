@@ -24,7 +24,7 @@
     }
 </script>
 
-{#if $page.data.user.role === 'Secretario'}
+{#if $page.data.role === 'Secretario'}
     <Table {tableName} items={subjects} {filters} {isFilterable} {refreshItems}/>
 {:else}
     <Table

@@ -36,11 +36,11 @@
 
 <section class="px-4 pt-3 pb-5">
     <h1 class="text-center text-2xl mb-4 font-semibold text-primary-950 dark:text-primary-100">
-        Módulos Reportes {$page.data.user.role}
+        Módulos Reportes {$page.data.role}
     </h1>
     <div class="{defaultClass} justify-center items-center">
         <div class="flex gap-5 justify-center">
-            {#if $page.data.user.role !== 'Estudiante'}
+            {#if $page.data.role !== 'Estudiante'}
                 <div class={defaultClass}>
                     <Card on:click={gotoReport1}>
                         <span slot="tittle">Listado de los estudiantes por grupo</span>
@@ -67,7 +67,7 @@
                     <span slot="tittle">Escalafón</span>
                     <span slot="btn-text">{btnText}</span>
                 </Card>
-                {#if $page.data.user.role !== 'Estudiante'}
+                {#if $page.data.role !== 'Estudiante'}
                     <div>
                         <Card on:click={gotoReport6}>
                             <span slot="tittle">Certificación de notas de cada estudiante</span>
@@ -76,7 +76,7 @@
                     </div>
                 {/if}
             </div>
-            {#if $page.data.user.role !== 'Estudiante'}
+            {#if $page.data.role !== 'Estudiante'}
                 <div class={defaultClass}>
                     <Card on:click={gotoReport7}>
 						<span slot="tittle"

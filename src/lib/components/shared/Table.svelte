@@ -41,7 +41,7 @@
     }
 </script>
 
-<section class="mt-4 mx-3">
+<section class="mt-4 mx-3 pb-5">
     <div class="flex justify-between items-center">
         {#if isNamed}
             <h2 class="font-bold block mb-3 ml-3 text-secondary-950 dark:text-secondary-100 text-xl">

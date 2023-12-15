@@ -1,9 +1,11 @@
 <script>
 	import { Select } from 'flowbite-svelte';
 	import Table from '$lib/components/shared/Table.svelte';
+	import { page } from '$app/stores';
 
 	let tableName = 'Reporte 8 por año';
 	let selectedOption = 'Por año';
+	let isDeletable = $page.data.role === 'Secretario';
 	let options = [
 		{ value: 'Por año', name: 'Por año' },
 		{ value: 'Por grupo', name: 'Por grupo' }
@@ -129,7 +131,7 @@
 								items={yearData.unenrollment_students}
 								isCreatable={false}
 								isUpdatable={false}
-								isDeletable={false}
+								{isDeletable}
 								isNamed={false}
 								{refreshItems}
 							/>
@@ -168,7 +170,7 @@
 											items={groupData.unenrollment_students}
 											isCreatable={false}
 											isUpdatable={false}
-											isDeletable={false}
+											{isDeletable}
 											isNamed={false}
 											{refreshItems}
 										/>

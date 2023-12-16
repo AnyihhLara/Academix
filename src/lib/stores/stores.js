@@ -13,6 +13,7 @@ import { createLocalStorage, createSessionStorage, persist } from '@macfja/svelt
 
 export const loggedIn = persist(writable(false), createSessionStorage(), 'L');
 export const view = persist(writable('/'), createLocalStorage(), 'V');
+export const currentSchoolYear = writable('2022-2023');
 export const tables = readable([
 	{
 		name: 'Situaciones académicas',

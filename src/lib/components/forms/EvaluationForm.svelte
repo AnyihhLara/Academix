@@ -80,6 +80,7 @@
 				bind:value={evaluation.evaluationType}
 				class='mt-2'
 				items={evaluationNumericalValues}
+				placeholder='Selecciona la nota de la evaluación'
 				required
 			/>
 		</Label>
@@ -87,13 +88,23 @@
 	<div>
 		<Label
 		>Estudiante
-			<Select bind:value={evaluation.student} class='mt-2' items={students} required />
+			<Select
+				bind:value={evaluation.student}
+				class='mt-2'
+				items={students}
+				placeholder='Selecciona al estudiante de la evaluación'
+				required />
 		</Label>
 	</div>
 	<div>
 		<Label
 		>Asignatura
-			<Select bind:value={evaluation.subject} class='mt-2' items={subjects} required />
+			<Select
+				bind:value={evaluation.subject}
+				class='mt-2'
+				items={subjects}
+				placeholder='Selecciona la asignatura de la evaluación'
+				required />
 		</Label>
 	</div>
 	<div>

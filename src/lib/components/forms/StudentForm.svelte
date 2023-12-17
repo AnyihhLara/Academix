@@ -127,7 +127,6 @@
 		};
 	}
 
-	//TODO: Put the ''required'' in the inputs that need it too
 </script>
 
 <GenericForm {action} {createItem} {deleteItem} {resetForm} {tableName} {updateItem}>
@@ -174,7 +173,12 @@
 	<div>
 		<Label
 		>Sexo
-			<Select bind:value={student.sex} class='mt-2' items={sexes} required />
+			<Select
+				bind:value={student.sex}
+				class={defaultClass}
+				items={sexes}
+				placeholder='Selecciona el sexo del estudiante'
+				required />
 		</Label>
 	</div>
 	<div>
@@ -193,14 +197,24 @@
 	<div>
 		<Label
 		>Año
-			<Select bind:value={student.academicYear} class={defaultClass} items={years} required />
+			<Select
+				bind:value={student.academicYear}
+				class={defaultClass}
+				items={years}
+				placeholder='Primero selecciona el año académico del estudiante...'
+				required />
 		</Label>
 	</div>
 	{#if selectableGroups}
 		<div>
 			<Label
 			>Grupo
-				<Select bind:value={student.group} class={defaultClass} items={selectableGroups} required />
+				<Select
+					bind:value={student.group}
+					class={defaultClass}
+					items={selectableGroups}
+					placeholder='...luego selecciona el grupo del estudiante'
+					required />
 			</Label>
 		</div>
 	{/if}
@@ -211,6 +225,7 @@
 				bind:value={student.academicSituation}
 				class={defaultClass}
 				items={academicSituations}
+				placeholder='Selecciona la situación académica del estudiante'
 				required
 			/>
 		</Label>
@@ -223,10 +238,10 @@
 					bind:value={student.unenrollmentReason}
 					class={defaultClass}
 					items={unenrollmentReasons}
+					placeholder='Selecciona la causa de baja del estudiante'
 					required
 				/>
 			</Label>
 		</div>
 	{/if}
 </GenericForm>
-<!-- see later inputs to disable (year, unenrollmentReason, etc) -->

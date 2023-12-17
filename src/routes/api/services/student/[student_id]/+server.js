@@ -11,7 +11,7 @@ export async function GET({ params }) {
 				transaction: t,
 				replacements: { student_id }
 			});
-			return await sequelize.query(`SELECT read_student(:student_id)`, {
+			return await sequelize.query(`SELECT * FROM read_student(:student_id)`, {
 				type: sequelize.QueryTypes.SELECT,
 				transaction: t,
 				replacements: { student_id }

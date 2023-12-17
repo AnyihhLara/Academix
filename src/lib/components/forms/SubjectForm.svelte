@@ -82,7 +82,13 @@
 	<div>
 		<Label
 		>Año
-			<Select bind:value={subject.year} class='mt-2' items={years} required />
+			<Select
+				bind:value={subject.year}
+				class={defaultClass}
+				items={years}
+				placeholder='Selecciona el año académico de la asignatura'
+				required
+			/>
 		</Label>
 	</div>
 </GenericForm>

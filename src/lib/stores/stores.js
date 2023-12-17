@@ -98,7 +98,8 @@ export const tables = readable([
 		tableColumns: [
 			{ label: 'Nombre de usuario', key: 'user_name' },
 			{ label: 'Contraseña', key: 'user_password' },
-			{ label: 'Rol', key: 'role_name' }
+			{ label: 'Rol', key: 'role_name' },
+			{ label: 'Identificador', key: 'code' }
 		]
 	},
 	{
@@ -163,7 +164,7 @@ export const tables = readable([
 		tableColumns: [
 			{ label: 'Asignatura', key: 'subject_name' },
 			{ label: 'Calificación', key: 'grade' },
-			{ label: 'Promedio', key: 'average' }
+			{ label: 'Promedio', key: 'average' }
 		]
 	},
 	{

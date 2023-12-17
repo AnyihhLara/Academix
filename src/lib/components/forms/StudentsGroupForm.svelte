@@ -60,7 +60,13 @@
 		<div>
 			<Label
 			>Año
-				<Select bind:value={studentsGroup.year} class='mt-2' items={years} required />
+				<Select
+					bind:value={studentsGroup.year}
+					class={defaultClass}
+					items={years}
+					placeholder='Selecciona el año académico al que pertenece el grupo'
+					required
+				/>
 			</Label>
 		</div>
 	{/if}

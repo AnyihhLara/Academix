@@ -49,20 +49,24 @@ export async function POST({ request }) {
 	const result = await sequelize.transaction(async (t) => {
 		try {
 			await sequelize.query(
-				`SELECT create_evaluation(:evaluation_name, :evaluation_type_id, :student_id, :subject_id, :evaluation_date)`,
+				`SELECT create_evaluation(:evaluation_type_id, :evaluation_date, :student_id, :subject_id)`,
 				{
 					replacements: body,
 					type: sequelize.QueryTypes.SELECT,
 					transaction: t
 				}
 			);
-			return await sequelize.query(`SELECT * FROM ${table} ORDER BY evaluation_id DESC LIMIT 1`, {
-				type: sequelize.QueryTypes.SELECT,
-				transaction: t
-			});
+			return await sequelize.query(
+				`SELECT * FROM ${evaluationTable} ORDER BY evaluation_id DESC LIMIT 1`,
+				{
+					type: sequelize.QueryTypes.SELECT,
+					transaction: t
+				}
+			);
 		} catch (e) {
 			throw error(400, e);
 		}
 	});
+
 	return json(result[0]);
 }

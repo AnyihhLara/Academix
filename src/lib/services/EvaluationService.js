@@ -23,12 +23,7 @@ class EvaluationService extends BaseService {
 		return await this.handleReq(undefined, queryParams, 'GET');
 	}
 
-	async createEvaluation(
-		evaluation_type_id,
-		student_id,
-		subject_id,
-		evaluation_date
-	) {
+	async createEvaluation(evaluation_type_id, student_id, subject_id, evaluation_date) {
 		const evaluation = {
 			evaluation_type_id: evaluation_type_id,
 			student_id: student_id,
@@ -46,7 +41,19 @@ class EvaluationService extends BaseService {
 		return await this.handleReq(this.url(evaluation_id.toString()), undefined, 'DELETE');
 	}
 
-	async updateEvaluation(evaluation_id, evaluation) {
+	async updateEvaluation(
+		evaluation_id,
+		evaluation_type_id,
+		student_id,
+		subject_id,
+		evaluation_date
+	) {
+		const evaluation = {
+			evaluation_type_id: evaluation_type_id,
+			student_id: student_id,
+			subject_id: subject_id,
+			evaluation_date: evaluation_date
+		};
 		return await this.handleReq(this.url(evaluation_id.toString()), undefined, 'PUT', evaluation);
 	}
 }

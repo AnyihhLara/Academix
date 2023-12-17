@@ -38,9 +38,9 @@ class ReportService extends BaseService {
 		return await this.handleReq(this.url('5'), queryParams, 'GET');
 	}
 
-	async report6(limit = 'ALL') {
-		const queryParams = this.makeParams({ limit });
-		return await this.handleReq(this.url('6'), queryParams, 'GET');
+	async report6(student_code, limit = 'ALL') {
+		const queryParams = this.makeParams({ student_code, limit });
+		return await this.handleReq(this.url('6'), queryParams, 'GET');
 	}
 
 	async report7(limit = 'ALL') {

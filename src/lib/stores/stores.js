@@ -160,9 +160,9 @@ export const tables = readable([
 		name: 'Reporte 6',
 		component: null,
 		tableColumns: [
-			{ label: 'Asignatura', key: 'subject' },
+			{ label: 'Asignatura', key: 'subject_name' },
 			{ label: 'Calificación', key: 'grade' },
-			{ label: 'Promedio', key: 'average' }
+			{ label: 'Promedio', key: 'average' }
 		]
 	},
 	{
@@ -203,7 +203,7 @@ export const tables = readable([
 			{ label: 'Número de orden', key: 'order_number' },
 			{ label: 'Nombre', key: 'student_name' },
 			{ label: 'Apellidos', key: 'lastname' },
-			{ label: 'Grupo', key: 'students_group' }
+			{ label: 'Grupo', key: 'student_group' }
 		]
 	}
 ]);

@@ -1,60 +1,57 @@
-import sequelize from "$lib/database/db.js";
-import {error, json} from '@sveltejs/kit'
+import sequelize from '$lib/database/db.js';
+import { error, json } from '@sveltejs/kit';
 
-export async function GET({params}) {
-    let {student_id} = params
-    student_id = Number(student_id);
-    const result = await sequelize
-        .transaction(async (t) => {
-            let result = await sequelize.query(
-                `SELECT read_student(:student_id)`,
-                {
-                    type: sequelize.QueryTypes.SELECT,
-                    transaction: t,
-                    replacements: {student_id},
-                }
-            )
-            return result
-        })
-        .catch((err) => {
-            throw error(400, {message: err.message})
-        })
+export async function GET({ params }) {
+	let { student_id } = params;
+	student_id = Number(student_id);
+	const result = await sequelize
+		.transaction(async (t) => {
+			await sequelize.query(`SELECT read_student(:student_id)`, {
+				type: sequelize.QueryTypes.SELECT,
+				transaction: t,
+				replacements: { student_id }
+			});
+			return await sequelize.query(`SELECT read_student(:student_id)`, {
+				type: sequelize.QueryTypes.SELECT,
+				transaction: t,
+				replacements: { student_id }
+			});
+		})
+		.catch((err) => {
+			throw error(400, { message: err.message });
+		});
 
-    if (result.length == 0)
-        throw error(404, {
-            message: `Estudiante con id ${student_id} no encontrado`,
-        })
-    return json(result[0])
+	if (result.length === 0)
+		throw error(404, {
+			message: `Estudiante con id ${student_id} no encontrado`
+		});
+	return json(result[0]);
 }
 
-export async function DELETE({params}) {
-    let {student_id} = params
-    student_id = Number(student_id);
-    const result = await sequelize
-        .transaction(async (t) => {
-            const result = await sequelize.query(
-                `SELECT delete_student(:student_id)`,
-                {
-                    replacements: {student_id},
-                    type: sequelize.QueryTypes.DELETE,
-                    transaction: t,
-                }
-            )
-            return result
-        })
-        .catch((err) => {
-            throw error(400, {message: err.message})
-        })
-    return json(result)
+export async function DELETE({ params }) {
+	let { student_id } = params;
+	student_id = Number(student_id);
+	const result = await sequelize
+		.transaction(async (t) => {
+			return await sequelize.query(`SELECT delete_student(:student_id)`, {
+				replacements: { student_id },
+				type: sequelize.QueryTypes.DELETE,
+				transaction: t
+			});
+		})
+		.catch((err) => {
+			throw error(400, { message: err.message });
+		});
+	return json(result);
 }
 
-export async function PUT({params, request}) {
-    let {student_id} = params
-    student_id = Number(student_id);
-    const body = await request.json() //new attribute values for student
-    const result = await sequelize.transaction(async (t) => {
-        await sequelize.query(
-            `SELECT update_student(
+export async function PUT({ params, request }) {
+	let { student_id } = params;
+	student_id = Number(student_id);
+	const body = await request.json(); //new attribute values for student
+	const result = await sequelize.transaction(async (t) => {
+		await sequelize.query(
+			`SELECT update_student(
                                     :student_id,  
                                     :student_code, 
                                     :student_name, 
@@ -66,26 +63,23 @@ export async function PUT({params, request}) {
                                     :year_id, 
                                     :group_id, 
                                     :user_id)`,
-            {
-                type: sequelize.QueryTypes.SELECT,
-                transaction: t,
-                replacements: {
-                    ...body,
-                    student_id,
-                },
-            }
-        )
-        return await sequelize.query(
-            `SELECT read_student(:student_id)`,
-            {
-                type: sequelize.QueryTypes.SELECT,
-                transaction: t,
-                replacements: {student_id},
-            }
-        )
-    })
+			{
+				type: sequelize.QueryTypes.SELECT,
+				transaction: t,
+				replacements: {
+					...body,
+					student_id
+				}
+			}
+		);
+		return await sequelize.query(`SELECT read_student(:student_id)`, {
+			type: sequelize.QueryTypes.SELECT,
+			transaction: t,
+			replacements: { student_id }
+		});
+	});
 
-    if (result.length === 0)
-        throw new error(404, {message: `Estudiante con id ${student_id} no encontrado`})
-    return json(result[0])
+	if (result.length === 0)
+		throw new error(404, { message: `Estudiante con id ${student_id} no encontrado` });
+	return json(result[0]);
 }

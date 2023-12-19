@@ -1,6 +1,6 @@
 import sequelize from '$lib/database/db.js'
-import {error, json} from '@sveltejs/kit'
-import {academicSituationTable as table} from '$lib/database/dbTables.js'
+import { error, json } from '@sveltejs/kit'
+import { academicSituationTable as table } from '$lib/database/dbTables.js'
 
 export async function GET({ url }) {
     const { searchParams: params } = url //query parameters
@@ -12,9 +12,9 @@ export async function GET({ url }) {
                     FROM ${table} 
                     LIMIT ${limit}`,
                 {
-                type: sequelize.QueryTypes.SELECT,
-                transaction: t,
-            });
+                    type: sequelize.QueryTypes.SELECT,
+                    transaction: t,
+                });
         })
         .catch((err) => {
             throw error(400, { message: err.message })
@@ -42,7 +42,7 @@ export async function POST({ request }) {
                 }
             )
         } catch (e) {
-            throw error(400, e)
+            throw error(400, { message: e.message })
         }
     })
     return json(result[0])

@@ -1,10 +1,10 @@
 <script>
-    import { Input, Label } from 'flowbite-svelte';
-    import GenericForm from './GenericForm.svelte';
-    import academicSituationService from '$lib/services/AcademicSituationService.js';
-    import { createEventDispatcher } from 'svelte';
+	import { Input, Label } from 'flowbite-svelte';
+	import GenericForm from './GenericForm.svelte';
+	import academicSituationService from '$lib/services/AcademicSituationService.js';
+	import { createEventDispatcher } from 'svelte';
 
-    export let action;
+	export let action;
 	export let item = null;
 	let tableName = 'situación académica',
 		defaultClass = 'mt-2',
@@ -37,15 +37,15 @@
 
 <GenericForm {action} {createItem} {deleteItem} {resetForm} {tableName} {updateItem}>
 	<div>
-		<Label for='name'
-		>Nombre
+		<Label for="name"
+			>Nombre
 			<Input
 				bind:value={academicSituation.name}
 				class={defaultClass}
-				id='name'
-				placeholder='Nombre de la situación académica'
+				id="name"
+				placeholder="Nombre de la situación académica"
 				required
-				type='text'
+				type="text"
 			/>
 		</Label>
 	</div>

@@ -4,29 +4,39 @@
 	import PlusIcon from '$lib/components/icons/PlusIcon.svelte';
 
 	export let action, tableName, createItem, updateItem, deleteItem, resetForm;
-	let tittle,
+	let title,
 		nameBtnModal,
+		error = null,
 		openModal = false;
 
 	if (action === 'Create') {
-		tittle = `Añadir ${tableName}`;
+		title = `Añadir ${tableName}`;
 		nameBtnModal = 'Añadir';
 	} else if (action === 'Update') {
-		tittle = `Modificar ${tableName}`;
+		title = `Modificar ${tableName}`;
 		nameBtnModal = 'Modificar';
 	} else if (action === 'Delete') {
-		tittle = `Modificar ${tableName}`;
+		title = `Eliminar ${tableName}`;
 		nameBtnModal = 'Eliminar';
 	}
 	async function handleSubmit() {
 		if (action === 'Create') {
-			await createItem();
-			openModal = false;
+			try {
+				await createItem();
+				openModal = false;
+				await resetForm();
+			} catch (e) {
+				error = e.message;
+			}
 		} else if (action === 'Update') {
-			await updateItem();
-			openModal = false;
+			try {
+				await updateItem();
+				openModal = false;
+				await resetForm();
+			} catch (e) {
+				error = e.message;
+			}
 		}
-		await resetForm();
 	}
 	function handleDelete() {
 		deleteItem();
@@ -41,10 +51,10 @@
 	{nameBtnModal}
 </Button>
 {#if action === 'Delete'}
-	<Modal title="" bind:open={openModal} autoclose size="sm" class="w-full">
+	<Modal {title} bind:open={openModal} autoclose size="sm" class="w-full">
 		<ExclamationCircleOutline class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" />
 		<p class="mb-4 text-gray-500 dark:text-gray-300 text-center">
-			¿Está seguro que desea eliminar {tableName}?
+			¿Está seguro que desea eliminar el/la {tableName}?
 		</p>
 		<div class="flex justify-center items-center space-x-4">
 			<Button color="red" on:click={handleDelete}>Sí, estoy seguro</Button>
@@ -52,7 +62,7 @@
 		</div>
 	</Modal>
 {:else}
-	<Modal {tittle} bind:open={openModal} class="min-w-full">
+	<Modal {title} bind:open={openModal} class="min-w-full">
 		<form on:submit|preventDefault={handleSubmit} autocomplete="off">
 			<div class="grid gap-4 mb-4">
 				<slot />
@@ -67,3 +77,18 @@
 		</form>
 	</Modal>
 {/if}
+<Modal
+	title="Error"
+	bind:open={error}
+	color="red"
+	size="xs"
+	autoclose
+	on:close={() => (error = null)}
+>
+	<div class="text-base leading-relaxed">
+		{error}
+	</div>
+	<svelte:fragment slot="footer">
+		<Button on:click={() => (error = null)} color="red">OK</Button>
+	</svelte:fragment>
+</Modal>

@@ -4,62 +4,39 @@ import { error, json } from '@sveltejs/kit';
 export async function GET({ url }) {
 	const { searchParams: params } = url; //query parameters
 	const limit = params.get('limit');
+	const groupNumber = params.get('group_number');
+	console.log(groupNumber)
+	const year = params.get('year');
 	const result = await sequelize
 		.transaction(async (t) => {
-			return await sequelize.query(`SELECT * FROM report5_evaluations_by_group() LIMIT ${limit}`, {
-				type: sequelize.QueryTypes.SELECT,
-				transaction: t
-			});
+			return await sequelize.query(
+				`SELECT * FROM report5_academic_ladder(${year}, ${groupNumber} ) LIMIT ${limit}`,
+				{
+					type: sequelize.QueryTypes.SELECT,
+					transaction: t
+				}
+			);
 		})
 		.catch((e) => {
 			throw error(400, { message: e.message });
 		});
-
-	let dataBySchoolYear = [];
+	let data = {};
+	data.students = [];
 	result.forEach((row) => {
-		let schoolYearObj = dataBySchoolYear.find((obj) => obj.schoolYear === row.school_year);
-		if (!schoolYearObj) {
-			schoolYearObj = {
-				schoolYear: row.school_year,
-				years: []
-			};
-			dataBySchoolYear.push(schoolYearObj);
-		}
+		data.school_year = row.school_year,
+			data.year = row.year,
+			data.group_number = row.group_number;
 
-		let yearObj = schoolYearObj.years.find((obj) => obj.year === row.year);
-		if (!yearObj) {
-			yearObj = {
-				year: row.year,
-				subjects: []
-			};
-			schoolYearObj.years.push(yearObj);
-		}
-
-		let subjectObj = yearObj.subjects.find((obj) => obj.subject === row.subject_name);
-		if (!subjectObj) {
-			subjectObj = {
-				subject: row.subject_name,
-				studentsGroups: []
-			};
-			yearObj.subjects.push(subjectObj);
-		}
-
-		let groupObj = subjectObj.studentsGroups.find((obj) => obj.studentsGroup === row.group_number);
-		if (!groupObj) {
-			groupObj = {
-				studentsGroup: row.group_number,
-				evaluations: []
-			};
-			subjectObj.studentsGroups.push(groupObj);
-		}
-
-		groupObj.evaluations.push({
-			order_number: row.order_number,
+		data.students = [...data.students, {
+			rank: row.rank,
 			student_name: row.student_name,
-			student_lastname: row.student_lastname,
-			evaluation_type_name: row.evaluation_type_name
-		});
+			lastname: row.student_lastname,
+			average: row.average,
+			order_number: row.order_number,
+			sex: row.sex,
+			municipality: row.municipality
+		}];
 	});
-
-	return json(dataBySchoolYear);
+	return json(data);
 }
+

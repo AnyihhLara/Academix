@@ -38,13 +38,18 @@
 				})
 			);
 		}
+		// if (action === 'Update') {
+			// disabledYear = true;
+			// academicSituations = [{ value: 'Baja', name: 'Baja' }];
+			//see later groups and academic situations 
+		// }
 	});
-
 	export let action;
 	export let item = null;
 
 	let tableName = 'estudiante',
 		defaultClass = 'mt-2',
+		disabledYear = false,
 		student = {
 			code: '',
 			name: '',
@@ -59,7 +64,6 @@
 	let sexes, years, groups, academicSituations, unenrollmentReasons;
 	let studentServ = studentService.getInstance();
 	const dispatch = createEventDispatcher();
-
 	let situation;
 	$: if (student.academicSituation) {
 		situation = academicSituations.find(({ value }) => value === student.academicSituation);
@@ -126,106 +130,110 @@
 			group: null
 		};
 	}
-
 </script>
 
 <GenericForm {action} {createItem} {deleteItem} {resetForm} {tableName} {updateItem}>
 	<div>
-		<Label for='code'>
+		<Label for="code">
 			Código
 			<Input
 				bind:value={student.code}
 				class={defaultClass}
-				id='code'
-				placeholder='Código del estudiante'
+				id="code"
+				placeholder="Código del estudiante"
 				required
-				type='text'
+				type="text"
 			/>
 		</Label>
 	</div>
 	<div>
-		<Label for='name'>
+		<Label for="name">
 			Nombre
 			<Input
 				bind:value={student.name}
 				class={defaultClass}
-				id='name'
-				placeholder='Nombre del estudiante'
+				id="name"
+				placeholder="Nombre del estudiante"
 				required
-				type='text'
+				type="text"
 			/>
 		</Label>
 	</div>
 
 	<div>
-		<Label for='lastname'>
+		<Label for="lastname">
 			Apellidos
 			<Input
 				bind:value={student.lastname}
 				class={defaultClass}
-				id='lastname'
-				placeholder='Apellidos del estudiante'
+				id="lastname"
+				placeholder="Apellidos del estudiante"
 				required
-				type='text'
+				type="text"
 			/>
 		</Label>
 	</div>
 	<div>
 		<Label
-		>Sexo
+			>Sexo
 			<Select
 				bind:value={student.sex}
 				class={defaultClass}
 				items={sexes}
-				placeholder='Selecciona el sexo del estudiante'
-				required />
+				placeholder="Selecciona el sexo del estudiante"
+				required
+			/>
 		</Label>
 	</div>
 	<div>
-		<Label for='municipality'>
+		<Label for="municipality">
 			Municipio
 			<Input
 				bind:value={student.municipality}
 				class={defaultClass}
-				id='municipality'
-				placeholder='Municipio del estudiante'
+				id="municipality"
+				placeholder="Municipio del estudiante"
 				required
-				type='text'
+				type="text"
 			/>
 		</Label>
 	</div>
 	<div>
 		<Label
-		>Año
+			>Año
 			<Select
 				bind:value={student.academicYear}
 				class={defaultClass}
 				items={years}
-				placeholder='Primero selecciona el año académico del estudiante...'
-				required />
+				placeholder="Primero selecciona el año académico del estudiante..."
+				required
+				disabled={disabledYear}
+				readonly={disabledYear}
+			/>
 		</Label>
 	</div>
 	{#if selectableGroups}
 		<div>
 			<Label
-			>Grupo
+				>Grupo
 				<Select
 					bind:value={student.group}
 					class={defaultClass}
 					items={selectableGroups}
-					placeholder='...luego selecciona el grupo del estudiante'
-					required />
+					placeholder="...luego selecciona el grupo del estudiante"
+					required
+				/>
 			</Label>
 		</div>
 	{/if}
 	<div>
 		<Label
-		>Situación Académica
+			>Situación Académica
 			<Select
 				bind:value={student.academicSituation}
 				class={defaultClass}
 				items={academicSituations}
-				placeholder='Selecciona la situación académica del estudiante'
+				placeholder="Selecciona la situación académica del estudiante"
 				required
 			/>
 		</Label>
@@ -233,12 +241,12 @@
 	{#if situation && situation.name === 'Baja'}
 		<div>
 			<Label
-			>Causa de Baja
+				>Causa de Baja
 				<Select
 					bind:value={student.unenrollmentReason}
 					class={defaultClass}
 					items={unenrollmentReasons}
-					placeholder='Selecciona la causa de baja del estudiante'
+					placeholder="Selecciona la causa de baja del estudiante"
 					required
 				/>
 			</Label>

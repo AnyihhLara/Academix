@@ -46,7 +46,7 @@ export async function POST({ request }) {
 			);
 		} catch (e) {
 			console.log(e.message);
-			throw error(400, e);
+			throw error(400, { message: e.message })
 		}
 	});
 	return json(result[0]);

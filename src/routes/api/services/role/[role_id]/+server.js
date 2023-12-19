@@ -43,26 +43,29 @@ export async function DELETE({ params }) {
 export async function PUT({ params, request }) {
 	let { role_id } = params;
 	role_id = Number(role_id);
-	const body = await request.json(); //new attribute values for rol
-	const result = await sequelize.transaction(async (t) => {
-		await sequelize.query(`SELECT update_role(:role_id, :role_name)`, {
-			type: sequelize.QueryTypes.SELECT,
-			transaction: t,
-			replacements: {
-				...body,
-				role_id
-			}
+	const body = await request.json(); //new attribute values for role
+	try {
+		const result = await sequelize.transaction(async (t) => {
+			await sequelize.query(`SELECT update_role(:role_id, :role_name)`, {
+				type: sequelize.QueryTypes.SELECT,
+				transaction: t,
+				replacements: {
+					...body,
+					role_id
+				}
+			});
+			return await sequelize.query(`SELECT read_role(:role_id)`, {
+				type: sequelize.QueryTypes.SELECT,
+				transaction: t,
+				replacements: {
+					...body,
+					role_id
+				}
+			});
 		});
-		return await sequelize.query(`SELECT read_role(:role_id)`, {
-			type: sequelize.QueryTypes.SELECT,
-			transaction: t,
-			replacements: {
-				...body,
-				role_id
-			}
-		});
-	});
 
-	if (result.length === 0) throw new error(404, { message: `Rol con id ${role_id} no encontrado` });
-	return json(result[0]);
+		if (result.length === 0) throw new error(404, { message: `Rol con id ${role_id} no encontrado` });
+		return json(result[0]);
+	}
+	catch (e) { throw error(400, { message: e.message }) }
 }

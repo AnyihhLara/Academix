@@ -77,5 +77,4 @@ export async function PUT({ params, request }) {
         return json(result[0])
     }
     catch (e) { throw error(400, { message: e.message }) }
-
 }

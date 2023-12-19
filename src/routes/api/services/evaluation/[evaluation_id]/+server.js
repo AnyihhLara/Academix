@@ -49,26 +49,29 @@ export async function PUT({ params, request }) {
 	let { evaluation_id } = params;
 	evaluation_id = Number(evaluation_id);
 	const body = await request.json(); //new attribute values for evaluation
-	const result = await sequelize.transaction(async (t) => {
-		await sequelize.query(
-			`SELECT update_evaluation(:evaluation_id, :evaluation_type_id, :evaluation_date, :student_id, :subject_id)`,
-			{
+	try {
+		const result = await sequelize.transaction(async (t) => {
+			await sequelize.query(
+				`SELECT update_evaluation(:evaluation_id, :evaluation_type_id, :evaluation_date, :student_id, :subject_id)`,
+				{
+					type: sequelize.QueryTypes.SELECT,
+					transaction: t,
+					replacements: {
+						...body,
+						evaluation_id
+					}
+				}
+			);
+			return await sequelize.query(`SELECT read_evaluation(:evaluation_id)`, {
 				type: sequelize.QueryTypes.SELECT,
 				transaction: t,
-				replacements: {
-					...body,
-					evaluation_id
-				}
-			}
-		);
-		return await sequelize.query(`SELECT read_evaluation(:evaluation_id)`, {
-			type: sequelize.QueryTypes.SELECT,
-			transaction: t,
-			replacements: { evaluation_id }
+				replacements: { evaluation_id }
+			});
 		});
-	});
 
-	if (result.length === 0)
-		throw new error(404, { message: `Evaluación con id ${evaluation_id} no encontrada` });
-	return json(result[0]);
+		if (result.length === 0)
+			throw new error(404, { message: `Evaluación con id ${evaluation_id} no encontrada` });
+		return json(result[0]);
+	}
+	catch (e) { throw error(400, { message: e.message }) }
 }

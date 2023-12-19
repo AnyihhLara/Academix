@@ -1,9 +1,9 @@
 import sequelize from '$lib/database/db.js'
-import {error, json} from '@sveltejs/kit'
-import {yearTable as table} from '$lib/database/dbTables.js'
+import { error, json } from '@sveltejs/kit'
+import { yearTable as table } from '$lib/database/dbTables.js'
 
-export async function GET({url}) {
-    const {searchParams: params} = url //query parameters
+export async function GET({ url }) {
+    const { searchParams: params } = url //query parameters
     const limit = params.get('limit')
     const result = await sequelize
         .transaction(async (t) => {
@@ -13,12 +13,12 @@ export async function GET({url}) {
             });
         })
         .catch((err) => {
-            throw error(400, {message: err.message})
+            throw error(400, { message: err.message })
         })
     return json(result)
 }
 
-export async function POST({request}) {
+export async function POST({ request }) {
     const body = await request.json() //new year
     const result = await sequelize.transaction(async (t) => {
         try {
@@ -38,7 +38,7 @@ export async function POST({request}) {
                 }
             )
         } catch (e) {
-            throw error(400, e)
+            throw error(400, { message: e.message })
         }
     })
     return json(result[0])

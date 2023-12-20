@@ -90,7 +90,16 @@
 	}
 
 	async function resetForm() {
-		user = { username: '', passsword: '', role: null, student_id: null };
+		if (item) {
+			user.username = item.user_name;
+			user.password = '';
+			if (item.code === '-') user.student_id = null;
+			else user.student_id = item.code;
+			const role = roles.find(({ name }) => name === item.role_name);
+			if (role) user.role = role.value;
+			else user.role = null;
+		} else user = { username: '', password: '', role: null, student_id: null };
+
 		students = await studentServ.getStudents();
 	}
 

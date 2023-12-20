@@ -1,10 +1,10 @@
 <script>
-    import { Input, Label, NumberInput } from 'flowbite-svelte';
-    import GenericForm from './GenericForm.svelte';
-    import evaluationTypeService from '$lib/services/EvaluationTypeService.js';
-    import { createEventDispatcher, onMount } from 'svelte';
+	import { Input, Label, NumberInput } from 'flowbite-svelte';
+	import GenericForm from './GenericForm.svelte';
+	import evaluationTypeService from '$lib/services/EvaluationTypeService.js';
+	import { createEventDispatcher, onMount } from 'svelte';
 
-    export let action;
+	export let action;
 	export let item = null;
 	let tableName = 'tipo de evaluación',
 		defaultClass = 'mt-2',
@@ -15,7 +15,7 @@
 	onMount(() => resetForm());
 
 	async function createItem() {
-		await evaluationTypeServ.createEvaluationType(
+		item = await evaluationTypeServ.createEvaluationType(
 			evaluationType.name,
 			evaluationType.numericalValue
 		);
@@ -37,7 +37,6 @@
 	}
 
 	async function resetForm() {
-		console.log('reset');
 		if (item) {
 			let {
 				evaluation_type_id,
@@ -47,7 +46,6 @@
 			item.evaluation_type_id = evaluation_type_id;
 			item.evaluation_type_name = evaluation_type_name;
 			item.evaluation_numerical_value = evaluation_numerical_value;
-			console.log(item);
 			evaluationType.name = item.evaluation_type_name;
 			evaluationType.numericalValue = item.evaluation_numerical_value;
 		} else {

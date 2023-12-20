@@ -285,13 +285,27 @@ export const pdfHeaders = readable([
 	{
 		reportName: 'Reporte 7',
 		headers: {
-			school_year: 'Curso Escolar',
+			schoolYear: 'Curso Escolar',
 			student_name: 'Nombre',
-			student_lastname: 'Apellidos',
-			average: 'Promedio',
-			grade: 'Nota',
+			lastname: 'Apellidos',
+			order_number: 'Número de Lista',
+			group_number: 'Grupo',
 			year: 'Año Académico',
-			subject_name: 'Asignatura'
+			failed_subjects: 'Asignatura Suspensa'
+		}
+	},
+	{
+		reportName: 'Reporte 8',
+		headers: {
+			schoolYear: 'Curso Escolar',
+			student_name: 'Nombre',
+			lastname: 'Apellidos',
+			order_number: 'Número de Lista',
+			studentsGroup: 'Grupo',
+			group_number: 'Grupo',
+			year: 'Año Académico',
+			unenrollment_reason: 'Causa de Baja',
+			student_id: 'Identificador'
 		}
 	},
 	{

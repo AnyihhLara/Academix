@@ -1,6 +1,7 @@
 import sequelize from '$lib/database/db.js';
 import { error, json } from '@sveltejs/kit';
 import { env } from '$env/dynamic/private';
+import CryptoJS from 'crypto-js';
 
 export async function GET({ params }) {
 	let { user_id } = params;

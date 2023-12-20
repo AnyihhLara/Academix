@@ -2,6 +2,8 @@ import sequelize from '$lib/database/db.js';
 import { rolesTable, usersTable } from '$lib/database/dbTables.js';
 import authService from '$lib/services/AuthService.js';
 import { view } from '$lib/stores/stores.js';
+import CryptoJS from 'crypto-js';
+import { env } from '$env/dynamic/private';
 
 export const handle = async ({ event, resolve }) => {
 	const user = event.cookies.get('academix-user');
@@ -27,7 +29,8 @@ export const handle = async ({ event, resolve }) => {
 				}
 			);
 			if (s.length === 0) throw new Error('Usuario incorrecto o no autorizado');
-			if (s[0].user_password !== pass) throw new Error('Contraseña incorrecta');
+			const hashed = CryptoJS.SHA256(env.SECRET_KEY + pass).toString();
+			if (s[0].user_password !== hashed) throw new Error('Contraseña incorrecta');
 			return {
 				id_user: s[0].user_id,
 				username: s[0].user_name,

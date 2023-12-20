@@ -2,6 +2,8 @@ import sequelize from '$lib/database/db.js';
 import { error, json } from '@sveltejs/kit';
 import { usersTable as table } from '$lib/database/dbTables.js';
 import { getCookieSettings } from '$lib';
+import CryptoJS from 'crypto-js';
+import { env } from '$env/dynamic/private';
 
 export async function POST({ request, cookies }) {
 	const body = await request.json();
@@ -22,7 +24,8 @@ export async function POST({ request, cookies }) {
 			);
 
 			if (s.length === 0) throw new Error('Usuario incorrecto o no autorizado');
-			if (s[0].user_password !== password) throw new Error('Contraseña incorrecta');
+			const hashed = CryptoJS.SHA256(env.SECRET_KEY + password).toString();
+			if (s[0].user_password !== hashed) throw new Error('Contraseña incorrecta');
 			const login = {
 				id_user: s[0].user_id,
 				username: s[0].user_name,

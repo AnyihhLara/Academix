@@ -97,7 +97,6 @@ export const tables = readable([
 		component: UserForm,
 		tableColumns: [
 			{ label: 'Nombre de usuario', key: 'user_name' },
-			{ label: 'Contraseña', key: 'user_password' },
 			{ label: 'Rol', key: 'role_name' },
 			{ label: 'Identificador', key: 'code' }
 		]
@@ -273,6 +272,18 @@ export const pdfHeaders = readable([
 	},
 	{
 		reportName: 'Reporte 6',
+		headers: {
+			school_year: 'Curso Escolar',
+			student_name: 'Nombre',
+			student_lastname: 'Apellidos',
+			average: 'Promedio',
+			grade: 'Nota',
+			year: 'Año Académico',
+			subject_name: 'Asignatura'
+		}
+	},
+	{
+		reportName: 'Reporte 7',
 		headers: {
 			school_year: 'Curso Escolar',
 			student_name: 'Nombre',

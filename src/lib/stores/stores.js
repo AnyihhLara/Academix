@@ -184,7 +184,7 @@ export const tables = readable([
 			{ label: 'Número de orden', key: 'order_number' },
 			{ label: 'Nombre', key: 'student_name' },
 			{ label: 'Apellidos', key: 'lastname' },
-			{ label: 'Grupo', key: 'students_group' },
+			{ label: 'Grupo', key: 'group_number' },
 			{ label: 'Causa de baja', key: 'unenrollment_reason' }
 		]
 	},

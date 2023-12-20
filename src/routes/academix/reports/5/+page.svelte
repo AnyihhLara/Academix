@@ -29,6 +29,10 @@
 			value: group_number,
 			name: group_number
 		}));
+		selectableGroups = selectableGroups.filter(
+			(group, index, self) =>
+				index === self.findIndex((t) => t.value === group.value && t.name === group.name)
+		);
 		selectableGroups = [...selectableGroups, { value: null, name: 'ninguno' }];
 		refreshItems();
 	}

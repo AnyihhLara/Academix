@@ -5,7 +5,6 @@ export async function GET({ url }) {
 	const { searchParams: params } = url; //query parameters
 	const limit = params.get('limit');
 	const groupNumber = params.get('group_number');
-	console.log(groupNumber)
 	const year = params.get('year');
 	const result = await sequelize
 		.transaction(async (t) => {

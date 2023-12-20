@@ -1,100 +1,63 @@
 <script>
-	import { Select } from 'flowbite-svelte';
+	import { Label, Select } from 'flowbite-svelte';
 	import Table from '$lib/components/shared/Table.svelte';
 	import { page } from '$app/stores';
+	import { onMount } from 'svelte';
+	import reportService from '$lib/services/ReportService.js';
+	import studentsGroupService from '$lib/services/StudentsGroupService.js';
+	import yearService from '$lib/services/YearService.js';
+	import { currentSchoolYear } from '$lib/stores/stores.js';
+
+	onMount(async () => {
+		let yearServ = yearService.getInstance();
+		let studentsGroupServ = studentsGroupService.getInstance();
+		years = await yearServ.getYears();
+		years = years.filter(({ school_year }) => school_year === $currentSchoolYear);
+		years = years.map(({ year }) => ({ value: year, name: year }));
+		groups = await studentsGroupServ.getStudentsGroups();
+		refreshItems();
+	});
 
 	let tableName = 'Reporte 8 por año';
-	let selectedOption = 'Por año';
+	let service = reportService.getInstance();
+	let selectedYear,
+		selectedGroup = null;
+	let years, groups, selectableGroups, dataByYear, dataByGroup;
 	let isDeletable = $page.data.role === 'Secretario';
-	let options = [
-		{ value: 'Por año', name: 'Por año' },
-		{ value: 'Por grupo', name: 'Por grupo' }
-	];
-	let dataByYear = [
-		{
-			schoolYear: '2022-2023',
-			years: [
-				{
-					year: 1,
-					unenrollment_students: [
-						{
-							order_number: 1,
-							student_name: 'Juan',
-							lastname: ' Pérez',
-							students_group: 1,
-							unenrollment_reason: 'Culminación de estudios'
-						},
-						{
-							order_number: 2,
-							student_name: 'María',
-							lastname: 'García',
-							students_group: 1,
-							unenrollment_reason: 'Enfermedad'
-						}
-					]
-				},
-				{
-					year: 2,
-					unenrollment_students: []
-				}
-			]
-		},
-		{
-			schoolYear: '2023-2024',
-			years: []
+
+	$: if (selectedYear || selectedGroup) {
+		selectableGroups = groups.filter(({ year }) => year === selectedYear);
+		selectableGroups = selectableGroups.map(({ group_number }) => ({
+			value: group_number,
+			name: group_number
+		}));
+		selectableGroups = selectableGroups.filter(
+			(group, index, self) =>
+				index === self.findIndex((t) => t.value === group.value && t.name === group.name)
+		);
+		selectableGroups = [...selectableGroups, { value: null, name: 'ninguno' }];
+		refreshItems();
+		setTableName();
+	}
+	const refreshItems = () => {
+		if (selectedYear && selectedGroup === null) {
+			service.report8(selectedYear, selectedGroup).then((i) => {
+				dataByYear = i;
+			});
+		} else if (selectedYear && selectedGroup !== null) {
+			service.report8(selectedYear, selectedGroup).then((i) => {
+				dataByGroup = i;
+			});
 		}
-	];
-	let dataByGroup = [
-		{
-			schoolYear: '2022-2023',
-			years: [
-				{
-					year: 1,
-					studentsGroups: [
-						{
-							studentsGroup: 1,
-							unenrollment_students: [
-								{
-									order_number: 1,
-									student_name: 'Juan',
-									lastname: ' Pérez',
-									unenrollment_reason: 'Culminación de estudios'
-								},
-								{
-									order_number: 2,
-									student_name: 'María',
-									lastname: 'García',
-									unenrollment_reason: 'Enfermedad'
-								}
-							]
-						},
-						{
-							studentsGroup: 2,
-							unenrollment_students: []
-						}
-					]
-				},
-				{
-					year: 2,
-					studentsGroups: []
-				}
-			]
-		},
-		{
-			schoolYear: '2023-2024',
-			years: []
-		}
-	];
+	};
 
 	function setTableName() {
-		if (selectedOption === 'Por año') {
+		if (selectedYear && selectedGroup === null) {
 			tableName = 'Reporte 8 por año';
-		} else if (selectedOption === 'Por grupo') {
+		} else if (selectedYear && selectedGroup !== null) {
 			tableName = 'Reporte 8 por grupo';
 		}
 	}
-
-	function refreshItems() {}
 </script>
 
 <section class="px-2 pt-6 pb-8">
@@ -102,85 +65,69 @@
 		<h1 class="text-center text-2xl font-semibold text-primary-950 dark:text-primary-100">
 			Listado de los estudiantes que causan baja en un curso
 		</h1>
-		<div class="flex justify-center mx-5">
-			<Select
-				placeholder="Seleccione una opción:"
-				items={options}
-				bind:value={selectedOption}
-				class="w-96 h-10 mt-1"
-				on:change={setTableName}
-			/>
-		</div>
+		{#if years}
+			<div class="flex justify-center items-center gap-3">
+				<Label>Año</Label>
+				<Select
+					placeholder="Seleccione un año:"
+					items={years}
+					bind:value={selectedYear}
+					on:change={setTableName}
+					class="w-96 h-10 mt-1"
+				/>
+			</div>
+			{#if selectableGroups}
+				<div class="flex justify-center items-center gap-3">
+					<Label>Grupo</Label>
+					<Select
+						placeholder="Seleccione un grupo:"
+						items={selectableGroups}
+						bind:value={selectedGroup}
+						on:change={setTableName}
+						class="w-96 h-10 mt-1"
+					/>
+				</div>
+			{/if}
+		{/if}
 	</div>
-	{#if selectedOption === 'Por año' && dataByYear}
-		{#each dataByYear as schoolYearData}
-			<section class="mt-6 mx-3" key={schoolYearData.schoolYear}>
-				<h2 class="font-bold block mb-3 ml-3 text-secondary-950 dark:text-secondary-100 text-xl">
-					Curso: {schoolYearData.schoolYear}
-				</h2>
-				{#if schoolYearData.years}
-					{#each schoolYearData.years as yearData}
-						<section class="mt-4" key={`${schoolYearData.schoolYear}-${yearData.year}`}>
-							<h3
-								class="font-bold block mb-2 ml-4 text-secondary-850 dark:text-secondary-100 text-lg"
-							>
-								Año: {yearData.year}
-							</h3>
-							<Table
-								{tableName}
-								items={yearData.unenrollment_students}
-								isCreatable={false}
-								isUpdatable={false}
-								{isDeletable}
-								isNamed={false}
-								{refreshItems}
-							/>
-						</section>
-					{/each}
-				{/if}
-			</section>
-		{/each}
-	{:else if selectedOption === 'Por grupo' && dataByGroup}
-		{#each dataByGroup as schoolYearData}
-			<section class="mt-6 mx-3" key={schoolYearData.schoolYear}>
-				<h2 class="font-bold block mb-3 ml-3 text-secondary-950 dark:text-secondary-100 text-xl">
-					Curso: {schoolYearData.schoolYear}
-				</h2>
-				{#if schoolYearData.years}
-					{#each schoolYearData.years as yearData}
-						<section class="mt-4" key={`${schoolYearData.schoolYear}-${yearData.year}`}>
-							<h3
-								class="font-bold block mb-2 ml-4 text-secondary-850 dark:text-secondary-100 text-lg"
-							>
-								Año: {yearData.year}
-							</h3>
-							{#if yearData.studentsGroups}
-								{#each yearData.studentsGroups as groupData}
-									<section
-										class="mt-4"
-										key={`${schoolYearData.schoolYear}-Grupo-${yearData.year}-Grupo-${groupData.studentsGroup}`}
-									>
-										<h2
-											class="font-bold block mb-2 ml-3 text-secondary-850 dark:text-secondary-100 text-lg"
-										>
-											Grupo: {groupData.studentsGroup}
-										</h2>
-										<Table
-											{tableName}
-											items={groupData.unenrollment_students}
-											isCreatable={false}
-											isUpdatable={false}
-											{isDeletable}
-											isNamed={false}
-											{refreshItems}
-										/>
-									</section>
-								{/each}
-							{/if}
-						</section>
-					{/each}
-				{/if}
-			</section>
-		{/each}
+	{#if selectedYear && !selectedGroup && dataByYear}
+		<section class="mt-6 mx-3">
+			{#if dataByYear.school_years}
+				{#each dataByYear.school_years as data}
+					<h2 class="font-bold block mb-3 ml-3 text-secondary-950 dark:text-secondary-100 text-xl">
+						Curso: {data.school_year} Año: {data.year}
+					</h2>
+
+					<Table
+						{tableName}
+						items={data.unenrollment_students}
+						isCreatable={false}
+						isUpdatable={false}
+						{isDeletable}
+						isNamed={false}
+						{refreshItems}
+					/>
+				{/each}
+			{/if}
+		</section>
+	{:else if selectedYear && selectedGroup && dataByGroup}
+		<section class="mt-6 mx-3">
+			{#if dataByGroup.school_years}
+				{#each dataByGroup.school_years as data}
+					<h2 class="font-bold block mb-3 ml-3 text-secondary-950 dark:text-secondary-100 text-xl">
+						Curso: {data.school_year} Año: {data.year} Grupo: {data.group_number}
+					</h2>
+					<Table
+						{tableName}
+						items={data.unenrollment_students}
+						isCreatable={false}
+						isUpdatable={false}
+						{isDeletable}
+						isNamed={false}
+						{refreshItems}
+					/>
+				{/each}
+			{/if}
+		</section>
 	{/if}
 </section>

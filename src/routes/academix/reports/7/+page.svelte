@@ -17,7 +17,8 @@
 		refreshItems();
 	});
 
-	let tableName = 'Reporte 7';
+	const tableName = 'Reporte 7';
+	const reportName = 'Listado de estudiantes desaprobados por grupo en un rango de fecha';
 	let service = reportService.getInstance();
 	let startDate,
 		endDate,
@@ -54,58 +55,85 @@
 	$: if (startDate || endDate || selectedYear || selectedGroup) {
 		refreshItems();
 	}
-	const refreshItems = () => {
+
+	// async function downloadReport7() {
+	// 	const headers = ($pdfHeaders.find(({ reportName }) => reportName === tableName)).headers;
+	// 	console.log(failedStudentsByGroup.school_years);
+	// 	// const reportData = dataBySchoolYear.flatMap((schoolYearData) =>
+	// 	// 	schoolYearData.years.flatMap((yearData) =>
+	// 	// 		yearData.studentsGroups.map((groupData) => {
+	// 	// 			const students = groupData.students.map((student) => ({
+	// 	// 				...student,
+	// 	// 				schoolYear: schoolYearData.schoolYear,
+	// 	// 				year: yearData.year,
+	// 	// 				studentsGroup: groupData.studentsGroup
+	// 	// 			}));
+	// 	//
+	// 	// 			return students.map((student) =>
+	// 	// 				Object.fromEntries(
+	// 	// 					Object.entries(student).map(([key, value]) => [headers[key] || key, value])
+	// 	// 				)
+	// 	// 			);
+	// 	// 		})
+	// 	// 	)
+	// 	// );
+	//
+	// 	generatePDF(reportData, `Reporte #1: ${reportName} \n${dayjs().format('YYYY-MMM-DD')}`, false, true);
+	// }
+
+	const refreshItems = async () => {
 		if (validDate && startDate && endDate && selectedYear && selectedGroup) {
-			service.report7(startDate, endDate, selectedYear, selectedGroup).then((i) => {
-				failedStudentsByGroup = i;
-			});
+			failedStudentsByGroup = await service.report7(startDate, endDate, selectedYear, selectedGroup);
 			console.log(failedStudentsByGroup);
 		}
 	};
 </script>
 
 <section>
-	<h1 class="text-center text-2xl mb-4 pt-3 font-semibold text-primary-950 dark:text-primary-100">
-		Listado de estudiantes desaprobados por grupo en un rango de fecha
+	<h1 class='text-center text-2xl mb-4 pt-3 font-semibold text-primary-950 dark:text-primary-100'>
+		{reportName}
 	</h1>
-	<div class="flex items-center mx-5 gap-5">
-		<Label for="start-date">
+	<div class='flex items-center mx-5 gap-5'>
+		<Label for='start-date'>
 			Fecha Inicial
-			<Input id="start-date" type="date" bind:value={startDate} />
+			<Input bind:value={startDate} id='start-date' type='date' />
 		</Label>
-		<Label for="end-date">
+		<Label for='end-date'>
 			Fecha Final
-			<Input id="end-date" type="date" bind:value={endDate} />
+			<Input bind:value={endDate} id='end-date' type='date' />
 		</Label>
 		{#if years}
 			<Label
-				>Año <Select
-					placeholder="Seleccione un año:"
-					items={years}
-					bind:value={selectedYear}
-					on:change={() => {
+			>Año <Select
+				placeholder='Seleccione un año:'
+				items={years}
+				bind:value={selectedYear}
+				on:change={() => {
 						selectedGroup = '';
 					}}
-				/></Label
+			/></Label
 			>
 			{#if selectableGroups}
-				<div class="flex justify-center items-center gap-3">
+				<div class='flex justify-center items-center gap-3'>
 					<Label
-						>Grupo <Select
-							placeholder="Seleccione un grupo:"
-							items={selectableGroups}
-							bind:value={selectedGroup}
-						/></Label
+					>Grupo <Select
+						placeholder='Seleccione un grupo:'
+						items={selectableGroups}
+						bind:value={selectedGroup}
+					/></Label
 					>
 				</div>
 			{/if}
 		{/if}
 	</div>
 	{#if validDate && startDate && endDate && selectedYear && selectedGroup && failedStudentsByGroup}
-		<section class="mt-6 mx-3 pb-2">
+		<section class='mt-6 mx-3 pb-2'>
 			{#if failedStudentsByGroup.school_years}
+				<!--				<div class='flex justify-end pr-6'>-->
+				<!--					<Button on:click={downloadReport7} size='sm'>Descargar PDF</Button>-->
+				<!--				</div>-->
 				{#each failedStudentsByGroup.school_years as data}
-					<h2 class="font-bold block mb-3 ml-3 text-secondary-950 dark:text-secondary-100 text-xl">
+					<h2 class='font-bold block mb-3 ml-3 text-secondary-950 dark:text-secondary-100 text-xl'>
 						Curso: {data.school_year} Año: {data.year} Grupo: {data.group_number}
 					</h2>
 					<Table
@@ -124,17 +152,17 @@
 </section>
 
 <Modal
-	title="Error"
-	bind:open={error}
-	color="red"
-	size="xs"
 	autoclose
+	bind:open={error}
+	color='red'
 	on:close={() => (error = null)}
+	size='xs'
+	title='Error'
 >
-	<div class="text-base leading-relaxed">
+	<div class='text-base leading-relaxed'>
 		{error}
 	</div>
-	<svelte:fragment slot="footer">
-		<Button on:click={() => (error = null)} color="red">OK</Button>
+	<svelte:fragment slot='footer'>
+		<Button color='red' on:click={() => (error = null)}>OK</Button>
 	</svelte:fragment>
 </Modal>

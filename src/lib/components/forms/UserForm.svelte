@@ -58,7 +58,7 @@
 			user.role
 		);
 
-		if (item.code !== item.user_id) {
+		if (item.code !== item.user_id && item.code !== '-') {
 			let { student_id } = students.find(({ student_code }) => student_code === item.code);
 			await assignStudentToUser(student_id, null);
 			await assignStudentToUser(user.student_id, item.user_id);

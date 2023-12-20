@@ -92,7 +92,7 @@
 						<h3
 							class='font-bold block mb-2 ml-4 text-secondary-850 dark:text-secondary-100 text-lg'
 						>
-							Año {year.year} Curso {year.school_year}
+							Año {year.year} 
 						</h3>
 						<Table
 							{tableName}

@@ -3,13 +3,21 @@
     import {onMount} from 'svelte';
     import subjectService from "$lib/services/SubjectService.js";
     import {page} from "$app/stores";
+    import yearService from '$lib/services/YearService.js';
+    import { currentSchoolYear } from '$lib/stores/stores.js';
 
-    onMount(() => {
+    onMount(async() => {
+        let yearServ = yearService.getInstance();
+        years = await yearServ.getYears();
+        years = years.filter(({ school_year }) => school_year === $currentSchoolYear);
+        years = years.map(({ year }) => year);
+        filters.find((filter) => filter.key === 'year').options = years;
         refreshItems();
     });
 
     let subjects = [],
-        filters = [{name: 'Años', key: 'academicYear', options: [], selectedOptions: []}],
+        filters = [{name: 'Años', key: 'year', options: [], selectedOptions: []}],
+        years,
         isFilterable = true,
         isCreatable = false,
         isUpdatable = false,
@@ -38,3 +46,4 @@
             {refreshItems}
     />
 {/if}
+

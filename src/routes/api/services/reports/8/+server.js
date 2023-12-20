@@ -35,6 +35,7 @@ export async function GET({ url }) {
         }
 
         schoolYearObj.unenrollment_students.push({
+            student_id: row.student_id,
             student_name: row.student_name,
             lastname: row.lastname,
             group_number: row.group_number,

@@ -209,3 +209,89 @@ export const tables = readable([
 		]
 	}
 ]);
+export const pdfHeaders = readable([
+	{
+		reportName: 'Reporte 1',
+		headers: {
+			order_number: 'Número de Lista',
+			student_name: 'Nombre',
+			student_lastname: 'Apellidos',
+			student_code: 'Código',
+			schoolYear: 'Curso Escolar',
+			year: 'Año Académico',
+			studentsGroup: 'Grupo'
+		}
+	},
+	{
+		reportName: 'Reporte 2',
+		headers: {
+			planned_hours: 'Horas Planificadas',
+			subject_name: 'Asignatura',
+			schoolYear: 'Curso Escolar',
+			year: 'Año Académico'
+		}
+	},
+	{
+		reportName: 'Reporte 3',
+		headers: {
+			order_number: 'Número de Lista',
+			student_name: 'Nombre',
+			student_lastname: 'Apellidos',
+			student_code: 'Código',
+			schoolYear: 'Curso Escolar',
+			year: 'Año Académico',
+			studentsGroup: 'Grupo',
+			evaluation_type_name: 'Calificación',
+			subject: 'Asignatura'
+		}
+	},
+	{
+		reportName: 'Reporte 4',
+		headers: {
+			student_order: 'Número de Lista',
+			student_name: 'Nombre',
+			student_lastname: 'Apellidos',
+			average: 'Promedio',
+			year: 'Año Académico',
+			groupNumber: 'Grupo'
+		}
+	},
+	{
+		reportName: 'Reporte 5',
+		headers: {
+			school_year: 'Curso Escolar',
+			municipality: 'Municipio',
+			student_name: 'Nombre',
+			lastname: 'Apellidos',
+			order_number: 'Número de Lista',
+			average: 'Promedio',
+			sex: 'Sexo',
+			rank: 'Número de Escalafón',
+			year: 'Año Académico',
+			group_number: 'Grupo'
+		}
+	},
+	{
+		reportName: 'Reporte 6',
+		headers: {
+			school_year: 'Curso Escolar',
+			student_name: 'Nombre',
+			student_lastname: 'Apellidos',
+			average: 'Promedio',
+			grade: 'Nota',
+			year: 'Año Académico',
+			subject_name: 'Asignatura'
+		}
+	},
+	{
+		reportName: 'Reporte 9',
+		headers: {
+			schoolYear: 'Curso Escolar',
+			student_name: 'Nombre',
+			lastname: 'Apellidos',
+			order_number: 'Número de Lista',
+			year: 'Año Académico',
+			student_group: 'Grupo'
+		}
+	}
+]);

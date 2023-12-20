@@ -80,7 +80,7 @@
 		</TableHead>
 		<TableBody>
 			{#if filteredItems}
-				{#each filteredItems as item}
+				{#each filteredItems as item (item)}
 					<TableBodyRow>
 						{#if tableColumns}
 							{#each tableColumns as column}

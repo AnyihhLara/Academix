@@ -2,7 +2,9 @@
 	import { Input, Label } from 'flowbite-svelte';
 	import GenericForm from './GenericForm.svelte';
 	import academicSituationService from '$lib/services/AcademicSituationService.js';
-	import { createEventDispatcher } from 'svelte';
+	import { createEventDispatcher, onMount } from 'svelte';
+
+	onMount(() => resetForm());
 
 	export let action;
 	export let item = null;
@@ -30,8 +32,18 @@
 		dispatch('deleted');
 	}
 
-	function resetForm() {
-		academicSituation = { name: '' };
+	async function resetForm() {
+		console.log('reset');
+		if (item) {
+			let { academic_situation_id, academic_situation_name } =
+				await academicSituationServ.getAcademicSituation(item.academic_situation_id);
+			item.academic_situation_id = academic_situation_id;
+			item.academic_situation_name = academic_situation_name;
+			console.log(item);
+			academicSituation.name = item.academic_situation_name;
+		} else {
+			academicSituation = { name: '' };
+		}
 	}
 </script>
 

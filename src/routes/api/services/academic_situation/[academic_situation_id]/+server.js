@@ -23,7 +23,14 @@ export async function GET({ params }) {
         throw error(404, {
             message: `Situación Académica con id ${academic_situation_id} no encontrada`,
         })
-    return json(result[0])
+    let strValue = result[0].read_academic_situation;
+    const values = strValue.slice(1, -1).split(',');
+    const obj = {
+        academic_situation_id: Number(values[0]),
+        academic_situation_name: values[1],
+    };
+
+    return json(obj)
 }
 
 export async function DELETE({ params }) {

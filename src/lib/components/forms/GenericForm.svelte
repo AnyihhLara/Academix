@@ -38,9 +38,13 @@
 			}
 		}
 	}
-	function handleDelete() {
-		deleteItem();
-		openModal = false;
+	async function handleDelete() {
+		try {
+			await deleteItem();
+			openModal = false;
+		} catch (e) {
+			error = e.message;
+		}
 	}
 	function handleCancel() {
 		openModal = false;

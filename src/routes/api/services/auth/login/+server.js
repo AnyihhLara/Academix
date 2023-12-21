@@ -25,6 +25,7 @@ export async function POST({ request, cookies }) {
 
 			if (s.length === 0) throw new Error('Usuario incorrecto o no autorizado');
 			const hashed = CryptoJS.SHA256(env.SECRET_KEY + password).toString();
+			console.log(hashed);
 			if (s[0].user_password !== hashed) throw new Error('Contraseña incorrecta');
 			const login = {
 				id_user: s[0].user_id,

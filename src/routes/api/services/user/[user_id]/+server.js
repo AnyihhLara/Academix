@@ -1,9 +1,9 @@
 import sequelize from '$lib/database/db.js';
 import { error, json } from '@sveltejs/kit';
 import { env } from '$env/dynamic/private';
-import CryptoJS from 'crypto-js'
+import CryptoJS from 'crypto-js';
 
-export async function GET({ params }) {
+export async function GET({ params }) { 
 	let { user_id } = params;
 	user_id = Number(user_id);
 	const result = await sequelize

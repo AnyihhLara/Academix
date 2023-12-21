@@ -5,7 +5,8 @@
 	import reportService from '$lib/services/ReportService.js';
 	import studentsGroupService from '$lib/services/StudentsGroupService.js';
 	import yearService from '$lib/services/YearService.js';
-	import { currentSchoolYear } from '$lib/stores/stores.js';
+	import { currentSchoolYear, pdfHeaders } from '$lib/stores/stores.js';
+	import { generatePDF } from '$lib';
 
 	onMount(async () => {
 		let yearServ = yearService.getInstance();
@@ -56,30 +57,23 @@
 		refreshItems();
 	}
 
-	// async function downloadReport7() {
-	// 	const headers = ($pdfHeaders.find(({ reportName }) => reportName === tableName)).headers;
-	// 	console.log(failedStudentsByGroup.school_years);
-	// 	// const reportData = dataBySchoolYear.flatMap((schoolYearData) =>
-	// 	// 	schoolYearData.years.flatMap((yearData) =>
-	// 	// 		yearData.studentsGroups.map((groupData) => {
-	// 	// 			const students = groupData.students.map((student) => ({
-	// 	// 				...student,
-	// 	// 				schoolYear: schoolYearData.schoolYear,
-	// 	// 				year: yearData.year,
-	// 	// 				studentsGroup: groupData.studentsGroup
-	// 	// 			}));
-	// 	//
-	// 	// 			return students.map((student) =>
-	// 	// 				Object.fromEntries(
-	// 	// 					Object.entries(student).map(([key, value]) => [headers[key] || key, value])
-	// 	// 				)
-	// 	// 			);
-	// 	// 		})
-	// 	// 	)
-	// 	// );
-	//
-	// 	generatePDF(reportData, `Reporte #1: ${reportName} \n${dayjs().format('YYYY-MMM-DD')}`, false, true);
-	// }
+	async function downloadReport7() {
+		const headers = ($pdfHeaders.find(({ reportName }) => reportName === tableName)).headers;
+		const reportData = [failedStudentsByGroup.school_years.flatMap((schoolYearData) =>
+			schoolYearData.failed_students.map((studentData) => ({
+				...studentData,
+				schoolYear: schoolYearData.school_year,
+				year: schoolYearData.year,
+				group_number: schoolYearData.group_number
+			})).map((student) =>
+				Object.fromEntries(
+					Object.entries(student).map(([key, value]) => [headers[key] || key, value])
+				)
+			)
+		)];
+
+		generatePDF(reportData, `Reporte #7 Año ${failedStudentsByGroup.school_years[0].year} Grupo ${failedStudentsByGroup.school_years[0].group_number}:\n${reportName} \ndesde ${startDate} hasta ${endDate}`, false, true);
+	}
 
 	const refreshItems = async () => {
 		if (validDate && startDate && endDate && selectedYear && selectedGroup) {
@@ -129,9 +123,9 @@
 	{#if validDate && startDate && endDate && selectedYear && selectedGroup && failedStudentsByGroup}
 		<section class='mt-6 mx-3 pb-2'>
 			{#if failedStudentsByGroup.school_years}
-				<!--				<div class='flex justify-end pr-6'>-->
-				<!--					<Button on:click={downloadReport7} size='sm'>Descargar PDF</Button>-->
-				<!--				</div>-->
+				<div class='flex justify-end pr-6'>
+					<Button on:click={downloadReport7} size='sm'>Descargar PDF</Button>
+				</div>
 				{#each failedStudentsByGroup.school_years as data}
 					<h2 class='font-bold block mb-3 ml-3 text-secondary-950 dark:text-secondary-100 text-xl'>
 						Curso: {data.school_year} Año: {data.year} Grupo: {data.group_number}

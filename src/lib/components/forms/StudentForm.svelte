@@ -39,9 +39,9 @@
 			);
 		}
 		// if (action === 'Update') {
-			// disabledYear = true;
-			// academicSituations = [{ value: 'Baja', name: 'Baja' }];
-			//see later groups and academic situations 
+		// disabledYear = true;
+		// academicSituations = [{ value: 'Baja', name: 'Baja' }];
+		//see later groups and academic situations
 		// }
 	});
 	export let action;
@@ -79,7 +79,7 @@
 	}
 
 	async function createItem() {
-		console.log('create');
+		isValidCode(student.code);
 		await studentServ.createStudent(
 			student.name,
 			student.lastname,
@@ -96,6 +96,7 @@
 	}
 
 	async function updateItem() {
+		isValidCode(student.code);
 		await studentServ.updateStudent(
 			item.student_id,
 			student.name,
@@ -129,6 +130,14 @@
 			academicYear: null,
 			group: null
 		};
+	}
+	function isValidCode(studentCode) {
+		let valid = /\D/;
+		if (studentCode.length < 11) {
+			throw new Error('El código del estudiante tiene que tener 11 dígitos.');
+		}
+		if (valid.test(studentCode))
+			throw new Error('El código del estudiante solo puede contener números.');
 	}
 </script>
 

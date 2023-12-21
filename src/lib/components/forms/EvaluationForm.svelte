@@ -43,6 +43,7 @@
 	const dispatch = createEventDispatcher();
 
 	async function createItem() {
+		isValidEvaluationDate(evaluation.evaluationDate);
 		await evaluationServ.createEvaluation(
 			evaluation.evaluationType,
 			evaluation.student,

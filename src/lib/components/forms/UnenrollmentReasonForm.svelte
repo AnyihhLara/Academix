@@ -1,10 +1,12 @@
 <script>
-    import { Input, Label } from 'flowbite-svelte';
-    import GenericForm from './GenericForm.svelte';
-    import unenrollmentReasonService from '$lib/services/UnenrollmentReasonService.js';
-    import { createEventDispatcher } from 'svelte';
+	import { Input, Label } from 'flowbite-svelte';
+	import GenericForm from './GenericForm.svelte';
+	import unenrollmentReasonService from '$lib/services/UnenrollmentReasonService.js';
+	import { createEventDispatcher, onMount } from 'svelte';
 
-    export let action;
+	onMount(() => resetForm());
+
+	export let action;
 	export let item = null;
 	let tableName = 'causa de baja',
 		defaultClass = 'mt-2',
@@ -30,22 +32,32 @@
 		dispatch('deleted');
 	}
 
-	function resetForm() {
-		unenrollmentReason = { name: '' };
+	async function resetForm() {
+		console.log('reset');
+		if (item) {
+			let { unenrollment_reason_id, unenrollment_reason_name } =
+				await unenrollmentReasonServ.getUnenrollmentReason(item.unenrollment_reason_id);
+			item.unenrollment_reason_id = unenrollment_reason_id;
+			item.unenrollment_reason_name = unenrollment_reason_name;
+			console.log(item);
+			unenrollmentReason.name = item.unenrollment_reason_name;
+		} else {
+			unenrollmentReason = { name: '' };
+		}
 	}
 </script>
 
 <GenericForm {action} {createItem} {deleteItem} {resetForm} {tableName} {updateItem}>
 	<div>
-		<Label for='name'
-		>Nombre
+		<Label for="name"
+			>Nombre
 			<Input
 				bind:value={unenrollmentReason.name}
 				class={defaultClass}
-				id='name'
-				placeholder='Nombre de la causa de baja'
+				id="name"
+				placeholder="Nombre de la causa de baja"
 				required
-				type='text'
+				type="text"
 			/>
 		</Label>
 	</div>

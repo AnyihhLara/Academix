@@ -20,7 +20,14 @@ export async function GET({ params }) {
 		throw error(404, {
 			message: `Rol con id ${role_id} no encontrado`
 		});
-	return json(result[0]);
+	let strValue = result[0].read_role;
+	const values = strValue.slice(1, -1).split(',');
+	const obj = {
+		role_id: Number(values[0]),
+		role_name: values[1],
+	};
+
+	return json(obj)
 }
 
 export async function DELETE({ params }) {

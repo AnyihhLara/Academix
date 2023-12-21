@@ -23,7 +23,14 @@ export async function GET({ params }) {
         throw error(404, {
             message: `Causa de baja con id ${unenrollment_reason_id} no encontrada`,
         })
-    return json(result[0])
+    let strValue = result[0].read_unenrollment_reason;
+    const values = strValue.slice(1, -1).split(',');
+    const obj = {
+        unenrollment_reason_id: Number(values[0]),
+        unenrollment_reason_name: values[1],
+    };
+
+    return json(obj)
 }
 
 export async function DELETE({ params }) {

@@ -2,18 +2,24 @@
 	import Table from '$lib/components/shared/Table.svelte';
 	import userService from '$lib/services/UserService.js';
 	import studentService from '$lib/services/StudentService.js';
+	import roleService from '$lib/services/RoleService.js';
 	import { onMount } from 'svelte';
 
-	onMount(() => {
+	onMount(async () => {
+		let roleServ = roleService.getInstance();
+		roles = await roleServ.getRoles();
+		roles = roles.map(({ role_name }) => (role_name ));
+		filters.find((filter) => filter.key === 'role_name').options = roles;
+		console.log(filters)
 		refreshItems();
 	});
 
-	let users = [],
+	let users = [], roles,
 		filters = [
 			{
 				name: 'Rol',
-				key: 'role',
-				options: ['Administrador', 'Estudiante', 'Profesor', 'Secretario'],
+				key: 'role_name',
+				options: [],
 				selectedOptions: []
 			}
 		],

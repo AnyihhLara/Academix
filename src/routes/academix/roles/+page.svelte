@@ -18,4 +18,4 @@
     }
 </script>
 
-<Table items={roles} {refreshItems} {tableName}/>
+<Table items={roles} {refreshItems} {tableName} isDeletable={false}/>

@@ -1,14 +1,6 @@
 <script>
 	import Card from '$lib/components/shared/Card.svelte';
 	import { goto } from '$app/navigation';
-	import { Button, Label, Modal, Popover } from 'flowbite-svelte';
-	import { EditOutline, ExclamationCircleOutline } from 'flowbite-svelte-icons';
-	import studentService from '$lib/services/StudentService.js';
-	import evaluationService from '$lib/services/EvaluationService.js';
-	import reportService from '$lib/services/ReportService.js';
-	import yearService from '$lib/services/YearService.js';
-	import groupService from '$lib/services/StudentsGroupService.js';
-	import { currentSchoolYear } from '$lib/stores/stores.js';
 
 	const gotoStudents = () => {
 		goto('/academix/students');
@@ -37,70 +29,12 @@
 
 	let defaultClass = 'flex-row space-y-5';
 	let btnText = 'Ver más';
-	let openModal = false;
-	let schoolYear = '2022-2023'; //temp
-	let isEditable = true; //temp
-	let students, years;
-	let studentServ = studentService.getInstance();
-	let evaluationServ = evaluationService.getInstance();
-	let service = reportService.getInstance();
-	let yearServ = yearService.getInstance();
-
-	async function xd() {
-		students = await studentServ.getStudents();
-		if (students) {
-			for (let i = 0; isEditable && i < students.length; i++) {
-				if (students[i].academic_situation !== 'Baja') {
-					evaluationServ.getEvaluationsOfStudent(students[i].student_id).then((j) => {
-						if (j.length <= 0) {
-							isEditable = false;
-						}
-					});
-				}
-			}
-		}
-	}
-	xd();
-	async function handleUpdate() {
-		let schoolYearParts = schoolYear.split('-');
-		let schoolYearStart = parseInt(schoolYearParts[0]);
-		let schoolYearEnd = parseInt(schoolYearParts[1]);
-		schoolYearStart++;
-		schoolYearEnd++;
-		schoolYear = `${schoolYearStart}-${schoolYearEnd}`; //temp
-		await updateData();
-		openModal = false;
-	}
-	let handleCancel = () => {
-		openModal = false;
-	};
-	async function updateData() {
-		
-	}
 </script>
 
 <section class="px-4 pt-3 pb-6">
-	<h1 class="text-center text-2xl mt-1 font-semibold text-primary-950 dark:text-primary-100">
+	<h1 class="text-center text-2xl mt-1 mb-2 font-semibold text-primary-950 dark:text-primary-100">
 		Módulos Secretaría
 	</h1>
-	<div class="flex items-center justify-end mb-4">
-		<Label for="school-year" class="text-2xl text-primary-950 dark:text-primary-100 mr-10"
-			>Curso escolar actual
-			<div class="flex justify-center items-center gap-4">
-				<Label class="text-secondary-700 text-xl text-center dark:text-primary-300"
-					>{schoolYear}</Label
-				>
-				{#if isEditable}
-					<EditOutline on:click={() => (openModal = !openModal)} />
-				{:else}
-					<EditOutline class="text-gray-500 dark:text-gray-400 cursor-not-allowed" id="b1" />
-					<Popover color="red" class="w-64 text-sm font-light " triggeredBy="#b1"
-						>No se puede modificar porque existen estudiantes sin nota final</Popover
-					>
-				{/if}
-			</div>
-		</Label>
-	</div>
 	<div class="{defaultClass} justify-center items-center">
 		<div class="flex gap-5 justify-center">
 			<div class={defaultClass}>
@@ -150,7 +84,7 @@
 	</div>
 </section>
 
-<Modal
+<!-- <Modal
 	title="Modificar curso escolar actual"
 	bind:open={openModal}
 	autoclose
@@ -167,4 +101,4 @@
 		<Button color="red" on:click={handleUpdate}>Sí, estoy seguro</Button>
 		<Button color="light" on:click={handleCancel}>No, cancelar</Button>
 	</div>
-</Modal>
+</Modal> -->

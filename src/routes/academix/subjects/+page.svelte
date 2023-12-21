@@ -33,7 +33,7 @@
 </script>
 
 {#if $page.data.role === 'Secretario'}
-    <Table {tableName} items={subjects} {filters} {isFilterable} {refreshItems}/>
+    <Table {tableName} items={subjects} {filters} {isFilterable} {refreshItems} {isDeletable}/>
 {:else}
     <Table
             {tableName}

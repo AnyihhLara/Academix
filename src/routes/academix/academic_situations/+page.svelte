@@ -18,4 +18,4 @@
     }
 </script>
 
-<Table items={academicSituations} {refreshItems} {tableName}/>
+<Table items={academicSituations} {refreshItems} {tableName} isDeletable={false}/>

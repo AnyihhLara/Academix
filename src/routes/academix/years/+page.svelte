@@ -18,4 +18,4 @@
 	};
 </script>
 
-<Table items={years} {refreshItems} {tableName} />
+<Table items={years} {refreshItems} {tableName} isDeletable={false} />

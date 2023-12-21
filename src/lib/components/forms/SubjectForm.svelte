@@ -13,6 +13,7 @@
 			years = years.filter(({ school_year }) => school_year === $currentSchoolYear);
 			years = years.map(({ year_id, year }) => ({ value: year_id, name: year }));
 		}
+		resetForm();
 	});
 
 	export let action;
@@ -25,11 +26,7 @@
 	const dispatch = createEventDispatcher();
 
 	async function createItem() {
-		await subjectServ.createSubject(
-			subject.name,
-			subject.plannedHours,
-			subject.year
-		);
+		await subjectServ.createSubject(subject.name, subject.plannedHours, subject.year);
 		dispatch('created');
 	}
 
@@ -48,32 +45,47 @@
 		dispatch('deleted');
 	}
 
-	function resetForm() {
-		subject = { name: '', plannedHours: 0, year: 0 };
+	async function resetForm() {
+		console.log('reset');
+		if (item) {
+			let { subject_id, subject_name, planned_hours, year } = await subjectServ.getSubject(
+				item.subject_id
+			);
+			item.subject_id = subject_id;
+			item.subject_name = subject_name;
+			item.planned_hours = planned_hours;
+			item.year = year;
+			console.log(item);
+			subject.name = item.subject_name;
+			subject.plannedHours = item.planned_hours;
+			subject.year = item.year;
+		} else {
+			subject = { name: '', plannedHours: 0, year: 0 };
+		}
 	}
 </script>
 
 <GenericForm {action} {createItem} {deleteItem} {resetForm} {tableName} {updateItem}>
 	<div>
-		<Label for='name'
-		>Nombre
+		<Label for="name"
+			>Nombre
 			<Input
 				bind:value={subject.name}
 				class={defaultClass}
-				id='name'
-				placeholder='Nombre de la asignatura'
+				id="name"
+				placeholder="Nombre de la asignatura"
 				required
-				type='text'
+				type="text"
 			/>
 		</Label>
 	</div>
 	<div>
-		<Label for='plannedHours'
-		>Horas planificadas
+		<Label for="plannedHours"
+			>Horas planificadas
 			<NumberInput
 				bind:value={subject.plannedHours}
 				class={defaultClass}
-				id='plannedHours'
+				id="plannedHours"
 				required
 			/>
 		</Label>
@@ -81,12 +93,12 @@
 
 	<div>
 		<Label
-		>Año
+			>Año
 			<Select
 				bind:value={subject.year}
 				class={defaultClass}
 				items={years}
-				placeholder='Selecciona el año académico de la asignatura'
+				placeholder="Selecciona el año académico de la asignatura"
 				required
 			/>
 		</Label>

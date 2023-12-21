@@ -8,28 +8,29 @@
 	import subjectService from '$lib/services/SubjectService.js';
 
 	onMount(async () => {
-			if (action !== 'Delete') {
-				let evaluationTypeServ = evaluationTypeService.getInstance();
-				let studentServ = studentService.getInstance();
-				let subjectServ = subjectService.getInstance();
-				evaluationNumericalValues = await evaluationTypeServ.getEvaluationTypes();
-				evaluationNumericalValues = evaluationNumericalValues.map(
-					({ evaluation_type_id, evaluation_numerical_value }) =>
-						({ value: evaluation_type_id, name: evaluation_numerical_value })
-				);
-				students = await studentServ.getStudents();
-				students = students.map(
-					({ student_id, student_code }) =>
-						({ value: student_id, name: student_code })
-				);
-				subjects = await subjectServ.getSubjects();
-				subjects = subjects.map(
-					({ subject_id, subject_name }) =>
-						({ value: subject_id, name: subject_name })
-				);
-			}
+		if (action !== 'Delete') {
+			let evaluationTypeServ = evaluationTypeService.getInstance();
+			let studentServ = studentService.getInstance();
+			let subjectServ = subjectService.getInstance();
+			evaluationNumericalValues = await evaluationTypeServ.getEvaluationTypes();
+			evaluationNumericalValues = evaluationNumericalValues.map(
+				({ evaluation_type_id, evaluation_numerical_value }) => ({
+					value: evaluation_type_id,
+					name: evaluation_numerical_value
+				})
+			);
+			students = await studentServ.getStudents();
+			students = students.map(({ student_id, student_code }) => ({
+				value: student_id,
+				name: student_code
+			}));
+			subjects = await subjectServ.getSubjects();
+			subjects = subjects.map(({ subject_id, subject_name }) => ({
+				value: subject_id,
+				name: subject_name
+			}));
 		}
-	);
+	});
 
 	export let action;
 	export let item = null;
@@ -52,6 +53,7 @@
 	}
 
 	async function updateItem() {
+		isValidEvaluationDate(evaluation.evaluationDate);
 		await evaluationServ.updateEvaluation(
 			item.evaluation_id,
 			evaluation.evaluationType,
@@ -70,52 +72,62 @@
 	function resetForm() {
 		evaluation = { evaluationType: '', student: '', subject: '', evaluationDate: '' };
 	}
+	function isValidEvaluationDate(evaluationDate) {
+		let actualDate = new Date().toISOString().split('T')[0];
+		let dateParts = evaluationDate.split('-');
+		let inDate = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]);
+		if (inDate > new Date(actualDate)) {
+			throw new Error('La fecha de la evaluación no puede ser mayor que la fecha actual.');
+		}
+	}
 </script>
 
 <GenericForm {action} {createItem} {deleteItem} {resetForm} {tableName} {updateItem}>
 	<div>
 		<Label
-		>Nota
+			>Nota
 			<Select
 				bind:value={evaluation.evaluationType}
-				class='mt-2'
+				class="mt-2"
 				items={evaluationNumericalValues}
-				placeholder='Selecciona la nota de la evaluación'
+				placeholder="Selecciona la nota de la evaluación"
 				required
 			/>
 		</Label>
 	</div>
 	<div>
 		<Label
-		>Estudiante
+			>Estudiante
 			<Select
 				bind:value={evaluation.student}
-				class='mt-2'
+				class="mt-2"
 				items={students}
-				placeholder='Selecciona al estudiante de la evaluación'
-				required />
+				placeholder="Selecciona al estudiante de la evaluación"
+				required
+			/>
 		</Label>
 	</div>
 	<div>
 		<Label
-		>Asignatura
+			>Asignatura
 			<Select
 				bind:value={evaluation.subject}
-				class='mt-2'
+				class="mt-2"
 				items={subjects}
-				placeholder='Selecciona la asignatura de la evaluación'
-				required />
+				placeholder="Selecciona la asignatura de la evaluación"
+				required
+			/>
 		</Label>
 	</div>
 	<div>
-		<Label for='evaluationDate'
-		>Fecha
+		<Label for="evaluationDate"
+			>Fecha
 			<Input
 				bind:value={evaluation.evaluationDate}
 				class={defaultClass}
-				id='evaluationDate'
+				id="evaluationDate"
 				required
-				type='date'
+				type="date"
 			/>
 		</Label>
 	</div>

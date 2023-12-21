@@ -22,7 +22,15 @@ export async function GET({ params }) {
         throw error(404, {
             message: `Asignatura con id ${subject_id} no encontrada`,
         })
-    return json(result[0])
+    let strValue = result[0].read_subject;
+    const values = strValue.slice(1, -1).split(',');
+    const obj = {
+        subject_id: Number(values[0]),
+        subject_name: values[1],
+        planned_hours: Number(values[2]),
+        year: Number(values[3])
+    };
+    return json(obj);
 }
 
 export async function DELETE({ params }) {

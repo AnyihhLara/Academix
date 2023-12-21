@@ -30,6 +30,7 @@ export const handle = async ({ event, resolve }) => {
 			);
 			if (s.length === 0) throw new Error('Usuario incorrecto o no autorizado');
 			const hashed = CryptoJS.SHA256(env.SECRET_KEY + pass).toString();
+			console.log(hashed)
 			if (s[0].user_password !== hashed) throw new Error('Contraseña incorrecta');
 			return {
 				id_user: s[0].user_id,

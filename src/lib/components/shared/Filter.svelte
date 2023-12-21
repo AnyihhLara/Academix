@@ -31,7 +31,7 @@
 			<DropdownItem class="flex items-center justify-between">
 				<ChevronLeftSolid class="w-3 h-3 me-2 text-primary-700 dark:text-white" />{filter.name}
 			</DropdownItem>
-			<Dropdown placement="left-start" class="w-44 p-3 space-y-3 text-sm" if={dropdownOpen}>
+			<Dropdown placement="left-start" class="w-44 p-3 space-y-3 text-sm overflow-y-auto max-h-64 " if={dropdownOpen}>
 				{#each filter.options as option}
 					<li class="rounded p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
 						<Checkbox

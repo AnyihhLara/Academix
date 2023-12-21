@@ -1,8 +1,13 @@
 <script>
 	import Card from '$lib/components/shared/Card.svelte';
 	import { goto } from '$app/navigation';
-	import { Button, Input, Label, Modal, Popover } from 'flowbite-svelte';
+	import { Button, Label, Modal, Popover } from 'flowbite-svelte';
 	import { EditOutline, ExclamationCircleOutline } from 'flowbite-svelte-icons';
+	import studentService from '$lib/services/StudentService.js';
+	import evaluationService from '$lib/services/EvaluationService.js';
+	import reportService from '$lib/services/ReportService.js';
+	import yearService from '$lib/services/YearService.js';
+	import groupService from '$lib/services/StudentsGroupService.js';
 	import { currentSchoolYear } from '$lib/stores/stores.js';
 
 	const gotoStudents = () => {
@@ -34,21 +39,44 @@
 	let btnText = 'Ver más';
 	let openModal = false;
 	let schoolYear = '2022-2023'; //temp
-	let isEditable = false; //temp
-	let handleUpdate = () => {
+	let isEditable = true; //temp
+	let students, years;
+	let studentServ = studentService.getInstance();
+	let evaluationServ = evaluationService.getInstance();
+	let service = reportService.getInstance();
+	let yearServ = yearService.getInstance();
+
+	async function xd() {
+		students = await studentServ.getStudents();
+		if (students) {
+			for (let i = 0; isEditable && i < students.length; i++) {
+				if (students[i].academic_situation !== 'Baja') {
+					evaluationServ.getEvaluationsOfStudent(students[i].student_id).then((j) => {
+						if (j.length <= 0) {
+							isEditable = false;
+						}
+					});
+				}
+			}
+		}
+	}
+	xd();
+	async function handleUpdate() {
 		let schoolYearParts = schoolYear.split('-');
 		let schoolYearStart = parseInt(schoolYearParts[0]);
 		let schoolYearEnd = parseInt(schoolYearParts[1]);
 		schoolYearStart++;
 		schoolYearEnd++;
 		schoolYear = `${schoolYearStart}-${schoolYearEnd}`; //temp
-		updateData();
+		await updateData();
 		openModal = false;
-	};
+	}
 	let handleCancel = () => {
 		openModal = false;
 	};
-	function updateData() {}
+	async function updateData() {
+		
+	}
 </script>
 
 <section class="px-4 pt-3 pb-6">

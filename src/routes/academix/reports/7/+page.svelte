@@ -15,7 +15,7 @@
 		years = years.filter(({ school_year }) => school_year === $currentSchoolYear);
 		years = years.map(({ year }) => ({ value: year, name: year }));
 		groups = await studentsGroupServ.getStudentsGroups();
-		refreshItems();
+		await refreshItems();
 	});
 
 	const tableName = 'Reporte 7';
@@ -122,7 +122,7 @@
 	</div>
 	{#if validDate && startDate && endDate && selectedYear && selectedGroup && failedStudentsByGroup}
 		<section class='mt-6 mx-3 pb-2'>
-			{#if failedStudentsByGroup.school_years}
+			{#if failedStudentsByGroup.school_years > 0}
 				<div class='flex justify-end pr-6'>
 					<Button on:click={downloadReport7} size='sm'>Descargar PDF</Button>
 				</div>

@@ -33,7 +33,7 @@ export async function POST({ request, cookies }) {
 				id_role: s[0].role_id
 			};
 			cookies.set('academix-user', username, getCookieSettings());
-			cookies.set('academix-pass', password, getCookieSettings());
+			cookies.set('academix-pass', hashed, getCookieSettings());
 
 			return login;
 		})
@@ -42,5 +42,4 @@ export async function POST({ request, cookies }) {
 			throw error(401, { message: e.message });
 		});
 	return json(result);
-	// TODO: Encryption!!!
 }

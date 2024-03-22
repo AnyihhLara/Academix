@@ -38,11 +38,6 @@
 				})
 			);
 		}
-		// if (action === 'Update') {
-		// disabledYear = true;
-		// academicSituations = [{ value: 'Baja', name: 'Baja' }];
-		//see later groups and academic situations
-		// }
 	});
 	export let action;
 	export let item = null;
@@ -131,105 +126,109 @@
 			group: null
 		};
 	}
+
 	function isValidCode(studentCode) {
 		let valid = /\D/;
+		if (valid.test(studentCode))
+			throw new Error('El código del estudiante solo puede contener números.');
 		if (studentCode.length < 11) {
 			throw new Error('El código del estudiante tiene que tener 11 dígitos.');
 		}
-		if (valid.test(studentCode))
-			throw new Error('El código del estudiante solo puede contener números.');
+		if (studentCode.length > 11) {
+			throw new Error('El código del estudiante no puede tener más de 11 dígitos.');
+		}
 	}
 </script>
 
 <GenericForm {action} {createItem} {deleteItem} {resetForm} {tableName} {updateItem}>
 	<div>
-		<Label for="code">
+		<Label for='code'>
 			Código
 			<Input
 				bind:value={student.code}
 				class={defaultClass}
-				id="code"
-				placeholder="Código del estudiante"
+				id='code'
+				placeholder='Código del estudiante'
 				required
-				type="text"
+				type='text'
 			/>
 		</Label>
 	</div>
 	<div>
-		<Label for="name">
+		<Label for='name'>
 			Nombre
 			<Input
 				bind:value={student.name}
 				class={defaultClass}
-				id="name"
-				placeholder="Nombre del estudiante"
+				id='name'
+				placeholder='Nombre del estudiante'
 				required
-				type="text"
+				type='text'
 			/>
 		</Label>
 	</div>
 
 	<div>
-		<Label for="lastname">
+		<Label for='lastname'>
 			Apellidos
 			<Input
 				bind:value={student.lastname}
 				class={defaultClass}
-				id="lastname"
-				placeholder="Apellidos del estudiante"
+				id='lastname'
+				placeholder='Apellidos del estudiante'
 				required
-				type="text"
+				type='text'
 			/>
 		</Label>
 	</div>
 	<div>
 		<Label
-			>Sexo
+		>Sexo
 			<Select
 				bind:value={student.sex}
 				class={defaultClass}
 				items={sexes}
-				placeholder="Selecciona el sexo del estudiante"
+				placeholder='Selecciona el sexo del estudiante'
 				required
 			/>
 		</Label>
 	</div>
 	<div>
-		<Label for="municipality">
+		<Label for='municipality'>
 			Municipio
 			<Input
 				bind:value={student.municipality}
 				class={defaultClass}
-				id="municipality"
-				placeholder="Municipio del estudiante"
+				id='municipality'
+				placeholder='Municipio del estudiante'
 				required
-				type="text"
+				type='text'
 			/>
 		</Label>
 	</div>
 	<div>
 		<Label
-			>Año
+		>Año
 			<Select
 				bind:value={student.academicYear}
 				class={defaultClass}
-				items={years}
-				placeholder="Primero selecciona el año académico del estudiante..."
-				required
 				disabled={disabledYear}
+				items={years}
+				placeholder='Primero selecciona el año académico del estudiante...'
 				readonly={disabledYear}
+				required
 			/>
 		</Label>
 	</div>
 	{#if selectableGroups}
 		<div>
 			<Label
-				>Grupo
+			>Grupo
 				<Select
 					bind:value={student.group}
 					class={defaultClass}
 					items={selectableGroups}
-					placeholder="...luego selecciona el grupo del estudiante"
+					placeholder='...luego selecciona el grupo del estudiante'
 					required
 				/>
 			</Label>
@@ -237,12 +236,12 @@
 	{/if}
 	<div>
 		<Label
-			>Situación Académica
+		>Situación Académica
 			<Select
 				bind:value={student.academicSituation}
 				class={defaultClass}
 				items={academicSituations}
-				placeholder="Selecciona la situación académica del estudiante"
+				placeholder='Selecciona la situación académica del estudiante'
 				required
 			/>
 		</Label>
@@ -250,12 +249,12 @@
 	{#if situation && situation.name === 'Baja'}
 		<div>
 			<Label
-				>Causa de Baja
+			>Causa de Baja
 				<Select
 					bind:value={student.unenrollmentReason}
 					class={defaultClass}
 					items={unenrollmentReasons}
-					placeholder="Selecciona la causa de baja del estudiante"
+					placeholder='Selecciona la causa de baja del estudiante'
 					required
 				/>
 			</Label>

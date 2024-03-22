@@ -31,74 +31,55 @@
 	let btnText = 'Ver más';
 </script>
 
-<section class="px-4 pt-3 pb-6">
-	<h1 class="text-center text-2xl mt-1 mb-2 font-semibold text-primary-950 dark:text-primary-100">
+<section class='px-4 pt-3 pb-6'>
+	<h1 class='text-center text-2xl mt-1 mb-2 font-semibold text-primary-950 dark:text-primary-100'>
 		Módulos Secretaría
 	</h1>
-	<div class="{defaultClass} justify-center items-center">
-		<div class="flex gap-5 justify-center">
+	<div class='{defaultClass} justify-center items-center'>
+		<div class='flex gap-5 justify-center'>
 			<div class={defaultClass}>
 				<Card on:click={gotoStudents}>
-					<span slot="tittle">Listado de estudiantes</span>
-					<span slot="btn-text">{btnText}</span>
+					<span slot='tittle'>Listado de estudiantes</span>
+					<span slot='btn-text'>{btnText}</span>
 				</Card>
 				<Card on:click={gotoSubjects}>
-					<span slot="tittle">Listado de asignaturas</span>
-					<span slot="btn-text">{btnText}</span>
+					<span slot='tittle'>Listado de asignaturas</span>
+					<span slot='btn-text'>{btnText}</span>
 				</Card>
 			</div>
 			<div class={defaultClass}>
 				<Card on:click={gotoYears}>
-					<span slot="tittle">Años existentes</span>
-					<span slot="btn-text">{btnText}</span>
+					<span slot='tittle'>Años existentes</span>
+					<span slot='btn-text'>{btnText}</span>
 				</Card>
 				<Card on:click={gotoStudentsGroups}>
-					<span slot="tittle">Grupos existentes</span>
-					<span slot="btn-text">{btnText}</span>
+					<span slot='tittle'>Grupos existentes</span>
+					<span slot='btn-text'>{btnText}</span>
 				</Card>
 			</div>
 			<div>
 				<Card on:click={gotoReports}>
-					<span slot="tittle">Reportes</span>
-					<div class="flex justify-center">
-						<img alt="Reportes" class="mb-1.5 h-36 w-96" src="/reports.jpg" />
+					<span slot='tittle'>Reportes</span>
+					<div class='flex justify-center'>
+						<img alt='Reportes' class='mb-1.5 h-36 w-96' src='/reports.jpg' />
 					</div>
-					<span slot="btn-text">{btnText}</span>
+					<span slot='btn-text'>{btnText}</span>
 				</Card>
 			</div>
 		</div>
-		<div class="flex gap-5 justify-center">
+		<div class='flex gap-5 justify-center'>
 			<Card on:click={gotoAcademicSituations}>
-				<span slot="tittle">Listado de situaciones académicas existentes</span>
-				<span slot="btn-text">{btnText}</span>
+				<span slot='tittle'>Listado de situaciones académicas existentes</span>
+				<span slot='btn-text'>{btnText}</span>
 			</Card>
 			<Card on:click={gotoUnenrollmentReasons}>
-				<span slot="tittle">Listado de causas de baja existentes</span>
-				<span slot="btn-text">{btnText}</span>
+				<span slot='tittle'>Listado de causas de baja existentes</span>
+				<span slot='btn-text'>{btnText}</span>
 			</Card>
 			<Card on:click={gotoEvaluationTypes}>
-				<span slot="tittle">Listado de tipos de evaluaciones existentes</span>
-				<span slot="btn-text">{btnText}</span>
+				<span slot='tittle'>Listado de tipos de evaluaciones existentes</span>
+				<span slot='btn-text'>{btnText}</span>
 			</Card>
 		</div>
 	</div>
 </section>
-
-<!-- <Modal
-	title="Modificar curso escolar actual"
-	bind:open={openModal}
-	autoclose
-	size="sm"
-	class="w-full"
->
-	<ExclamationCircleOutline class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" />
-	<p class="mb-4 text-gray-500 dark:text-gray-300 text-center">
-		¿Está seguro que desea modificar el curso escolar actual?
-		<br />
-		(esta acción es automática e irreversible)
-	</p>
-	<div class="flex justify-center items-center space-x-4">
-		<Button color="red" on:click={handleUpdate}>Sí, estoy seguro</Button>
-		<Button color="light" on:click={handleCancel}>No, cancelar</Button>
-	</div>
-</Modal> -->

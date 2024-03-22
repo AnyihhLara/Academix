@@ -4,7 +4,7 @@
 	import unenrollmentReasonService from '$lib/services/UnenrollmentReasonService.js';
 	import { createEventDispatcher, onMount } from 'svelte';
 
-	onMount(() => resetForm());
+	onMount(async () => await resetForm());
 
 	export let action;
 	export let item = null;
@@ -49,15 +49,15 @@
 
 <GenericForm {action} {createItem} {deleteItem} {resetForm} {tableName} {updateItem}>
 	<div>
-		<Label for="name"
-			>Nombre
+		<Label for='name'
+		>Nombre
 			<Input
 				bind:value={unenrollmentReason.name}
 				class={defaultClass}
-				id="name"
-				placeholder="Nombre de la causa de baja"
+				id='name'
+				placeholder='Nombre de la causa de baja'
 				required
-				type="text"
+				type='text'
 			/>
 		</Label>
 	</div>

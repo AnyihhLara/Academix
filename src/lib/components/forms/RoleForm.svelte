@@ -4,7 +4,7 @@
 	import roleService from '$lib/services/RoleService.js';
 	import { createEventDispatcher, onMount } from 'svelte';
 
-	onMount(() => resetForm());
+	onMount(async () => await resetForm());
 
 	export let action;
 	export let item = null;
@@ -45,15 +45,15 @@
 
 <GenericForm {action} {createItem} {deleteItem} {resetForm} {tableName} {updateItem}>
 	<div>
-		<Label for="name"
-			>Nombre
+		<Label for='name'
+		>Nombre
 			<Input
 				bind:value={role.name}
 				class={defaultClass}
-				id="name"
-				placeholder="Nombre del rol"
+				id='name'
+				placeholder='Nombre del rol'
 				required
-				type="text"
+				type='text'
 			/>
 		</Label>
 	</div>

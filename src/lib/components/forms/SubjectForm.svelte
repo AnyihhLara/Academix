@@ -13,7 +13,7 @@
 			years = years.filter(({ school_year }) => school_year === $currentSchoolYear);
 			years = years.map(({ year_id, year }) => ({ value: year_id, name: year }));
 		}
-		resetForm();
+		await resetForm();
 	});
 
 	export let action;
@@ -67,25 +67,25 @@
 
 <GenericForm {action} {createItem} {deleteItem} {resetForm} {tableName} {updateItem}>
 	<div>
-		<Label for="name"
-			>Nombre
+		<Label for='name'
+		>Nombre
 			<Input
 				bind:value={subject.name}
 				class={defaultClass}
-				id="name"
-				placeholder="Nombre de la asignatura"
+				id='name'
+				placeholder='Nombre de la asignatura'
 				required
-				type="text"
+				type='text'
 			/>
 		</Label>
 	</div>
 	<div>
-		<Label for="plannedHours"
-			>Horas planificadas
+		<Label for='plannedHours'
+		>Horas planificadas
 			<NumberInput
 				bind:value={subject.plannedHours}
 				class={defaultClass}
-				id="plannedHours"
+				id='plannedHours'
 				required
 			/>
 		</Label>
@@ -93,12 +93,12 @@
 
 	<div>
 		<Label
-			>Año
+		>Año
 			<Select
 				bind:value={subject.year}
 				class={defaultClass}
 				items={years}
-				placeholder="Selecciona el año académico de la asignatura"
+				placeholder='Selecciona el año académico de la asignatura'
 				required
 			/>
 		</Label>

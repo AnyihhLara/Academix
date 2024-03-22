@@ -12,7 +12,7 @@
 	let evaluationTypeServ = evaluationTypeService.getInstance();
 	const dispatch = createEventDispatcher();
 
-	onMount(() => resetForm());
+	onMount(async () => await resetForm());
 
 	async function createItem() {
 		item = await evaluationTypeServ.createEvaluationType(

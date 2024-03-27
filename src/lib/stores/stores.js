@@ -1,4 +1,4 @@
-import { readable, writable } from 'svelte/store';
+import { readable, writable, derived } from 'svelte/store';
 import AcademicSituationForm from '$lib/components/forms/AcademicSituationForm.svelte';
 import EvaluationForm from '$lib/components/forms/EvaluationForm.svelte';
 import EvaluationTypeForm from '$lib/components/forms/EvaluationTypeForm.svelte';
@@ -320,3 +320,42 @@ export const pdfHeaders = readable([
 		}
 	}
 ]);
+
+//i18n
+import translations from "../utils/translations";
+
+export const locale = writable("es");
+export const locales = Object.keys(translations);
+
+function translate(locale, key, vars) {
+	if (key && locale) {
+		let text = '';
+
+		if (locale === 'en') {
+
+			text = translations[locale][key];
+			console.log(text)
+
+			if (!text) {
+				text = key;
+			}
+			else {
+				Object.keys(vars).map((k) => {
+					const regex = new RegExp(`{{${k}}}`, "g");
+					text = text.replace(regex, vars[k]);
+				});
+			}
+
+		}
+		else {
+			text = key;
+		}
+		return text;
+	}
+}
+
+export const t = derived(locale, ($locale) => (key, vars = {}) =>
+	translate($locale, key, vars)
+);
+
+

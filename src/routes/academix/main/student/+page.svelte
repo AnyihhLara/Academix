@@ -7,6 +7,7 @@
 	import evaluationService from '$lib/services/EvaluationService.js';
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
+	import { t } from '$lib/stores/stores.js';
 
 	onMount(() => {
 		refreshItems();
@@ -53,7 +54,7 @@
 
 <section class="py-2 pb-2 pt-4 grid justify-center w-full">
 	<h1 class="text-center text-2xl mb-4 font-semibold text-primary-950 dark:text-primary-100">
-		Perfil de estudiante
+		{$t('Perfil de estudiante')}
 	</h1>
 	<Card
 		cardClass="max-w-full"
@@ -66,27 +67,30 @@
 		</svelte:fragment>
 		<div class="flex gap-5">
 			<div class="grid gap-5 mb-4">
-				<Label>Código:<span class="mx-2">{student.student_code}</span></Label>
-				<Label>Nombre:<span class="mx-2">{student.student_name}</span></Label>
-				<Label>Apellidos:<span class="mx-2">{student.lastname}</span></Label>
-				<Label>Año académico:<span class="mx-2">{student.year}</span></Label>
+				<Label>{$t('Código')}:<span class="mx-2">{student.student_code}</span></Label>
+				<Label>{$t('Nombre')}:<span class="mx-2">{student.student_name}</span></Label>
+				<Label>{$t('Apellidos')}:<span class="mx-2">{student.lastname}</span></Label>
+				<Label>{$t('Año académico')}:<span class="mx-2">{student.year}</span></Label>
 			</div>
 			<div class="grid gap-5 mb-4">
-				<Label>Grupo:<span class="mx-2">{student.group_number}</span></Label>
-				<Label>Sexo:<span class="mx-2">{student.sex}</span></Label>
-				<Label>Municipio:<span class="mx-2">{student.municipality}</span></Label>
-				<Label>Situación académica:<span class="mx-2">{student.academic_situation}</span></Label>
+				<Label>{$t('Grupo')}:<span class="mx-2">{student.group_number}</span></Label>
+				<Label>{$t('Sexo')}:<span class="mx-2">{student.sex}</span></Label>
+				<Label>{$t('Municipio')}:<span class="mx-2">{student.municipality}</span></Label>
+				<Label
+					>{$t('Situación académica')}:<span class="mx-2">{$t(student.academic_situation)}</span
+					></Label
+				>
 			</div>
 		</div>
-		<img alt="reportes" class="w-52 h-32" src="/reports.jpg" />
+		<img alt="reportes-reports" class="w-52 h-32" src="/reports.jpg" />
 		<span slot="div-btn">
 			{#if student.unenrollment_reason}
 				<Label class="ml-[184px]"
-					>Causa de baja:<span class="mx-2">{student.unenrollment_reason}</span></Label
+					>{$t('Causa de baja')}:<span class="mx-2">{$t(student.unenrollment_reason)}</span></Label
 				>
 			{/if}
 		</span>
-		<span slot="btn-text">Reportes</span>
+		<span slot="btn-text">{$t('Reportes')}</span>
 	</Card>
 	<Table
 		{filters}

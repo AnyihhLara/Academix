@@ -7,7 +7,7 @@
 		TableHead,
 		TableHeadCell
 	} from 'flowbite-svelte';
-	import { tables } from '$lib/stores/stores.js';
+	import { tables, t } from '$lib/stores/stores.js';
 	import Filter from './Filter.svelte';
 
 	export let tableName = '',
@@ -22,7 +22,8 @@
 
 	let tableInfo = $tables.find((table) => table.name === tableName),
 		component = null,
-		tableColumns = null;
+		tableColumns = null,
+		tableHeader = '';
 	$: filteredItems = items;
 	if (tableInfo) {
 		component = tableInfo.component;
@@ -33,7 +34,9 @@
 		component = tableInfo.component;
 		tableColumns = tableInfo.tableColumns;
 	}
-
+	$: if (tableName) {
+		tableHeader = $t(tableName);
+	}
 	let defaultClass = 'px-4 py-3';
 
 	function applyFilters() {
@@ -52,7 +55,7 @@
 	<div class="flex justify-between items-center">
 		{#if isNamed}
 			<h2 class="font-bold block mb-3 ml-3 text-secondary-950 dark:text-secondary-100 text-xl">
-				{tableName}
+				{tableHeader}
 			</h2>
 		{/if}
 		<div class="flex gap-3 mb-2 mr-3">
@@ -68,7 +71,7 @@
 		<TableHead>
 			{#if tableColumns}
 				{#each tableColumns as column}
-					<TableHeadCell padding={defaultClass} scope="col">{column.label}</TableHeadCell>
+					<TableHeadCell padding={defaultClass} scope="col">{$t(column.label)}</TableHeadCell>
 				{/each}
 				{#if isUpdatable}
 					<TableHeadCell padding={defaultClass} scope="col" />
@@ -84,7 +87,7 @@
 					<TableBodyRow>
 						{#if tableColumns}
 							{#each tableColumns as column}
-								<TableBodyCell tdClass={defaultClass}>{item[column.key]}</TableBodyCell>
+								<TableBodyCell tdClass={defaultClass}>{$t(item[column.key])}</TableBodyCell>
 							{/each}
 						{/if}
 						{#if component}

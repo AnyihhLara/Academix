@@ -1,13 +1,14 @@
 <script>
 	import { Input, Label } from 'flowbite-svelte';
 	import { EyeOutline, EyeSlashOutline } from 'flowbite-svelte-icons';
+	import { t } from '$lib/stores/stores.js';
 
 	let show = false;
 	export let password;
 </script>
 
 <Label for="show-password">
-	Contraseña
+	{$t('Contraseña')}
 	<Input
 		id="show-password"
 		type={show ? 'text' : 'password'}

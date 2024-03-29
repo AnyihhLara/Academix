@@ -8,21 +8,15 @@
 	onMount(async () => {
 		let roleServ = roleService.getInstance();
 		roles = await roleServ.getRoles();
-		roles = roles.map(({ role_name }) => (role_name ));
+		roles = roles.map(({ role_name }) => role_name);
 		filters.find((filter) => filter.key === 'role_name').options = roles;
-		console.log(filters)
+		console.log(filters);
 		refreshItems();
 	});
 
-	let users = [], roles,
-		filters = [
-			{
-				name: 'Rol',
-				key: 'role_name',
-				options: [],
-				selectedOptions: []
-			}
-		],
+	let users = [],
+		roles,
+		filters = [{ name: 'Rol', key: 'role_name', options: [], selectedOptions: [] }],
 		isFilterable = true;
 	let tableName = 'Usuarios';
 	let userServ = userService.getInstance();

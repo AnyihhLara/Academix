@@ -6,6 +6,7 @@
 	import { createEventDispatcher, onMount } from 'svelte';
 	import roleService from '$lib/services/RoleService.js';
 	import studentService from '$lib/services/StudentService.js';
+	import { t } from '$lib/stores/stores.js';
 
 	onMount(async () => {
 		if (action !== 'Delete') {
@@ -18,7 +19,7 @@
 
 	export let action;
 	export let item = null;
-	let tableName = 'usuario',
+	let tableName = 'Usuario',
 		defaultClass = 'mt-2',
 		user = { username: '', password: '', role: null, student_id: null };
 	let roles, students;
@@ -34,29 +35,21 @@
 	let selectableStudents;
 	$: if (selectedRole && selectedRole.name === 'Estudiante') {
 		selectableStudents = students.filter(({ user_id }) => user_id === null);
-		selectableStudents = selectableStudents.map(
-			({ student_id, student_code }) => ({ value: student_id, name: student_code })
-		);
+		selectableStudents = selectableStudents.map(({ student_id, student_code }) => ({
+			value: student_id,
+			name: student_code
+		}));
 	}
 
 	async function createItem() {
-		let { user_id } = await userServ.createUser(
-			user.username,
-			user.password,
-			user.role
-		);
+		let { user_id } = await userServ.createUser(user.username, user.password, user.role);
 
 		if (user.student_id) await assignStudentToUser(user.student_id, user_id);
 		dispatch('created');
 	}
 
 	async function updateItem() {
-		await userServ.updateUser(
-			item.user_id,
-			user.username,
-			user.password,
-			user.role
-		);
+		await userServ.updateUser(item.user_id, user.username, user.password, user.role);
 
 		if (item.code !== item.user_id && item.code !== '-') {
 			let { student_id } = students.find(({ student_code }) => student_code === item.code);
@@ -102,20 +95,19 @@
 
 		students = await studentServ.getStudents();
 	}
-
 </script>
 
 <GenericForm {action} {createItem} {deleteItem} {resetForm} {tableName} {updateItem}>
 	<div>
-		<Label for='name'
-		>Nombre de usuario
+		<Label for="name"
+			>{$t('Nombre de usuario')}
 			<Input
 				bind:value={user.username}
 				class={defaultClass}
-				id='name'
-				placeholder='Nombre del usuario'
+				id="name"
+				placeholder={$t('Nombre del usuario')}
 				required
-				type='text'
+				type="text"
 			/>
 		</Label>
 	</div>
@@ -125,12 +117,12 @@
 
 	<div>
 		<Label
-		>Rol
+			>{$t('Rol')}
 			<Select
 				bind:value={user.role}
 				class={defaultClass}
 				items={roles}
-				placeholder='Selecciona el rol del usuario'
+				placeholder={$t('Selecciona el rol del usuario')}
 				required
 			/>
 		</Label>
@@ -138,13 +130,14 @@
 	{#if selectedRole && selectedRole.name === 'Estudiante'}
 		<div>
 			<Label
-			>Estudiante
+				>{$t('Estudiante')}
 				<Select
 					bind:value={user.student_id}
-					class='mt-2'
+					class="mt-2"
 					items={selectableStudents}
-					placeholder='Selecciona al estudiante para este usuario'
-					required />
+					placeholder={$t('Selecciona al estudiante para este usuario')}
+					required
+				/>
 			</Label>
 		</div>
 	{/if}

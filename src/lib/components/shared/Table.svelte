@@ -87,7 +87,7 @@
 					<TableBodyRow>
 						{#if tableColumns}
 							{#each tableColumns as column}
-								<TableBodyCell tdClass={defaultClass}>{$t(item[column.key])}</TableBodyCell>
+								<TableBodyCell tdClass={defaultClass}>{item[column.key]}</TableBodyCell>
 							{/each}
 						{/if}
 						{#if component}

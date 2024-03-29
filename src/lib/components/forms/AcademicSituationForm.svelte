@@ -3,12 +3,13 @@
 	import GenericForm from './GenericForm.svelte';
 	import academicSituationService from '$lib/services/AcademicSituationService.js';
 	import { createEventDispatcher, onMount } from 'svelte';
+	import { t } from '$lib/stores/stores.js';
 
 	onMount(async () => await resetForm());
 
 	export let action;
 	export let item = null;
-	let tableName = 'situación académica',
+	let tableName = 'Situación académica',
 		defaultClass = 'mt-2',
 		academicSituation = { name: '' };
 	let academicSituationServ = academicSituationService.getInstance();
@@ -49,15 +50,15 @@
 
 <GenericForm {action} {createItem} {deleteItem} {resetForm} {tableName} {updateItem}>
 	<div>
-		<Label for='name'
-		>Nombre
+		<Label for="name"
+			>{$t('Nombre')}
 			<Input
 				bind:value={academicSituation.name}
 				class={defaultClass}
-				id='name'
-				placeholder='Nombre de la situación académica'
+				id="name"
+				placeholder={$t('Nombre de la situación académica')}
 				required
-				type='text'
+				type="text"
 			/>
 		</Label>
 	</div>

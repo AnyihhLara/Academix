@@ -6,6 +6,7 @@
 	import evaluationTypeService from '$lib/services/EvaluationTypeService.js';
 	import studentService from '$lib/services/StudentService.js';
 	import subjectService from '$lib/services/SubjectService.js';
+	import { t } from '$lib/stores/stores.js';
 
 	onMount(async () => {
 		if (action !== 'Delete') {
@@ -35,7 +36,7 @@
 	export let action;
 	export let item = null;
 
-	let tableName = 'evaluación',
+	let tableName = 'Evaluación',
 		defaultClass = 'mt-2',
 		evaluation = { evaluationType: '', student: '', subject: '', evaluationDate: '' };
 	let evaluationNumericalValues, students, subjects;
@@ -86,12 +87,12 @@
 <GenericForm {action} {createItem} {deleteItem} {resetForm} {tableName} {updateItem}>
 	<div>
 		<Label
-			>Nota
+			>{$t('Nota')}
 			<Select
 				bind:value={evaluation.evaluationType}
 				class="mt-2"
 				items={evaluationNumericalValues}
-				placeholder="Selecciona la nota de la evaluación"
+				placeholder={$t('Selecciona la nota de la evaluación')}
 				required
 			/>
 		</Label>
@@ -103,7 +104,7 @@
 				bind:value={evaluation.student}
 				class="mt-2"
 				items={students}
-				placeholder="Selecciona al estudiante de la evaluación"
+				placeholder={$t('Selecciona al estudiante de la evaluación')}
 				required
 			/>
 		</Label>
@@ -115,7 +116,7 @@
 				bind:value={evaluation.subject}
 				class="mt-2"
 				items={subjects}
-				placeholder="Selecciona la asignatura de la evaluación"
+				placeholder={$t('Selecciona la asignatura de la evaluación')}
 				required
 			/>
 		</Label>

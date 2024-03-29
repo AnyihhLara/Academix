@@ -4,7 +4,7 @@
 	import { createEventDispatcher, onMount } from 'svelte';
 	import subjectService from '$lib/services/SubjectService.js';
 	import yearService from '$lib/services/YearService.js';
-	import { currentSchoolYear } from '$lib/stores/stores.js';
+	import { currentSchoolYear, t } from '$lib/stores/stores.js';
 
 	onMount(async () => {
 		if (action !== 'Delete') {
@@ -18,7 +18,7 @@
 
 	export let action;
 	export let item = null;
-	let tableName = 'asignatura',
+	let tableName = 'Asignatura',
 		defaultClass = 'mt-2',
 		subject = { name: '', plannedHours: 0, year: 0 };
 	let years;
@@ -67,25 +67,25 @@
 
 <GenericForm {action} {createItem} {deleteItem} {resetForm} {tableName} {updateItem}>
 	<div>
-		<Label for='name'
-		>Nombre
+		<Label for="name"
+			>{$t('Nombre')}
 			<Input
 				bind:value={subject.name}
 				class={defaultClass}
-				id='name'
-				placeholder='Nombre de la asignatura'
+				id="name"
+				placeholder={$t('Nombre de la asignatura')}
 				required
-				type='text'
+				type="text"
 			/>
 		</Label>
 	</div>
 	<div>
-		<Label for='plannedHours'
-		>Horas planificadas
+		<Label for="plannedHours"
+			>Horas planificadas
 			<NumberInput
 				bind:value={subject.plannedHours}
 				class={defaultClass}
-				id='plannedHours'
+				id="plannedHours"
 				required
 			/>
 		</Label>
@@ -93,12 +93,12 @@
 
 	<div>
 		<Label
-		>Año
+			>{$t('Año')}
 			<Select
 				bind:value={subject.year}
 				class={defaultClass}
 				items={years}
-				placeholder='Selecciona el año académico de la asignatura'
+				placeholder={$t('Selecciona el año académico de la asignatura')}
 				required
 			/>
 		</Label>

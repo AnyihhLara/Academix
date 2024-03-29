@@ -3,11 +3,11 @@
 	import GenericForm from './GenericForm.svelte';
 	import yearService from '$lib/services/YearService.js';
 	import { createEventDispatcher } from 'svelte';
-	import { currentSchoolYear } from '$lib/stores/stores.js';
+	import { currentSchoolYear, t } from '$lib/stores/stores.js';
 
 	export let action;
 	export let item = null;
-	let tableName = 'año',
+	let tableName = 'Año',
 		defaultClass = 'mt-2',
 		year = { academicYear: 0, schoolYear: $currentSchoolYear };
 	let yearServ = yearService.getInstance();
@@ -36,17 +36,17 @@
 <GenericForm {action} {tableName} {createItem} {updateItem} {deleteItem} {resetForm}>
 	<div>
 		<Label for="year"
-			>Año
+			>{$t('Año')}
 			<NumberInput id="year" class={defaultClass} bind:value={year.academicYear} required />
 		</Label>
 	</div>
 	<div>
 		<Label for="schoolYear" color="disabled"
-			>Curso escolar
+			>{$t('Curso escolar')}
 			<Input
 				type="text"
 				id="schoolYear"
-				placeholder="Curso escolar del año"
+				placeholder={$t('Curso escolar del año')}
 				class={defaultClass}
 				bind:value={year.schoolYear}
 				required

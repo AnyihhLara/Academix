@@ -19,11 +19,11 @@
 	});
 
 	const tableName = 'Reporte 7';
-	const reportName = 'Listado de estudiantes desaprobados por grupo en un rango de fecha';
+	const reportName = 'Listado de los estudiantes desaprobados por grupo en un rango de fecha';
 	let service = reportService.getInstance();
 	let startDate,
 		endDate,
-		validDate = true, //temp
+		validDate = true,
 		selectedYear,
 		selectedGroup,
 		error = null;
@@ -58,76 +58,90 @@
 	}
 
 	async function downloadReport7() {
-		const headers = ($pdfHeaders.find(({ reportName }) => reportName === tableName)).headers;
-		const reportData = [failedStudentsByGroup.school_years.flatMap((schoolYearData) =>
-			schoolYearData.failed_students.map((studentData) => ({
-				...studentData,
-				schoolYear: schoolYearData.school_year,
-				year: schoolYearData.year,
-				group_number: schoolYearData.group_number
-			})).map((student) =>
-				Object.fromEntries(
-					Object.entries(student).map(([key, value]) => [headers[key] || key, value])
-				)
+		const headers = $pdfHeaders.find(({ reportName }) => reportName === tableName).headers;
+		const reportData = [
+			failedStudentsByGroup.school_years.flatMap((schoolYearData) =>
+				schoolYearData.failed_students
+					.map((studentData) => ({
+						...studentData,
+						schoolYear: schoolYearData.school_year,
+						year: schoolYearData.year,
+						group_number: schoolYearData.group_number
+					}))
+					.map((student) =>
+						Object.fromEntries(
+							Object.entries(student).map(([key, value]) => [headers[key] || key, value])
+						)
+					)
 			)
-		)];
+		];
 
-		generatePDF(reportData, `Reporte #7 Año ${failedStudentsByGroup.school_years[0].year} Grupo ${failedStudentsByGroup.school_years[0].group_number}:\n${reportName} \ndesde ${startDate} hasta ${endDate}`, false, true);
+		generatePDF(
+			reportData,
+			`Reporte #7 Año ${failedStudentsByGroup.school_years[0].year} Grupo ${failedStudentsByGroup.school_years[0].group_number}:\n${reportName} \ndesde ${startDate} hasta ${endDate}`,
+			false,
+			true
+		);
 	}
 
 	const refreshItems = async () => {
 		if (validDate && startDate && endDate && selectedYear && selectedGroup) {
-			failedStudentsByGroup = await service.report7(startDate, endDate, selectedYear, selectedGroup);
+			failedStudentsByGroup = await service.report7(
+				startDate,
+				endDate,
+				selectedYear,
+				selectedGroup
+			);
 			console.log(failedStudentsByGroup);
 		}
 	};
 </script>
 
 <section>
-	<h1 class='text-center text-2xl mb-4 pt-3 font-semibold text-primary-950 dark:text-primary-100'>
+	<h1 class="text-center text-2xl mb-4 pt-3 font-semibold text-primary-950 dark:text-primary-100">
 		{reportName}
 	</h1>
-	<div class='flex items-center mx-5 gap-5'>
-		<Label for='start-date'>
+	<div class="flex items-center mx-5 gap-5">
+		<Label for="start-date">
 			Fecha Inicial
-			<Input bind:value={startDate} id='start-date' type='date' />
+			<Input bind:value={startDate} id="start-date" type="date" />
 		</Label>
-		<Label for='end-date'>
+		<Label for="end-date">
 			Fecha Final
-			<Input bind:value={endDate} id='end-date' type='date' />
+			<Input bind:value={endDate} id="end-date" type="date" />
 		</Label>
 		{#if years}
 			<Label
-			>Año <Select
-				placeholder='Seleccione un año:'
-				items={years}
-				bind:value={selectedYear}
-				on:change={() => {
+				>Año <Select
+					placeholder="Seleccione un año:"
+					items={years}
+					bind:value={selectedYear}
+					on:change={() => {
 						selectedGroup = '';
 					}}
-			/></Label
+				/></Label
 			>
 			{#if selectableGroups}
-				<div class='flex justify-center items-center gap-3'>
+				<div class="flex justify-center items-center gap-3">
 					<Label
-					>Grupo <Select
-						placeholder='Seleccione un grupo:'
-						items={selectableGroups}
-						bind:value={selectedGroup}
-					/></Label
+						>Grupo <Select
+							placeholder="Seleccione un grupo:"
+							items={selectableGroups}
+							bind:value={selectedGroup}
+						/></Label
 					>
 				</div>
 			{/if}
 		{/if}
 	</div>
 	{#if validDate && startDate && endDate && selectedYear && selectedGroup && failedStudentsByGroup}
-		<section class='mt-6 mx-3 pb-2'>
+		<section class="mt-6 mx-3 pb-2">
 			{#if failedStudentsByGroup.school_years > 0}
-				<div class='flex justify-end pr-6'>
-					<Button on:click={downloadReport7} size='sm'>Descargar PDF</Button>
+				<div class="flex justify-end pr-6">
+					<Button on:click={downloadReport7} size="sm">Descargar PDF</Button>
 				</div>
 				{#each failedStudentsByGroup.school_years as data}
-					<h2 class='font-bold block mb-3 ml-3 text-secondary-950 dark:text-secondary-100 text-xl'>
+					<h2 class="font-bold block mb-3 ml-3 text-secondary-950 dark:text-secondary-100 text-xl">
 						Curso: {data.school_year} Año: {data.year} Grupo: {data.group_number}
 					</h2>
 					<Table
@@ -148,15 +162,15 @@
 <Modal
 	autoclose
 	bind:open={error}
-	color='red'
+	color="red"
 	on:close={() => (error = null)}
-	size='xs'
-	title='Error'
+	size="xs"
+	title="Error"
 >
-	<div class='text-base leading-relaxed'>
+	<div class="text-base leading-relaxed">
 		{error}
 	</div>
-	<svelte:fragment slot='footer'>
-		<Button color='red' on:click={() => (error = null)}>OK</Button>
+	<svelte:fragment slot="footer">
+		<Button color="red" on:click={() => (error = null)}>OK</Button>
 	</svelte:fragment>
 </Modal>

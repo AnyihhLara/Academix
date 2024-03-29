@@ -3,10 +3,11 @@
 	import GenericForm from './GenericForm.svelte';
 	import evaluationTypeService from '$lib/services/EvaluationTypeService.js';
 	import { createEventDispatcher, onMount } from 'svelte';
+	import { t } from '$lib/stores/stores.js';
 
 	export let action;
 	export let item = null;
-	let tableName = 'tipo de evaluación',
+	let tableName = 'Tipo de evaluación',
 		defaultClass = 'mt-2',
 		evaluationType = { name: '', numericalValue: 0 };
 	let evaluationTypeServ = evaluationTypeService.getInstance();
@@ -38,11 +39,8 @@
 
 	async function resetForm() {
 		if (item) {
-			let {
-				evaluation_type_id,
-				evaluation_type_name,
-				evaluation_numerical_value
-			} = await evaluationTypeServ.getEvaluationType(item.evaluation_type_id);
+			let { evaluation_type_id, evaluation_type_name, evaluation_numerical_value } =
+				await evaluationTypeServ.getEvaluationType(item.evaluation_type_id);
 			item.evaluation_type_id = evaluation_type_id;
 			item.evaluation_type_name = evaluation_type_name;
 			item.evaluation_numerical_value = evaluation_numerical_value;
@@ -56,25 +54,25 @@
 
 <GenericForm {action} {createItem} {deleteItem} {resetForm} {tableName} {updateItem}>
 	<div>
-		<Label for='name'
-		>Nombre
+		<Label for="name"
+			>{$t('Nombre')}
 			<Input
 				bind:value={evaluationType.name}
 				class={defaultClass}
-				id='name'
-				placeholder='Nombre del tipo de evaluación'
+				id="name"
+				placeholder={$t('Nombre del tipo de evaluación')}
 				required
-				type='text'
+				type="text"
 			/>
 		</Label>
 	</div>
 	<div>
-		<Label for='numericalValue'
-		>Valor numérico
+		<Label for="numericalValue"
+			>{$t("Valor numérico")}
 			<NumberInput
 				bind:value={evaluationType.numericalValue}
 				class={defaultClass}
-				id='numericalValue'
+				id="numericalValue"
 				required
 			/>
 		</Label>

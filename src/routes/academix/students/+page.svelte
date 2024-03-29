@@ -33,14 +33,9 @@
 
 	let students = [],
 		filters = [
-			{
-				name: 'Situaciones Académicas',
-				key: 'academic_situation',
-				options: [],
-				selectedOptions: []
-			},
-			{ name: 'Años', key: 'year', options: [], selectedOptions: [] },
-			{ name: 'Grupos', key: 'group_number', options: [], selectedOptions: [] }
+			{ name: 'Situación académica', key: 'academic_situation', options: [], selectedOptions: [] },
+			{ name: 'Año', key: 'year', options: [], selectedOptions: [] },
+			{ name: 'Grupo', key: 'group_number', options: [], selectedOptions: [] }
 		],
 		years,
 		groups,

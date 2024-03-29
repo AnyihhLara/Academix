@@ -3,12 +3,13 @@
 	import GenericForm from './GenericForm.svelte';
 	import unenrollmentReasonService from '$lib/services/UnenrollmentReasonService.js';
 	import { createEventDispatcher, onMount } from 'svelte';
+	import { t } from '$lib/stores/stores.js';
 
 	onMount(async () => await resetForm());
 
 	export let action;
 	export let item = null;
-	let tableName = 'causa de baja',
+	let tableName = 'Causa de baja',
 		defaultClass = 'mt-2',
 		unenrollmentReason = { name: '' };
 	let unenrollmentReasonServ = unenrollmentReasonService.getInstance();
@@ -49,15 +50,15 @@
 
 <GenericForm {action} {createItem} {deleteItem} {resetForm} {tableName} {updateItem}>
 	<div>
-		<Label for='name'
-		>Nombre
+		<Label for="name"
+			>{$t('Nombre')}
 			<Input
 				bind:value={unenrollmentReason.name}
 				class={defaultClass}
-				id='name'
-				placeholder='Nombre de la causa de baja'
+				id="name"
+				placeholder={$t('Nombre de la causa de baja')}
 				required
-				type='text'
+				type="text"
 			/>
 		</Label>
 	</div>

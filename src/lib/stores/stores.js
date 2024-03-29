@@ -332,9 +332,7 @@ function translate(locale, key, vars) {
 		let text = '';
 
 		if (locale === 'en') {
-
 			text = translations[locale][key];
-			console.log(text)
 
 			if (!text) {
 				text = key;
@@ -345,7 +343,6 @@ function translate(locale, key, vars) {
 					text = text.replace(regex, vars[k]);
 				});
 			}
-
 		}
 		else {
 			text = key;

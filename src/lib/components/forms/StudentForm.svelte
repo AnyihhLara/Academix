@@ -7,7 +7,7 @@
 	import yearService from '$lib/services/YearService.js';
 	import academicSituationService from '$lib/services/AcademicSituationService.js';
 	import unenrollmentReasonService from '$lib/services/UnenrollmentReasonService.js';
-	import { currentSchoolYear } from '$lib/stores/stores.js';
+	import { currentSchoolYear, t } from '$lib/stores/stores.js';
 
 	onMount(async () => {
 		if (action !== 'Delete') {
@@ -42,7 +42,7 @@
 	export let action;
 	export let item = null;
 
-	let tableName = 'estudiante',
+	let tableName = 'Estudiante',
 		defaultClass = 'mt-2',
 		disabledYear = false,
 		student = {
@@ -142,79 +142,79 @@
 
 <GenericForm {action} {createItem} {deleteItem} {resetForm} {tableName} {updateItem}>
 	<div>
-		<Label for='code'>
-			Código
+		<Label for="code">
+			{$t('Código')}
 			<Input
 				bind:value={student.code}
 				class={defaultClass}
-				id='code'
-				placeholder='Código del estudiante'
+				id="code"
+				placeholder={$t('Código del estudiante')}
 				required
-				type='text'
+				type="text"
 			/>
 		</Label>
 	</div>
 	<div>
-		<Label for='name'>
-			Nombre
+		<Label for="name">
+			{$t('Nombre')}
 			<Input
 				bind:value={student.name}
 				class={defaultClass}
-				id='name'
-				placeholder='Nombre del estudiante'
+				id="name"
+				placeholder={$t('Nombre del estudiante')}
 				required
-				type='text'
+				type="text"
 			/>
 		</Label>
 	</div>
 
 	<div>
-		<Label for='lastname'>
-			Apellidos
+		<Label for="lastname">
+			{$t('Apellidos')}
 			<Input
 				bind:value={student.lastname}
 				class={defaultClass}
-				id='lastname'
-				placeholder='Apellidos del estudiante'
+				id="lastname"
+				placeholder={$t('Apellidos del estudiante')}
 				required
-				type='text'
+				type="text"
 			/>
 		</Label>
 	</div>
 	<div>
 		<Label
-		>Sexo
+			>{$t("Sexo")}
 			<Select
 				bind:value={student.sex}
 				class={defaultClass}
 				items={sexes}
-				placeholder='Selecciona el sexo del estudiante'
+				placeholder={$t("Selecciona el sexo del estudiante")}
 				required
 			/>
 		</Label>
 	</div>
 	<div>
-		<Label for='municipality'>
-			Municipio
+		<Label for="municipality">
+			{$t("Municipio")}
 			<Input
 				bind:value={student.municipality}
 				class={defaultClass}
-				id='municipality'
-				placeholder='Municipio del estudiante'
+				id="municipality"
+				placeholder={$t("Municipio del estudiante")}
 				required
-				type='text'
+				type="text"
 			/>
 		</Label>
 	</div>
 	<div>
 		<Label
-		>Año
+			>{$t("Año")}
 			<Select
 				bind:value={student.academicYear}
 				class={defaultClass}
 				disabled={disabledYear}
 				items={years}
-				placeholder='Primero selecciona el año académico del estudiante...'
+				placeholder={$t("Primero selecciona el año académico del estudiante...")}
 				readonly={disabledYear}
 				required
 			/>
@@ -223,12 +223,12 @@
 	{#if selectableGroups}
 		<div>
 			<Label
-			>Grupo
+				>{$t("Grupo")}
 				<Select
 					bind:value={student.group}
 					class={defaultClass}
 					items={selectableGroups}
-					placeholder='...luego selecciona el grupo del estudiante'
+					placeholder={$t("...luego selecciona el grupo del estudiante")}
 					required
 				/>
 			</Label>
@@ -236,12 +236,12 @@
 	{/if}
 	<div>
 		<Label
-		>Situación Académica
+			>{$t("Situación académica")}
 			<Select
 				bind:value={student.academicSituation}
 				class={defaultClass}
 				items={academicSituations}
-				placeholder='Selecciona la situación académica del estudiante'
+				placeholder={$t("Selecciona la situación académica del estudiante")}
 				required
 			/>
 		</Label>
@@ -249,12 +249,12 @@
 	{#if situation && situation.name === 'Baja'}
 		<div>
 			<Label
-			>Causa de Baja
+				>{$t("Causa de Baja")}
 				<Select
 					bind:value={student.unenrollmentReason}
 					class={defaultClass}
 					items={unenrollmentReasons}
-					placeholder='Selecciona la causa de baja del estudiante'
+					placeholder={$t("Selecciona la causa de baja del estudiante")}
 					required
 				/>
 			</Label>

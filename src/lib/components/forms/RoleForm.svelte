@@ -3,12 +3,13 @@
 	import GenericForm from './GenericForm.svelte';
 	import roleService from '$lib/services/RoleService.js';
 	import { createEventDispatcher, onMount } from 'svelte';
+	import { t } from '$lib/stores/stores.js';
 
 	onMount(async () => await resetForm());
 
 	export let action;
 	export let item = null;
-	let tableName = 'rol',
+	let tableName = 'Rol',
 		defaultClass = 'mt-2',
 		role = { name: '' };
 	let roleServ = roleService.getInstance();
@@ -45,15 +46,15 @@
 
 <GenericForm {action} {createItem} {deleteItem} {resetForm} {tableName} {updateItem}>
 	<div>
-		<Label for='name'
-		>Nombre
+		<Label for="name"
+			>{$t('Nombre')}
 			<Input
 				bind:value={role.name}
 				class={defaultClass}
-				id='name'
-				placeholder='Nombre del rol'
+				id="name"
+				placeholder={$t('Nombre del rol')}
 				required
-				type='text'
+				type="text"
 			/>
 		</Label>
 	</div>

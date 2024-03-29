@@ -22,8 +22,8 @@
     });
     let evaluations = [],
         filters = [
-            {name: 'Asignaturas', key: 'subject_name', options: [], selectedOptions: []},
-            {name: 'Notas', key: 'evaluation_numerical_value', options: [], selectedOptions: []}
+            {name: 'Asignatura', key: 'subject_name', options: [], selectedOptions: []},
+            {name: 'Nota', key: 'evaluation_numerical_value', options: [], selectedOptions: []}
         ],
         evaluationTypes,
         subjects,

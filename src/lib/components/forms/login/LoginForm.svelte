@@ -4,7 +4,7 @@
 	import { Button } from 'flowbite-svelte';
 	import { goto } from '$app/navigation';
 	import authService from '$lib/services/AuthService.js';
-	import { loggedIn, view } from '$lib/stores/stores.js';
+	import { loggedIn, view, t } from '$lib/stores/stores.js';
 
 	let form, error;
 	let login = {
@@ -42,15 +42,15 @@
 <form action="#" bind:this={form} on:submit|preventDefault={handleLogin}>
 	<div class="space-y-6">
 		<h3 class="mb-4 text-xl font-medium text-center text-gray-900 dark:text-white">
-			Iniciar sesión
+			{$t('Iniciar sesión')}
 		</h3>
 		<UserInput bind:username={login.username} />
 		<PasswordInput bind:password={login.password} />
-		<Button class="w-full" type="submit">Ingrese a su cuenta</Button>
+		<Button class="w-full" type="submit">{$t('Ingrese a su cuenta')}</Button>
 	</div>
 	{#if error}
 		<div class="text-center mt-4">
-			<span class="text-red-600 font-medium">Usuario o contraseña incorrectos</span>
+			<span class="text-red-600 font-medium dark:text-red-300">{$t('Usuario o contraseña incorrectos')}</span>
 		</div>
 	{/if}
 </form>

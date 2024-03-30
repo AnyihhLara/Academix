@@ -17,7 +17,11 @@
 	let dataBySchoolYear = [];
 
 	async function downloadReport1() {
-		const headers = $pdfHeaders.find(({ reportName }) => reportName === tableName).headers;
+		const headers = Object.fromEntries(
+			Object.entries($pdfHeaders.find(({ reportName }) => reportName === tableName).headers).map(
+				([key, value]) => [key, $t(value)]
+			)
+		);
 		const reportData = dataBySchoolYear.flatMap((schoolYearData) =>
 			schoolYearData.years.flatMap((yearData) =>
 				yearData.studentsGroups.map((groupData) => {
@@ -39,7 +43,7 @@
 
 		generatePDF(
 			reportData,
-			`Reporte #1: ${reportName} \n${dayjs().format('YYYY-MMM-DD')}`,
+			$t(`Reporte #1: ${reportName}`) + `\n${dayjs().format('YYYY-MMM-DD')}`,
 			false,
 			true
 		);
@@ -63,7 +67,7 @@
 		{#each dataBySchoolYear as schoolYearData}
 			<section class="mt-6 mx-3" key={schoolYearData.schoolYear}>
 				<h2 class="font-bold block mb-3 ml-3 text-secondary-950 dark:text-secondary-100 text-xl">
-					Curso: {schoolYearData.schoolYear}
+					{$t('Curso')}: {schoolYearData.schoolYear}
 				</h2>
 				{#if schoolYearData.years}
 					{#each schoolYearData.years as yearData}
@@ -71,7 +75,7 @@
 							<h3
 								class="font-bold block mb-2 ml-4 text-secondary-850 dark:text-secondary-100 text-lg"
 							>
-								Año: {yearData.year}
+								{$t('Año')}: {yearData.year}
 							</h3>
 							{#if yearData.studentsGroups}
 								{#each yearData.studentsGroups as studentsGroupData}
@@ -82,7 +86,7 @@
 										<h4
 											class="font-bold block mb-1 ml-6 text-secondary-800 dark:text-secondary-100 text-md"
 										>
-											Grupo: {studentsGroupData.studentsGroup}
+											{$t('Grupo')}: {studentsGroupData.studentsGroup}
 										</h4>
 										<Table
 											{tableName}

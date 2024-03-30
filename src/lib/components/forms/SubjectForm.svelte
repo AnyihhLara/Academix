@@ -20,7 +20,7 @@
 	export let item = null;
 	let tableName = 'Asignatura',
 		defaultClass = 'mt-2',
-		subject = { name: '', plannedHours: 0, year: 0 };
+		subject = { name: '', plannedHours: null, year: null };
 	let years;
 	let subjectServ = subjectService.getInstance();
 	const dispatch = createEventDispatcher();
@@ -60,7 +60,7 @@
 			subject.plannedHours = item.planned_hours;
 			subject.year = item.year;
 		} else {
-			subject = { name: '', plannedHours: 0, year: 0 };
+			subject = { name: '', plannedHours: null, year: null };
 		}
 	}
 </script>

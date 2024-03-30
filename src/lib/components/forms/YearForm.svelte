@@ -9,7 +9,7 @@
 	export let item = null;
 	let tableName = 'Año',
 		defaultClass = 'mt-2',
-		year = { academicYear: 0, schoolYear: $currentSchoolYear };
+		year = { academicYear: null, schoolYear: $currentSchoolYear };
 	let yearServ = yearService.getInstance();
 	const dispatch = createEventDispatcher();
 
@@ -29,7 +29,7 @@
 	}
 
 	function resetForm() {
-		year = { academicYear: 0, schoolYear: '' };
+		year = { academicYear: null, schoolYear: '' };
 	}
 </script>
 

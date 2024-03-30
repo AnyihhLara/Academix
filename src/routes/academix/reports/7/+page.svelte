@@ -5,7 +5,7 @@
 	import reportService from '$lib/services/ReportService.js';
 	import studentsGroupService from '$lib/services/StudentsGroupService.js';
 	import yearService from '$lib/services/YearService.js';
-	import { currentSchoolYear, pdfHeaders } from '$lib/stores/stores.js';
+	import { currentSchoolYear, pdfHeaders, t } from '$lib/stores/stores.js';
 	import { generatePDF } from '$lib';
 
 	onMount(async () => {
@@ -28,7 +28,26 @@
 		selectedGroup,
 		error = null;
 	let years, groups, selectableGroups, failedStudentsByGroup;
-	$: if (startDate && endDate && selectedYear) {
+
+	$: if (startDate) {
+		const startDateDate = new Date(startDate);
+		const date = new Date(Date.now());
+		if (startDateDate > date) {
+			validDate = false;
+			error = 'La fecha inicial no puede ser después del día actual';
+			(startDate = ''), (endDate = '');
+		}
+	}
+	$: if (endDate) {
+		const endDateDate = new Date(endDate);
+		const date = new Date(Date.now());
+		if (endDateDate > date) {
+			validDate = false;
+			error = 'La fecha final no puede ser después del día actual';
+			(startDate = ''), (endDate = '');
+		}
+	}
+	$: if (startDate && endDate) {
 		const startDateDate = new Date(startDate);
 		const endDateDate = new Date(endDate);
 
@@ -58,7 +77,11 @@
 	}
 
 	async function downloadReport7() {
-		const headers = $pdfHeaders.find(({ reportName }) => reportName === tableName).headers;
+		const headers = Object.fromEntries(
+			Object.entries($pdfHeaders.find(({ reportName }) => reportName === tableName).headers).map(
+				([key, value]) => [key, $t(value)]
+			)
+		);
 		const reportData = [
 			failedStudentsByGroup.school_years.flatMap((schoolYearData) =>
 				schoolYearData.failed_students
@@ -78,7 +101,17 @@
 
 		generatePDF(
 			reportData,
-			`Reporte #7 Año ${failedStudentsByGroup.school_years[0].year} Grupo ${failedStudentsByGroup.school_years[0].group_number}:\n${reportName} \ndesde ${startDate} hasta ${endDate}`,
+			$t('Reporte #7') +
+				$t('Año') +
+				`${failedStudentsByGroup.school_years[0].year}` +
+				$t('Grupo') +
+				`${failedStudentsByGroup.school_years[0].group_number}:\n` +
+				$t(reportName) +
+				'\n' +
+				$t('desde') +
+				` ${startDate} ` +
+				$t('hasta') +
+				` ${endDate}`,
 			false,
 			true
 		);
@@ -99,21 +132,22 @@
 
 <section>
 	<h1 class="text-center text-2xl mb-4 pt-3 font-semibold text-primary-950 dark:text-primary-100">
-		{reportName}
+		{$t(reportName)}
 	</h1>
 	<div class="flex items-center mx-5 gap-5">
 		<Label for="start-date">
-			Fecha Inicial
+			{$t('Fecha Inicial')}
 			<Input bind:value={startDate} id="start-date" type="date" />
 		</Label>
 		<Label for="end-date">
-			Fecha Final
+			{$t('Fecha Final')}
 			<Input bind:value={endDate} id="end-date" type="date" />
 		</Label>
 		{#if years}
 			<Label
-				>Año <Select
-					placeholder="Seleccione un año:"
+				>{$t('Año')}
+				<Select
+					placeholder={$t('Seleccione un año:')}
 					items={years}
 					bind:value={selectedYear}
 					on:change={() => {
@@ -124,8 +158,9 @@
 			{#if selectableGroups}
 				<div class="flex justify-center items-center gap-3">
 					<Label
-						>Grupo <Select
-							placeholder="Seleccione un grupo:"
+						>{$t('Grupo')}
+						<Select
+							placeholder={$t('Seleccione un grupo:')}
 							items={selectableGroups}
 							bind:value={selectedGroup}
 						/></Label
@@ -136,13 +171,15 @@
 	</div>
 	{#if validDate && startDate && endDate && selectedYear && selectedGroup && failedStudentsByGroup}
 		<section class="mt-6 mx-3 pb-2">
-			{#if failedStudentsByGroup.school_years > 0}
+			{#if failedStudentsByGroup.school_years.length > 0}
 				<div class="flex justify-end pr-6">
-					<Button on:click={downloadReport7} size="sm">Descargar PDF</Button>
+					<Button on:click={downloadReport7} size="sm">{$t('Descargar PDF')}</Button>
 				</div>
 				{#each failedStudentsByGroup.school_years as data}
 					<h2 class="font-bold block mb-3 ml-3 text-secondary-950 dark:text-secondary-100 text-xl">
-						Curso: {data.school_year} Año: {data.year} Grupo: {data.group_number}
+						{$t('Curso')}: {data.school_year}
+						{$t('Año')}: {data.year}
+						{$t('Grupo')}: {data.group_number}
 					</h2>
 					<Table
 						{tableName}
@@ -168,7 +205,7 @@
 	title="Error"
 >
 	<div class="text-base leading-relaxed">
-		{error}
+		{$t(error)}
 	</div>
 	<svelte:fragment slot="footer">
 		<Button color="red" on:click={() => (error = null)}>OK</Button>

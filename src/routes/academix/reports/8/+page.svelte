@@ -6,7 +6,7 @@
 	import reportService from '$lib/services/ReportService.js';
 	import studentsGroupService from '$lib/services/StudentsGroupService.js';
 	import yearService from '$lib/services/YearService.js';
-	import { currentSchoolYear, pdfHeaders } from '$lib/stores/stores.js';
+	import { currentSchoolYear, pdfHeaders, t } from '$lib/stores/stores.js';
 	import { generatePDF } from '$lib';
 	import dayjs from 'dayjs';
 
@@ -38,18 +38,25 @@
 			(group, index, self) =>
 				index === self.findIndex((t) => t.value === group.value && t.name === group.name)
 		);
-		selectableGroups = [...selectableGroups, { value: null, name: 'ninguno' }];
+		selectableGroups = [...selectableGroups, { value: null, name: $t('ninguno') }];
 		refreshItems();
 		setTableName();
 	}
 
 	async function downloadReport8() {
-		const headers = ($pdfHeaders.find(({ reportName }) => tableName.includes(reportName))).headers;
+		const headers = Object.fromEntries(
+			Object.entries(
+				$pdfHeaders.find(
+					({ reportName, reportName2 }) => reportName === tableName || reportName2 === tableName
+				).headers
+			).map(([key, value]) => [key, $t(value)])
+		);
 		let data;
 		if (dataByGroup) data = dataByGroup.school_years;
 		else if (dataByYear) data = dataByYear.school_years;
 
-		const reportData = [data.flatMap((schoolYearData) => {
+		const reportData = [
+			data.flatMap((schoolYearData) => {
 				const students = schoolYearData.unenrollment_students.map((student) => ({
 					...student,
 					schoolYear: schoolYearData.school_year,
@@ -62,10 +69,15 @@
 						Object.entries(student).map(([key, value]) => [headers[key] || key, value])
 					)
 				);
-			}
-		)];
+			})
+		];
 
-		generatePDF(reportData, `Reporte #8: ${reportName} \n${dayjs().format('YYYY-MMM-DD')}`, false, true);
+		generatePDF(
+			reportData,
+			$t(`Reporte #8: ${reportName}`) + `\n${dayjs().format('YYYY-MMM-DD')}`,
+			false,
+			true
+		);
 	}
 
 	const refreshItems = () => {
@@ -76,13 +88,16 @@
 			});
 		} else if (selectedYear && selectedGroup !== null) {
 			service.report8(selectedYear, selectedGroup).then((i) => {
+				dataByYear = null;
 				dataByGroup = i;
 			});
 		} else {
-			selectedYear = null;
-			selectedYear = null;
+			dataByYear = null;
+			dataByGroup = null;
 		}
 	};
+	$: console.log(dataByYear);
+	$: console.log(dataByGroup);
 
 	function setTableName() {
 		if (selectedYear && selectedGroup === null) {
@@ -93,45 +108,48 @@
 	}
 </script>
 
-<section class='px-2 pt-6 pb-8'>
-	<div class='flex items-center justify-between mx-6 gap-4'>
-		<h1 class='text-center text-2xl font-semibold text-primary-950 dark:text-primary-100'>
-			{reportName}
+<section class="px-2 pt-6 pb-8">
+	<div class="flex items-center justify-between mx-6 gap-4">
+		<h1 class="text-center text-2xl font-semibold text-primary-950 dark:text-primary-100">
+			{$t(reportName)}
 		</h1>
 		{#if years}
-			<div class='flex justify-center items-center gap-3'>
-				<Label>Año</Label>
+			<div class="flex justify-center items-center gap-3">
+				<Label>{$t('Año')}</Label>
 				<Select
-					placeholder='Seleccione un año:'
+					placeholder={$t('Seleccione un año:')}
 					items={years}
 					bind:value={selectedYear}
 					on:change={setTableName}
-					class='w-96 h-10 mt-1'
+					class="w-96 h-10 mt-1"
 				/>
 			</div>
 			{#if selectableGroups}
-				<div class='flex justify-center items-center gap-3'>
-					<Label>Grupo</Label>
+				<div class="flex justify-center items-center gap-3">
+					<Label>{$t('Grupo')}</Label>
 					<Select
-						placeholder='Seleccione un grupo:'
+						placeholder={$t('Seleccione un grupo:')}
 						items={selectableGroups}
 						bind:value={selectedGroup}
 						on:change={setTableName}
-						class='w-96 h-10 mt-1'
+						class="w-96 h-10 mt-1"
 					/>
 				</div>
 			{/if}
 		{/if}
 	</div>
+	{#if (dataByYear && dataByYear.school_years.length > 0) || (dataByGroup && dataByGroup.school_years.length > 0)}
+		<div class="flex justify-end pr-4 pt-2">
+			<Button on:click={downloadReport8} size="sm">{$t('Descargar PDF')}</Button>
+		</div>
+	{/if}
 	{#if selectedYear && !selectedGroup && dataByYear}
-		<section class='mt-6 mx-3'>
+		<section class="mt-6 mx-3">
 			{#if dataByYear.school_years}
-				<div class='flex justify-end pr-4'>
-					<Button on:click={downloadReport8} size='sm'>Descargar PDF</Button>
-				</div>
 				{#each dataByYear.school_years as data}
-					<h2 class='font-bold block mb-3 ml-3 text-secondary-950 dark:text-secondary-100 text-xl'>
-						Curso: {data.school_year} Año: {data.year}
+					<h2 class="font-bold block mb-3 ml-3 text-secondary-950 dark:text-secondary-100 text-xl">
+						{$t('Curso')}: {data.school_year}
+						{$t('Año')}: {data.year}
 					</h2>
 
 					<Table
@@ -147,14 +165,13 @@
 			{/if}
 		</section>
 	{:else if selectedYear && selectedGroup && dataByGroup}
-		<section class='mt-6 mx-3'>
+		<section class="mt-6 mx-3">
 			{#if dataByGroup.school_years}
-				<div class='flex justify-end pr-4'>
-					<Button on:click={downloadReport8} size='sm'>Descargar PDF</Button>
-				</div>
 				{#each dataByGroup.school_years as data}
-					<h2 class='font-bold block mb-3 ml-3 text-secondary-950 dark:text-secondary-100 text-xl'>
-						Curso: {data.school_year} Año: {data.year} Grupo: {data.group_number}
+					<h2 class="font-bold block mb-3 ml-3 text-secondary-950 dark:text-secondary-100 text-xl">
+						{$t('Curso')}: {data.school_year}
+						{$t('Año')}: {data.year}
+						{$t('Grupo')}: {data.group_number}
 					</h2>
 					<Table
 						{tableName}

@@ -14,6 +14,42 @@ import { createLocalStorage, createSessionStorage, persist } from '@macfja/svelt
 export const loggedIn = persist(writable(false), createSessionStorage(), 'L');
 export const view = persist(writable('/'), createLocalStorage(), 'V');
 export const currentSchoolYear = writable('2022-2023');
+
+//i18n
+import translations from "../utils/translations";
+
+export const locale = writable("es");
+export const locales = Object.keys(translations);
+
+function translate(locale, key, vars) {
+	if (key && locale) {
+		let text = '';
+
+		if (locale === 'en') {
+			text = translations[locale][key];
+
+			if (!text) {
+				text = key;
+			}
+			else {
+				Object.keys(vars).map((k) => {
+					const regex = new RegExp(`{{${k}}}`, "g");
+					text = text.replace(regex, vars[k]);
+				});
+			}
+		}
+		else {
+			text = key;
+		}
+		return text;
+	}
+}
+
+export const t = derived(locale, ($locale) => (key, vars = {}) =>
+	translate($locale, key, vars)
+);
+
+//tables
 export const tables = readable([
 	{
 		name: 'Situaciones académicas',
@@ -208,37 +244,38 @@ export const tables = readable([
 		]
 	}
 ]);
+//pdf
 export const pdfHeaders = readable([
 	{
 		reportName: 'Reporte 1',
 		headers: {
-			order_number: 'Número de Lista',
+			order_number: 'Número de orden',
 			student_name: 'Nombre',
 			student_lastname: 'Apellidos',
 			student_code: 'Código',
-			schoolYear: 'Curso Escolar',
-			year: 'Año Académico',
+			schoolYear: 'Curso escolar',
+			year: 'Año académico',
 			studentsGroup: 'Grupo'
 		}
 	},
 	{
 		reportName: 'Reporte 2',
 		headers: {
-			planned_hours: 'Horas Planificadas',
+			planned_hours: 'Horas planificadas',
 			subject_name: 'Asignatura',
-			schoolYear: 'Curso Escolar',
-			year: 'Año Académico'
+			schoolYear: 'Curso escolar',
+			year: 'Año académico'
 		}
 	},
 	{
 		reportName: 'Reporte 3',
 		headers: {
-			order_number: 'Número de Lista',
+			order_number: 'Número de orden',
 			student_name: 'Nombre',
 			student_lastname: 'Apellidos',
 			student_code: 'Código',
-			schoolYear: 'Curso Escolar',
-			year: 'Año Académico',
+			schoolYear: 'Curso escolar',
+			year: 'Año académico',
 			studentsGroup: 'Grupo',
 			evaluation_type_name: 'Calificación',
 			subject: 'Asignatura'
@@ -247,112 +284,81 @@ export const pdfHeaders = readable([
 	{
 		reportName: 'Reporte 4',
 		headers: {
-			student_order: 'Número de Lista',
+			student_order: 'Número de orden',
 			student_name: 'Nombre',
 			student_lastname: 'Apellidos',
 			average: 'Promedio',
-			year: 'Año Académico',
+			year: 'Año académico',
 			groupNumber: 'Grupo'
 		}
 	},
 	{
 		reportName: 'Reporte 5',
 		headers: {
-			school_year: 'Curso Escolar',
+			schoolYear: 'Curso escolar',
 			municipality: 'Municipio',
 			student_name: 'Nombre',
 			lastname: 'Apellidos',
-			order_number: 'Número de Lista',
+			order_number: 'Número de orden',
 			average: 'Promedio',
 			sex: 'Sexo',
-			rank: 'Número de Escalafón',
-			year: 'Año Académico',
+			rank: 'Número de escalafón',
+			year: 'Año académico',
 			group_number: 'Grupo'
 		}
 	},
 	{
 		reportName: 'Reporte 6',
 		headers: {
-			school_year: 'Curso Escolar',
+			school_year: 'Curso escolar',
 			student_name: 'Nombre',
 			student_lastname: 'Apellidos',
 			average: 'Promedio',
 			grade: 'Nota',
-			year: 'Año Académico',
+			year: 'Año académico',
 			subject_name: 'Asignatura'
 		}
 	},
 	{
 		reportName: 'Reporte 7',
 		headers: {
-			schoolYear: 'Curso Escolar',
+			schoolYear: 'Curso escolar',
 			student_name: 'Nombre',
 			lastname: 'Apellidos',
-			order_number: 'Número de Lista',
+			order_number: 'Número de orden',
 			group_number: 'Grupo',
-			year: 'Año Académico',
-			failed_subjects: 'Asignatura Suspensa'
+			year: 'Año académico',
+			failed_subjects: 'Asignatura desaprobada'
 		}
 	},
 	{
-		reportName: 'Reporte 8',
+		reportName: 'Reporte 8 por año',
+		reportName2: 'Reporte 8 por grupo',
 		headers: {
-			schoolYear: 'Curso Escolar',
+			schoolYear: 'Curso escolar',
 			student_name: 'Nombre',
 			lastname: 'Apellidos',
-			order_number: 'Número de Lista',
+			order_number: 'Número de orden',
 			studentsGroup: 'Grupo',
 			group_number: 'Grupo',
-			year: 'Año Académico',
-			unenrollment_reason: 'Causa de Baja',
+			year: 'Año académico',
+			unenrollment_reason: 'Causa de baja',
 			student_id: 'Identificador'
 		}
 	},
 	{
 		reportName: 'Reporte 9',
 		headers: {
-			schoolYear: 'Curso Escolar',
+			schoolYear: 'Curso escolar',
 			student_name: 'Nombre',
 			lastname: 'Apellidos',
-			order_number: 'Número de Lista',
-			year: 'Año Académico',
+			order_number: 'Número de orden',
+			year: 'Año académico',
 			student_group: 'Grupo'
 		}
 	}
 ]);
 
-//i18n
-import translations from "../utils/translations";
 
-export const locale = writable("es");
-export const locales = Object.keys(translations);
-
-function translate(locale, key, vars) {
-	if (key && locale) {
-		let text = '';
-
-		if (locale === 'en') {
-			text = translations[locale][key];
-
-			if (!text) {
-				text = key;
-			}
-			else {
-				Object.keys(vars).map((k) => {
-					const regex = new RegExp(`{{${k}}}`, "g");
-					text = text.replace(regex, vars[k]);
-				});
-			}
-		}
-		else {
-			text = key;
-		}
-		return text;
-	}
-}
-
-export const t = derived(locale, ($locale) => (key, vars = {}) =>
-	translate($locale, key, vars)
-);
 
 

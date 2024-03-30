@@ -5,7 +5,7 @@
 	import reportService from '$lib/services/ReportService.js';
 	import studentsGroupService from '$lib/services/StudentsGroupService.js';
 	import yearService from '$lib/services/YearService.js';
-	import { currentSchoolYear, pdfHeaders } from '$lib/stores/stores.js';
+	import { currentSchoolYear, pdfHeaders, t } from '$lib/stores/stores.js';
 	import { generatePDF } from '$lib';
 	import dayjs from 'dayjs';
 
@@ -36,32 +36,43 @@
 			(group, index, self) =>
 				index === self.findIndex((t) => t.value === group.value && t.name === group.name)
 		);
-		selectableGroups = [...selectableGroups, { value: null, name: 'ninguno' }];
+		selectableGroups = [...selectableGroups, { value: null, name: $t('ninguno') }];
 		refreshItems();
 	}
 
 	async function downloadReport5() {
-		const headers = ($pdfHeaders.find(({ reportName }) => reportName === tableName)).headers;
+		const headers = Object.fromEntries(
+			Object.entries($pdfHeaders.find(({ reportName }) => reportName === tableName).headers).map(
+				([key, value]) => [key, $t(value)]
+			)
+		);
 		let data;
 
 		if (dataByGroup) data = dataByGroup;
 		else if (dataByYear) data = dataByYear;
-
-		const reportData = [data.students.map((studentData) => {
-			return {
-				...studentData,
-				schoolYear: data.school_year,
-				year: data.year,
-				group_number: data.group_number
-			};
-		}).map((student) =>
-			Object.fromEntries(
-				Object.entries(student).map(([key, value]) => [headers[key] || key, value])
-			)
-		)];
-
-
-		generatePDF(reportData, `Reporte #5: ${reportName} \n${dayjs().format('YYYY-MMM-DD')}`, false, true);
+		
+		const reportData = [
+			data.students
+				.map((studentData) => {
+					return {
+						...studentData,
+						schoolYear: data.school_year,
+						year: data.year,
+						group_number: data.group_number
+					};
+				})
+				.map((student) =>
+					Object.fromEntries(
+						Object.entries(student).map(([key, value]) => [headers[key] || key, value])
+					)
+				)
+		];
+		generatePDF(
+			reportData,
+			$t(`Reporte #5: ${reportName}`) + `\n${dayjs().format('YYYY-MMM-DD')}`,
+			false,
+			true
+		);
 	}
 
 	const refreshItems = () => {
@@ -78,41 +89,45 @@
 	};
 </script>
 
-<section class='px-2 pt-6 pb-8'>
-	<div class='flex items-center justify-between mx-6 gap-4'>
-		<h1 class='text-center text-2xl font-semibold text-primary-950 dark:text-primary-100'>
-			{reportName}
+<section class="px-2 pt-6 pb-8">
+	<div class="flex items-center justify-between mx-6 gap-4">
+		<h1 class="text-center text-2xl font-semibold text-primary-950 dark:text-primary-100">
+			{$t(reportName)}
 		</h1>
 		{#if years}
-			<div class='flex justify-center items-center gap-3'>
-				<Label>Año</Label>
+			<div class="flex justify-center items-center gap-3">
+				<Label>{$t('Año')}</Label>
 				<Select
-					placeholder='Seleccione un año:'
+					placeholder={$t('Seleccione un año:')}
 					items={years}
 					bind:value={selectedYear}
-					class='w-96 h-10 mt-1'
+					class="w-96 h-10 mt-1"
 				/>
 			</div>
 			{#if selectableGroups}
-				<div class='flex justify-center items-center gap-3'>
-					<Label>Grupo</Label>
+				<div class="flex justify-center items-center gap-3">
+					<Label>{$t('Grupo')}</Label>
 					<Select
-						placeholder='Seleccione un grupo:'
+						placeholder={$t('Seleccione un grupo:')}
 						items={selectableGroups}
 						bind:value={selectedGroup}
-						class='w-96 h-10 mt-1'
+						class="w-96 h-10 mt-1"
 					/>
 				</div>
 			{/if}
 		{/if}
 	</div>
-	{#if selectedYear && !selectedGroup && dataByYear}
-		<div class='flex justify-end pr-6 pt-4'>
-			<Button on:click={downloadReport5} size='sm'>Descargar PDF</Button>
+	{#if selectedYear}
+		<div class="flex justify-end pr-6 pt-4">
+			<Button on:click={downloadReport5} size="sm">{$t('Descargar PDF')}</Button>
 		</div>
-		<section class='mt-4 mx-3'>
-			<h2 class='font-bold block mb-3 ml-3 text-secondary-950 dark:text-secondary-100 text-xl'>
-				Curso: {dataByYear.school_year} Año: {dataByYear.year}
+	{/if}
+
+	{#if selectedYear && !selectedGroup && dataByYear}
+		<section class="mt-4 mx-3">
+			<h2 class="font-bold block mb-3 ml-3 text-secondary-950 dark:text-secondary-100 text-xl">
+				{$t('Curso')}: {dataByYear.school_year}
+				{$t('Año')}: {dataByYear.year}
 			</h2>
 			<Table
 				{tableName}
@@ -125,12 +140,11 @@
 			/>
 		</section>
 	{:else if selectedYear && selectedGroup && dataByGroup}
-		<div class='flex justify-end pr-6 pt-4'>
-			<Button on:click={downloadReport5} size='sm'>Descargar PDF</Button>
-		</div>
-		<section class='mt-4 mx-3'>
-			<h2 class='font-bold block mb-3 ml-3 text-secondary-950 dark:text-secondary-100 text-xl'>
-				Curso: {dataByGroup.school_year} Año: {dataByGroup.year} Grupo: {dataByGroup.group_number}
+		<section class="mt-4 mx-3">
+			<h2 class="font-bold block mb-3 ml-3 text-secondary-950 dark:text-secondary-100 text-xl">
+				{$t('Curso')}: {dataByGroup.school_year}
+				{$t('Año')}: {dataByGroup.year}
+				{$t('Grupo')}: {dataByGroup.group_number}
 			</h2>
 			<Table
 				{tableName}

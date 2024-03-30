@@ -9,7 +9,7 @@
 	export let item = null;
 	let tableName = 'Tipo de evaluación',
 		defaultClass = 'mt-2',
-		evaluationType = { name: '', numericalValue: 0 };
+		evaluationType = { name: '', numericalValue: null };
 	let evaluationTypeServ = evaluationTypeService.getInstance();
 	const dispatch = createEventDispatcher();
 
@@ -47,7 +47,7 @@
 			evaluationType.name = item.evaluation_type_name;
 			evaluationType.numericalValue = item.evaluation_numerical_value;
 		} else {
-			evaluationType = { name: '', numericalValue: 0 };
+			evaluationType = { name: '', numericalValue: null };
 		}
 	}
 </script>

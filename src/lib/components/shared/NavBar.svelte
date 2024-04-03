@@ -11,7 +11,7 @@
 	import { BuildingSolid, MoonSolid, SunSolid } from 'flowbite-svelte-icons';
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
-	import { loggedIn, view, t } from '$lib/stores/stores.js';
+	import { loggedIn, view, t, locale } from '$lib/stores/stores.js';
 	import LanguageSelector from './LanguageSelector.svelte';
 
 	async function handleLogout() {
@@ -22,6 +22,7 @@
 		} finally {
 			$view = '/';
 			$loggedIn = false;
+			$locale = 'es';
 			await goto($view, { invalidateAll: true });
 		}
 	}
@@ -50,7 +51,7 @@
 		<span class="block text-sm"> {$t('Usuario')} </span>
 		<span class="block truncate text-sm font-medium"> {$page.data.user} </span>
 	</DropdownHeader>
-	<DropdownItem>
-		<button on:click={handleLogout} class="text-red-600 text-sm">{$t('Cerrar sesión')}</button>
+	<DropdownItem on:click={handleLogout}>
+		<span class="font-medium text-red-600 text-sm w-full">{$t('Cerrar sesión')}</span>
 	</DropdownItem>
 </Dropdown>

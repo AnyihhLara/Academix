@@ -81,7 +81,7 @@
 	</div>
 	<div>
 		<Label for="plannedHours"
-			>Horas planificadas
+			>{$t('Horas planificadas')}
 			<NumberInput
 				bind:value={subject.plannedHours}
 				class={defaultClass}

@@ -34,7 +34,7 @@
 		const date = new Date(Date.now());
 		if (startDateDate > date) {
 			validDate = false;
-			error = 'La fecha inicial no puede ser después del día actual';
+			error = 'La fecha inicial no puede ser después de la fecha actual';
 			(startDate = ''), (endDate = '');
 		}
 	}
@@ -43,7 +43,7 @@
 		const date = new Date(Date.now());
 		if (endDateDate > date) {
 			validDate = false;
-			error = 'La fecha final no puede ser después del día actual';
+			error = 'La fecha final no puede ser después de la fecha actual';
 			(startDate = ''), (endDate = '');
 		}
 	}
@@ -102,10 +102,11 @@
 		generatePDF(
 			reportData,
 			$t('Reporte #7') +
+				' ' +
 				$t('Año') +
-				`${failedStudentsByGroup.school_years[0].year}` +
+				` ${failedStudentsByGroup.school_years[0].year}` +
 				$t('Grupo') +
-				`${failedStudentsByGroup.school_years[0].group_number}:\n` +
+				` ${failedStudentsByGroup.school_years[0].group_number}:\n` +
 				$t(reportName) +
 				'\n' +
 				$t('desde') +

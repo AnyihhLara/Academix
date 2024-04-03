@@ -54,7 +54,7 @@
 		generatePDF(
 			reportData,
 			$t(`Reporte #6: Estudiante`) +
-				`${student.student_code} ${student.student_name} ${student.student_lastname}: \n` +
+				` ${student.student_code} ${student.student_name} ${student.student_lastname}: \n` +
 				$t(reportName) +
 				`\n${dayjs().format('YYYY-MMM-DD')}`,
 			false,

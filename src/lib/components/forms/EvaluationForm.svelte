@@ -99,7 +99,7 @@
 	</div>
 	<div>
 		<Label
-			>Estudiante
+			>{$t("Estudiante")}
 			<Select
 				bind:value={evaluation.student}
 				class="mt-2"
@@ -111,7 +111,7 @@
 	</div>
 	<div>
 		<Label
-			>Asignatura
+			>{$t("Asignatura")}
 			<Select
 				bind:value={evaluation.subject}
 				class="mt-2"
@@ -123,7 +123,7 @@
 	</div>
 	<div>
 		<Label for="evaluationDate"
-			>Fecha
+			>{$t("Fecha")}
 			<Input
 				bind:value={evaluation.evaluationDate}
 				class={defaultClass}

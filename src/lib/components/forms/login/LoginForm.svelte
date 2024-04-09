@@ -17,12 +17,12 @@
 		let role_name = '';
 		if (form.reportValidity()) {
 			try {
-				const { id_user, username, id_role } = await authServ.login(login);
+				const { user } = await authServ.login(login);
 				login.username = '';
 				login.password = '';
 
-				if (id_user && username && id_role) {
-					role_name = await authServ.getRoleName(id_role);
+				if (user.id_user && user.username && user.id_role) {
+					role_name = user.role_name;
 				}
 			} catch (e) {
 				error = e.message;

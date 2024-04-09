@@ -42,9 +42,6 @@ class BaseService {
 		r.method = method;
 		r.credentials = 'include'; // This is required to send cookies
 
-		console.log(route);
-		console.log(body);
-
 		return await new Promise((resolve, reject) => {
 			fetch(route + queryparams, r)
 				.then(async (response) => {

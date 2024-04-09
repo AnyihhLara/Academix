@@ -33,6 +33,7 @@
 		"@macfja/svelte-persistent-store": "^2.4.1",
 		"crypto-js": "^4.2.0",
 		"dayjs": "^1.11.10",
+		"jsonwebtoken": "^9.0.2",
 		"jspdf": "^2.5.1",
 		"jspdf-autotable": "^3.8.1",
 		"pg": "^8.11.3",

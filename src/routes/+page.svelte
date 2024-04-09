@@ -6,7 +6,7 @@
 	export let data;
 
 	onMount(async () => {
-		if ($view === '/' || !$loggedIn || !data.user || !data.pass) {
+		if ($view === '/' || !$loggedIn || !data.token) {
 			$view = '/auth/login';
 		}
 		await goto($view);

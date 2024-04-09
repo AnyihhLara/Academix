@@ -25,14 +25,13 @@ export const handle = async ({ event, resolve }) => {
 
 			let authServ = authService.getInstance();
 			let routes = authServ.getAuthorizedRoutes(role_name);
-			console.log(routes[0]);
 			if (routes.length > 0) view.set(routes[0]);
 			else {
 				view.set('/auth/login');
 			}
 		}
 	} catch (err) {
-		console.log(err.message);
+		view.set('/auth/login');
 	}
 
 	return await resolve(event);

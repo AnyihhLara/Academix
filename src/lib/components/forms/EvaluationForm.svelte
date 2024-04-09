@@ -71,8 +71,24 @@
 		dispatch('deleted');
 	}
 
-	function resetForm() {
-		evaluation = { evaluationType: '', student: '', subject: '', evaluationDate: '' };
+	async function resetForm() {
+		if (item) {
+			let { evaluation_id, student_name, evaluation_date, subject_name, evaluation_numerical_value } =
+				await evaluationServ.getEvaluation(item.evaluation_id);
+			item.evaluation_id = evaluation_id;
+			item.student_name = student_name;
+			item.evaluation_date = evaluation_date;
+			item.subject_name = subject_name;
+			item.evaluation_numerical_value = evaluation_numerical_value;
+			console.log(item);
+
+			evaluation.student = item.student_name;
+			evaluation.subject = item.subject_name;
+			evaluation.evaluationDate = item.evaluation_date;
+			evaluation.evaluationType = item.evaluation_numerical_value;
+		} else {
+			evaluation = { name: '' };
+		}
 	}
 	function isValidEvaluationDate(evaluationDate) {
 		let actualDate = new Date().toISOString().split('T')[0];

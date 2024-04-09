@@ -34,6 +34,7 @@ class EvaluationService extends BaseService {
 	}
 
 	async getEvaluation(evaluation_id) {
+		console.log(evaluation_id);
 		return await this.handleReq(this.url(evaluation_id.toString()), undefined, 'GET');
 	}
 

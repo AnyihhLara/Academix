@@ -74,13 +74,12 @@
 
 	async function resetForm() {
 		if (item) {
-			let { evaluation_id, student_id, evaluation_date, subject_id, evaluation_type_id } =
+			let { student_id, evaluation_date, subject_id, evaluation_type_id } =
 				await evaluationServ.getEvaluation(item.evaluation_id);
-			item.evaluation_id = Number(evaluation_id);
-			item.student_id = Number(student_id);
+			item.student_id = student_id;
 			item.evaluation_date = evaluation_date;
-			item.subject_id = Number(subject_id);
-			item.evaluation_type_id = Number(evaluation_type_id);
+			item.subject_id = subject_id;
+			item.evaluation_type_id = evaluation_type_id;
 
 			evaluation.student = item.student_id;
 			evaluation.subject = item.subject_id;

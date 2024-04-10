@@ -35,9 +35,8 @@
 
 	async function resetForm() {
 		if (item) {
-			let { academic_situation_id, academic_situation_name } =
+			let { academic_situation_name } =
 				await academicSituationServ.getAcademicSituation(item.academic_situation_id);
-			item.academic_situation_id = academic_situation_id;
 			item.academic_situation_name = academic_situation_name;
 			academicSituation.name = item.academic_situation_name;
 		} else {

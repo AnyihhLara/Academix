@@ -36,11 +36,8 @@
 	async function resetForm() {
 		console.log('reset');
 		if (item) {
-			let { unenrollment_reason_id, unenrollment_reason_name } =
-				await unenrollmentReasonServ.getUnenrollmentReason(item.unenrollment_reason_id);
-			item.unenrollment_reason_id = unenrollment_reason_id;
+			let { unenrollment_reason_name } = await unenrollmentReasonServ.getUnenrollmentReason(item.unenrollment_reason_id);
 			item.unenrollment_reason_name = unenrollment_reason_name;
-			console.log(item);
 			unenrollmentReason.name = item.unenrollment_reason_name;
 		} else {
 			unenrollmentReason = { name: '' };

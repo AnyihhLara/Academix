@@ -35,7 +35,6 @@
 		if (item) {
 			let { role_name } = await roleServ.getRole(item.role_id);
 			item.role_name = role_name;
-			
 			role.name = item.role_name;
 		} else {
 			role = { name: '' };

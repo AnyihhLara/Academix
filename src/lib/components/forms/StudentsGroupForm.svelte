@@ -13,6 +13,7 @@
 			years = years.filter(({ school_year }) => school_year === $currentSchoolYear);
 			years = years.map(({ year_id, year }) => ({ value: year_id, name: year }));
 		}
+		await resetForm();
 	});
 
 	export let action;
@@ -39,8 +40,16 @@
 		dispatch('deleted');
 	}
 
-	function resetForm() {
-		studentsGroup = { year: null, number: null };
+	async function resetForm() {
+		if (item) {
+			let { group_number } = await studentsGroupServ.getStudentsGroup(item.group_id, item.year_id);
+			item.group_number = group_number;
+
+			studentsGroup.year = item.year_id;
+			studentsGroup.number = item.group_number;
+		} else {
+			studentsGroup = { year: null, number: null };
+		}
 	}
 </script>
 

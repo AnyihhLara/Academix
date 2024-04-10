@@ -39,11 +39,11 @@
 
 	async function resetForm() {
 		if (item) {
-			let { evaluation_type_id, evaluation_type_name, evaluation_numerical_value } =
+			let { evaluation_type_name, evaluation_numerical_value } =
 				await evaluationTypeServ.getEvaluationType(item.evaluation_type_id);
-			item.evaluation_type_id = evaluation_type_id;
 			item.evaluation_type_name = evaluation_type_name;
 			item.evaluation_numerical_value = evaluation_numerical_value;
+			
 			evaluationType.name = item.evaluation_type_name;
 			evaluationType.numericalValue = item.evaluation_numerical_value;
 		} else {

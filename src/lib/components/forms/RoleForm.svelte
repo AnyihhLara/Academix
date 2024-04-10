@@ -33,10 +33,9 @@
 	async function resetForm() {
 		console.log('reset');
 		if (item) {
-			let { role_id, role_name } = await roleServ.getRole(item.role_id);
-			item.role_id = role_id;
+			let { role_name } = await roleServ.getRole(item.role_id);
 			item.role_name = role_name;
-			console.log(item);
+			
 			role.name = item.role_name;
 		} else {
 			role = { name: '' };

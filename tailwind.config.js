@@ -6,6 +6,14 @@ const config = {
     darkMode: 'class',
 
     theme: {
+        screens: {
+            'sm': '280px', //phone fold
+            'md': '350px', //phone vertical
+            'lg': '640px', //phone horizontal
+            'xl': '700px', //tablet vertical
+            '2xl': '900px', //tablet horizontal
+            '3xl': '1000px' //pc
+        },
         extend: {
             colors: {
                 // flowbite-svelte
@@ -35,7 +43,7 @@ const config = {
                     900: '#831843',
                     950: '#500724'
                 }
-            }
+            },
         }
     }
 };

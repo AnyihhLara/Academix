@@ -5,10 +5,12 @@
 	import { goto } from '$app/navigation';
 	import { locale, t } from '$lib/stores/stores.js';
 	import LanguageSelector from './LanguageSelector.svelte';
+	import authService from '$lib/services/AuthService.js';
 
 	async function handleLogout() {
 		try {
-			await fetch('/api/services/auth/logout', { method: 'DELETE' });
+			let authServ = authService.getInstance();
+			await authServ.logout();
 		} catch (e) {
 			console.log(e);
 		} finally {

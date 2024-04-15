@@ -17,12 +17,8 @@ class AuthService extends BaseService {
 		return await this.handleReq(this.url('login'), undefined, 'POST', login);
 	}
 
-	async refresh() {
-		return await this.handleReq(this.url('refresh'), undefined, 'POST');
-	}
-
-	async getRoleName(id_role) {
-		return await this.handleReq(this.url('role/' + id_role), undefined, 'GET');
+	async logout() {
+		return await this.handleReq(this.url('logout'), undefined, 'DELETE');
 	}
 
 	getAuthorizedRoutes(role) {

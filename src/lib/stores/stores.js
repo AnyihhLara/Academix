@@ -1,4 +1,4 @@
-import { readable, writable, derived } from 'svelte/store';
+import { derived, readable, writable } from 'svelte/store';
 import AcademicSituationForm from '$lib/components/forms/AcademicSituationForm.svelte';
 import EvaluationForm from '$lib/components/forms/EvaluationForm.svelte';
 import EvaluationTypeForm from '$lib/components/forms/EvaluationTypeForm.svelte';
@@ -9,16 +9,12 @@ import UnenrollmentReasonForm from '$lib/components/forms/UnenrollmentReasonForm
 import YearForm from '$lib/components/forms/YearForm.svelte';
 import UserForm from '$lib/components/forms/UserForm.svelte';
 import RoleForm from '$lib/components/forms/RoleForm.svelte';
-import { createLocalStorage, createSessionStorage, persist } from '@macfja/svelte-persistent-store';
+//i18n
+import translations from '../utils/translations';
 
-export const loggedIn = persist(writable(false), createSessionStorage(), 'L');
-export const view = persist(writable('/'), createLocalStorage(), 'V');
 export const currentSchoolYear = writable('2022-2023');
 
-//i18n
-import translations from "../utils/translations";
-
-export const locale = writable("es");
+export const locale = writable('es');
 export const locales = Object.keys(translations);
 
 function translate(locale, key, vars) {
@@ -30,23 +26,24 @@ function translate(locale, key, vars) {
 
 			if (!text) {
 				text = key;
-			}
-			else {
+			} else {
 				Object.keys(vars).map((k) => {
-					const regex = new RegExp(`{{${k}}}`, "g");
+					const regex = new RegExp(`{{${k}}}`, 'g');
 					text = text.replace(regex, vars[k]);
 				});
 			}
-		}
-		else {
+		} else {
 			text = key;
 		}
 		return text;
 	}
 }
 
-export const t = derived(locale, ($locale) => (key, vars = {}) =>
-	translate($locale, key, vars)
+export const t = derived(
+	locale,
+	($locale) =>
+		(key, vars = {}) =>
+			translate($locale, key, vars)
 );
 
 //tables
@@ -358,7 +355,3 @@ export const pdfHeaders = readable([
 		}
 	}
 ]);
-
-
-
-

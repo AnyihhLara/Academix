@@ -1,5 +1,8 @@
-export async function load({ cookies }) {
-	const token = cookies.get('jwt');
+import { redirect } from '@sveltejs/kit';
 
-	return { token };
+export async function load({ cookies, locals }) {
+	const token = cookies.get('jwt');
+	console.log('PAGE/');
+
+	if (!token && !locals.user) throw redirect(302, locals.view);
 }

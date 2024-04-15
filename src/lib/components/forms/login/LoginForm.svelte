@@ -4,7 +4,7 @@
 	import { Button } from 'flowbite-svelte';
 	import { goto } from '$app/navigation';
 	import authService from '$lib/services/AuthService.js';
-	import { loggedIn, view, t } from '$lib/stores/stores.js';
+	import { t } from '$lib/stores/stores.js';
 
 	let form, error;
 	let login = {
@@ -15,27 +15,27 @@
 
 	const handleLogin = async () => {
 		let role_name = '';
+
 		if (form.reportValidity()) {
 			try {
 				const { user } = await authServ.login(login);
-				login.username = '';
-				login.password = '';
 
 				if (user.id_user && user.username && user.id_role) {
 					role_name = user.role_name;
 				}
 			} catch (e) {
 				error = e.message;
+				login.username = '';
+				login.password = '';
 			}
 		}
 		let routes = authServ.getAuthorizedRoutes(role_name);
 		if (routes.length > 0) {
-			$view = routes[0];
-			$loggedIn = true;
+			await goto(routes[0]);
 		} else {
-			$view = '/auth/login';
+			await goto('/');
 		}
-		await goto($view);
+
 	};
 </script>
 

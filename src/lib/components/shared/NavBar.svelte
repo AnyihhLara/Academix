@@ -1,17 +1,9 @@
 <script>
-	import {
-		Avatar,
-		DarkMode,
-		Dropdown,
-		DropdownHeader,
-		DropdownItem,
-		Navbar,
-		NavBrand
-	} from 'flowbite-svelte';
+	import { Avatar, DarkMode, Dropdown, DropdownHeader, DropdownItem, Navbar, NavBrand } from 'flowbite-svelte';
 	import { BuildingSolid, MoonSolid, SunSolid } from 'flowbite-svelte-icons';
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
-	import { loggedIn, view, t, locale } from '$lib/stores/stores.js';
+	import { locale, t } from '$lib/stores/stores.js';
 	import LanguageSelector from './LanguageSelector.svelte';
 
 	async function handleLogout() {
@@ -20,16 +12,14 @@
 		} catch (e) {
 			console.log(e);
 		} finally {
-			$view = '/';
-			$loggedIn = false;
 			$locale = 'es';
-			await goto($view, { invalidateAll: true });
+			await goto('/auth/login', { invalidateAll: true });
 		}
 	}
 </script>
 
 <Navbar class="shadow-xl">
-	<NavBrand class="ml-8" href="/">
+	<NavBrand class="ml-8" href={$page.data.view}>
 		<BuildingSolid class="mr-3 h-6 sm:h-9" />
 		<span class="self-center whitespace-nowrap text-xl font-bold dark:text-white">ACADEMIX</span>
 	</NavBrand>
@@ -49,7 +39,7 @@
 <Dropdown placement="bottom" triggeredBy="#avatar-menu">
 	<DropdownHeader>
 		<span class="block text-sm"> {$t('Usuario')} </span>
-		<span class="block truncate text-sm font-medium"> {$page.data.user} </span>
+		<span class="block truncate text-sm font-medium"> {$page.data.user.username} </span>
 	</DropdownHeader>
 	<DropdownItem on:click={handleLogout}>
 		<span class="font-medium text-red-600 text-sm w-full">{$t('Cerrar sesión')}</span>

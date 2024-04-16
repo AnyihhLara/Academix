@@ -21,7 +21,7 @@
 	export let item = null;
 	let tableName = 'Usuario',
 		defaultClass = 'mt-2',
-		user = { username: '', password: '', role: null, student_id: null };
+		user = { username: '', password: '', role: null, student_id: null, email: null };
 	let roles, students;
 	let userServ = userService.getInstance();
 	let studentServ = studentService.getInstance();
@@ -46,14 +46,14 @@
 	}
 
 	async function createItem() {
-		let { user_id } = await userServ.createUser(user.username, user.password, user.role);
+		let { user_id } = await userServ.createUser(user.username, user.password, user.role, user.email);
 
 		if (user.student_id) await assignStudentToUser(user.student_id, user_id);
 		dispatch('created');
 	}
 
 	async function updateItem() {
-		await userServ.updateUser(item.user_id, user.username, user.password, user.role);
+		await userServ.updateUser(item.user_id, user.username, user.password, user.role, user.email);
 
 		if (item.code !== item.user_id && item.code !== '-') {
 			let { student_id } = students.find(({ student_code }) => student_code === item.code);
@@ -94,7 +94,8 @@
 				preferred_language,
 				role_name,
 				student_id,
-				student_code
+				student_code,
+				email
 			} = await userServ.getUser(item.user_id);
 			item.user_name = user_name;
 			item.role_id = role_id;
@@ -102,14 +103,16 @@
 			item.role_name = role_name;
 			item.student_id = student_id;
 			item.code = student_code;
+			item.email = email;
 
 			user.username = item.user_name;
 			user.password = '';
 			user.role = item.role_id;
 			user.role_name = item.role_name;
 			user.student_id = item.student_id;
+			user.email = item.email;
 		} else {
-			user = { username: '', password: '', role: null, student_id: null };
+			user = { username: '', password: '', role: null, student_id: null, email: null };
 		}
 		students = await studentServ.getStudents();
 	}
@@ -132,7 +135,19 @@
 	<div>
 		<PasswordInput bind:password={user.password} />
 	</div>
-
+	<div>
+		<Label for="email"
+		>{$t('Correo electrónico')}
+			<Input
+				bind:value={user.email}
+				class={defaultClass}
+				id="email"
+				placeholder={$t('Correo electrónico')}
+				required
+				type="email"
+			/>
+		</Label>
+	</div>
 	<div>
 		<Label
 			>{$t('Rol')}

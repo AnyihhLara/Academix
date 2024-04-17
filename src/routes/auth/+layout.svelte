@@ -1,6 +1,6 @@
-<div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+<div class="flex justify-center items-center h-screen">
 	<div
-		class="bg-white dark:bg-secondary-950 rounded-2xl pt-5 pb-7 px-7 sm:w-60 md:w-80 lg:w-96 xl:w-[400px] 2xl:[450px] 3xl:w-96"
+		class="bg-white dark:bg-secondary-950 rounded-2xl pt-5 pb-7 px-7 xs:w-60 sm:w-80 md:w-[370px] lg:w-[400px] xl:w-[450px] 2xl:w-96 3xl:w-[500px] min-w-[240px]"
 	>
 		<slot />
 	</div>

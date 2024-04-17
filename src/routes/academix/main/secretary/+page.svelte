@@ -27,59 +27,50 @@
 	const gotoReports = () => {
 		goto('/academix/reports');
 	};
-
-	let defaultClass = 'flex-row space-y-5';
-	$: btnText = $t('Ver más');
 </script>
 
 <section class="px-4 pt-3 pb-6">
 	<h1 class="text-center text-2xl mt-1 mb-2 font-semibold text-primary-950 dark:text-primary-100">
 		{$t('Módulos Secretaría')}
 	</h1>
-	<div class="{defaultClass} justify-center items-center">
-		<div class="flex gap-5 justify-center">
-			<div class={defaultClass}>
-				<Card on:click={gotoStudents}>
-					<span slot="tittle">{$t('Listado de estudiantes')}</span>
-					<span slot="btn-text">{btnText}</span>
-				</Card>
-				<Card on:click={gotoSubjects}>
-					<span slot="tittle">{$t('Listado de asignaturas')}</span>
-					<span slot="btn-text">{btnText}</span>
-				</Card>
-			</div>
-			<div class={defaultClass}>
-				<Card on:click={gotoYears}>
-					<span slot="tittle">{$t('Años existentes')}</span>
-					<span slot="btn-text">{btnText}</span>
-				</Card>
-				<Card on:click={gotoStudentsGroups}>
-					<span slot="tittle">{$t('Grupos existentes')}</span>
-					<span slot="btn-text">{btnText}</span>
-				</Card>
-			</div>
-			<div>
-				<Card on:click={gotoReports}>
-					<span slot="tittle">{$t('Reportes')}</span>
-					<div class="flex justify-center">
-						<img alt="Reportes-Reports" class="mb-1.5 h-36 w-96" src="/reports.jpg" />
-					</div>
-					<span slot="btn-text">{btnText}</span>
-				</Card>
-			</div>
-		</div>
-		<div class="flex gap-5 justify-center">
+	<div class="flex justify-center items-center">
+		<div
+			class="xs:flex xs:flex-col xs:gap-4 xs:w-[80%] xl:grid xl:grid-cols-2 3xl:grid-cols-3 lg:w-auto"
+		>
+			<Card on:click={gotoStudents}>
+				<span slot="title">{$t('Listado de estudiantes')}</span>
+ 
+			</Card>
+			<Card on:click={gotoSubjects}>
+				<span slot="title">{$t('Listado de asignaturas')}</span>
+ 
+			</Card>
 			<Card on:click={gotoAcademicSituations}>
-				<span slot="tittle">{$t('Listado de situaciones académicas existentes')}</span>
-				<span slot="btn-text">{btnText}</span>
+				<span slot="title">{$t('Listado de situaciones académicas existentes')}</span>
+ 
+			</Card>
+			<Card on:click={gotoYears}>
+				<span slot="title">{$t('Años existentes')}</span>
+ 
+			</Card>
+			<Card on:click={gotoStudentsGroups}>
+				<span slot="title">{$t('Grupos existentes')}</span>
+ 
 			</Card>
 			<Card on:click={gotoUnenrollmentReasons}>
-				<span slot="tittle">{$t('Listado de causas de baja existentes')}</span>
-				<span slot="btn-text">{btnText}</span>
+				<span slot="title">{$t('Listado de causas de baja existentes')}</span>
+ 
 			</Card>
 			<Card on:click={gotoEvaluationTypes}>
-				<span slot="tittle">{$t('Listado de tipos de evaluaciones existentes')}</span>
-				<span slot="btn-text">{btnText}</span>
+				<span slot="title">{$t('Listado de tipos de evaluaciones existentes')}</span>
+ 
+			</Card>
+			<Card on:click={gotoReports}>
+				<span slot="title">{$t('Reportes')}</span>
+				<div class="flex justify-center">
+					<img alt="Reportes-Reports" class="mb-1.5 h-36 w-96" src="/reports.jpg" />
+				</div>
+ 
 			</Card>
 		</div>
 	</div>

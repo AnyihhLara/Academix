@@ -1,8 +1,8 @@
 <script>
 	import '../app.css';
-	import { Footer, FooterCopyright } from 'flowbite-svelte';
+	// import { Footer, FooterCopyright } from 'flowbite-svelte';
 	import { t } from '$lib/stores/stores.js';
-	$: copyrightMessage = $t('Todos los derechos reservados') + '';
+	$: copyrightMessage = $t('Todos los derechos reservados') + '.';
 </script>
 
 <div
@@ -10,15 +10,14 @@
 	dark:from-primary-950 dark:to-primary-900"
 >
 	<slot />
-	<div class="fixed bottom-0 w-full">
-		<Footer>
-			<FooterCopyright
-				spanClass="block mb-1 text-sm font-semibold sm:text-center text-primary-950 dark:text-primary-100"
-				href="/"
-				by="Academix™"
-				year={2023}
-				{copyrightMessage}
-			/>
-		</Footer>
-	</div>
+	<!-- <Footer class="justify-self-end">
+		<FooterCopyright
+			spanClass="block xs:text-xs sm:text-sm font-semibold text-center text-primary-950 dark:text-primary-100"
+			href="/"
+			by="Academix™"
+			year={2023}
+			{copyrightMessage}
+		/>
+	</Footer> -->
 </div>
+

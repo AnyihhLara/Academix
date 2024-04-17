@@ -1,6 +1,6 @@
 <script>
 	import Card from '$lib/components/shared/Card.svelte';
-	import { Avatar, Label } from 'flowbite-svelte';
+	import { Avatar, Button, Label } from 'flowbite-svelte';
 	import { goto } from '$app/navigation';
 	import Table from '$lib/components/shared/Table.svelte';
 	import studentService from '$lib/services/StudentService.js';
@@ -8,6 +8,8 @@
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import { t } from '$lib/stores/stores.js';
+	import StudentData from '$lib/components/shared/StudentData.svelte';
+	import { ArrowRightOutline } from 'flowbite-svelte-icons';
 
 	onMount(() => {
 		refreshItems();
@@ -52,46 +54,80 @@
 	};
 </script>
 
-<section class="py-2 pb-2 pt-4 grid justify-center w-full">
+<section class="flex flex-col py-2 pb-2 pt-4 justify-center items-center w-full">
 	<h1 class="text-center text-2xl mb-4 font-semibold text-primary-950 dark:text-primary-100">
 		{$t('Perfil de estudiante')}
 	</h1>
 	<Card
-		cardClass="max-w-full"
-		divBtnClass="flex justify-between mt-1"
-		divClass="flex gap-5 items-start justify-center"
-		on:click={gotoReports}
+		cardClass="max-w-full justify-normal xs:w-[80%] xl:w-auto"
+		divClass="flex gap-5 justify-center"
 	>
 		<svelte:fragment slot="avatar-slot">
-			<Avatar size="xl" />
+			<Avatar
+				size="xl"
+				class="xs:rounded-md xs:h-40 xs:w-28 lg:w-36 2xl:h-36 2xl:w-auto 2xl:rounded-full"
+			/>
 		</svelte:fragment>
-		<div class="flex gap-5">
-			<div class="grid gap-5 mb-4">
-				<Label>{$t('Código')}:<span class="mx-2">{student.student_code}</span></Label>
-				<Label>{$t('Nombre')}:<span class="mx-2">{student.student_name}</span></Label>
-				<Label>{$t('Apellidos')}:<span class="mx-2">{student.lastname}</span></Label>
-				<Label>{$t('Año académico')}:<span class="mx-2">{student.year}</span></Label>
+		<div class="flex xs:flex-col 2xl:flex-row xl:gap-2 flex-wrap items-stretch">
+			<div class="flex flex-col gap-5 mb-4">
+				<StudentData
+					>{$t('Código')}:
+					<span slot="info">{student.student_code}</span>
+				</StudentData>
+				<StudentData
+					>{$t('Nombre')}:
+					<span slot="info">{student.student_name}</span>
+				</StudentData>
+				<StudentData
+					>{$t('Apellidos')}:
+					<span slot="info">{student.lastname}</span>
+				</StudentData>
+				<StudentData
+					>{$t('Año académico')}:
+					<span slot="info">{student.year}</span>
+				</StudentData>
+				{#if student.unenrollment_reason}
+					<div class="xs:hidden xl:block">
+						<StudentData
+							>{$t('Causa de baja')}:
+							<span slot="info">{student.unenrollment_reason}</span>
+						</StudentData>
+					</div>
+				{/if}
 			</div>
-			<div class="grid gap-5 mb-4">
-				<Label>{$t('Grupo')}:<span class="mx-2">{student.group_number}</span></Label>
-				<Label>{$t('Sexo')}:<span class="mx-2">{student.sex}</span></Label>
-				<Label>{$t('Municipio')}:<span class="mx-2">{student.municipality}</span></Label>
-				<Label
-					>{$t('Situación académica')}:<span class="mx-2">{$t(student.academic_situation)}</span
-					></Label
-				>
+			<div class="flex flex-col gap-5 mb-4">
+				<StudentData
+					>{$t('Grupo')}:
+					<span slot="info">{student.group_number}</span>
+				</StudentData>
+				<StudentData
+					>{$t('Sexo')}:
+					<span slot="info">{student.sex}</span>
+				</StudentData>
+				<StudentData
+					>{$t('Municipio')}:
+					<span slot="info">{student.municipality}</span>
+				</StudentData>
+				<StudentData
+					>{$t('Situación académica')}:
+					<span slot="info">{student.academic_situation}</span>
+				</StudentData>
+				{#if student.unenrollment_reason}
+					<div class="xl:hidden xs:block">
+						<StudentData
+							>{$t('Causa de baja')}:
+							<span slot="info">{student.unenrollment_reason}</span>
+						</StudentData>
+					</div>
+				{/if}
 			</div>
 		</div>
-		<img alt="reportes-reports" class="w-52 h-32" src="/reports.jpg" />
-		<span slot="div-btn">
-			{#if student.unenrollment_reason}
-				<Label class="ml-[184px]"
-					>{$t('Causa de baja')}:<span class="mx-2">{$t(student.unenrollment_reason)}</span></Label
-				>
-			{/if}
-		</span>
-		<span slot="btn-text">{$t('Reportes')}</span>
 	</Card>
+
+	<Button class="xs:w-[40%] xl:w-[30%] mt-4" on:click={gotoReports}>
+		{$t('Reportes')}<ArrowRightOutline class="w-3.5 h-3.5 ms-2 text-white" />
+	</Button>
+
 	<Table
 		{filters}
 		{isCreatable}

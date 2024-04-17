@@ -7,12 +7,13 @@ const config = {
 
     theme: {
         screens: {
-            'sm': '280px', //phone fold
-            'md': '350px', //phone vertical
-            'lg': '640px', //phone horizontal
-            'xl': '700px', //tablet vertical
-            '2xl': '900px', //tablet horizontal
-            '3xl': '1000px' //pc
+            'xs': '0px', //Mobile-S
+            'sm': '321px', //Mobile-M 
+            'md': '376px', ////Mobile-L 
+            'lg': '426px', //Tablet 
+            'xl': '769px', //Laptop/PC 
+            '2xl': '1025px', //Laptop-L/PC-L 
+            '3xl': '1441px', //4k
         },
         extend: {
             colors: {

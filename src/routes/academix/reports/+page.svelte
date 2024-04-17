@@ -32,7 +32,6 @@
 		goto('/academix/reports/9');
 	};
 	let defaultClass = 'flex-row space-y-5';
-	$: btnText = $t('Ver más');
 </script>
 
 <section class="px-4 pt-3 pb-5">
@@ -45,39 +44,39 @@
 			{#if $page.data.role !== 'Estudiante'}
 				<div class={defaultClass}>
 					<Card on:click={gotoReport1}>
-						<span slot="tittle">{$t('Listado de los estudiantes por grupo')}</span>
-						<span slot="btn-text">{btnText}</span>
+						<span slot="title">{$t('Listado de los estudiantes por grupo')}</span>
+		 
 					</Card>
 					<Card on:click={gotoReport2}>
-						<span slot="tittle">{$t('Listado de las asignaturas por año')}</span>
-						<span slot="btn-text">{btnText}</span>
+						<span slot="title">{$t('Listado de las asignaturas por año')}</span>
+		 
 					</Card>
 					<Card on:click={gotoReport3}>
-						<span slot="tittle"
+						<span slot="title"
 							>{$t('Listado de las evaluaciones por grupo en cada asignatura')}</span
 						>
-						<span slot="btn-text">{btnText}</span>
+		 
 					</Card>
 				</div>
 			{/if}
 			<div class={defaultClass}>
 				<Card on:click={gotoReport4}>
-					<span slot="tittle"
+					<span slot="title"
 						>{$t(
 							'Listado de los promedios finales obtenidos por los estudiantes de cada grupo'
 						)}</span
 					>
-					<span slot="btn-text">{btnText}</span>
+	 
 				</Card>
 				<Card on:click={gotoReport5}>
-					<span slot="tittle">{$t('Escalafón')}</span>
-					<span slot="btn-text">{btnText}</span>
+					<span slot="title">{$t('Escalafón')}</span>
+	 
 				</Card>
 				{#if $page.data.role !== 'Estudiante'}
 					<div>
 						<Card on:click={gotoReport6}>
-							<span slot="tittle">{$t('Certificación de notas de cada estudiante')}</span>
-							<span slot="btn-text">{btnText}</span>
+							<span slot="title">{$t('Certificación de notas de cada estudiante')}</span>
+			 
 						</Card>
 					</div>
 				{/if}
@@ -85,19 +84,18 @@
 			{#if $page.data.role !== 'Estudiante'}
 				<div class={defaultClass}>
 					<Card on:click={gotoReport7}>
-						<span slot="tittle"
+						<span slot="title"
 							>{$t('Listado de los estudiantes desaprobados por grupo en un rango de fecha')}</span
 						>
-						<span slot="btn-text">{btnText}</span>
+		 
 					</Card>
 					<Card on:click={gotoReport8}>
-						<span slot="tittle">{$t('Listado de los estudiantes que causan baja en un curso')}</span
-						>
-						<span slot="btn-text">{btnText}</span>
+						<span slot="title">{$t('Listado de los estudiantes que causan baja en un curso')}</span>
+		 
 					</Card>
 					<Card on:click={gotoReport9}>
-						<span slot="tittle">{$t('Listado de los estudiantes repitentes por año')}</span>
-						<span slot="btn-text">{btnText}</span>
+						<span slot="title">{$t('Listado de los estudiantes repitentes por año')}</span>
+		 
 					</Card>
 				</div>
 			{/if}

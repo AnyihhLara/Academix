@@ -1,23 +1,24 @@
 <script>
 	import { Card, Button } from 'flowbite-svelte';
 	import { ArrowRightOutline } from 'flowbite-svelte-icons';
+	import { t } from '$lib/stores/stores.js';
+	import { page } from '$app/stores';
+
 	export let divClass = '',
-		cardClass = '',
-		divBtnClass = '';
+		cardClass = '';
 </script>
 
-<Card class="min-w-[400px] {cardClass}">
+<Card class="space-y-1 justify-center {cardClass}">
 	<div class={divClass}>
 		<slot name="avatar-slot" />
-		<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-			<slot name="tittle" />
+		<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white text-center">
+			<slot name="title" />
 		</h5>
 		<slot />
-	</div>
-	<div class={divBtnClass}>
-		<slot name="div-btn" />
-		<Button class="w-fit" on:click>
-			<slot name="btn-text" /><ArrowRightOutline class="w-3.5 h-3.5 ms-2 text-white" />
+	</div>	
+	{#if $page.data.role !== 'Estudiante'}
+		<Button class="w-full" on:click>
+			{$t('Ver más')}<ArrowRightOutline class="w-3.5 h-3.5 ms-2 text-white" />
 		</Button>
-	</div>
+	{/if}
 </Card>

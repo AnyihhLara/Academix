@@ -52,20 +52,23 @@
 </script>
 
 <section class="mt-4 mx-3 pb-5">
-	<div class="flex justify-between items-center">
+	<div class="flex xs:justify-start xs:gap-4 2xl:gap-0 2xl:justify-between items-center">
 		{#if isNamed}
 			<h2 class="font-bold block mb-3 ml-3 text-secondary-950 dark:text-secondary-100 text-xl">
 				{tableHeader}
 			</h2>
 		{/if}
-		<div class="flex gap-3 mb-2 mr-3">
-			{#if component && isCreatable}
-				<svelte:component this={component} action="Create" on:created={refreshItems} />
-			{/if}
-			{#if isFilterable}
-				<Filter {filters} on:change={applyFilters} />
-			{/if}
-		</div>
+		{#if (component && isCreatable) || isFilterable}
+			<div class="flex gap-4 mb-2 mr-3">
+				{#if component && isCreatable}
+					<svelte:component this={component} action="Create" on:created={refreshItems} />
+				{/if}
+
+				{#if isFilterable}
+					<Filter {filters} on:change={applyFilters} />
+				{/if}
+			</div>
+		{/if}
 	</div>
 	<Table hoverable={true} shadow={true}>
 		<TableHead>

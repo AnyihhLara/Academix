@@ -5,4 +5,4 @@
 	let languages = locales.map((locale) => ({ value: locale, name: locale }));
 </script>
 
-<Select class="w-16" size="sm" items={languages} bind:value={$locale} placeholder="" />
+<Select class="xs:text-xs lg:text-sm lg:w-16" size="sm" items={languages} bind:value={$locale} placeholder="" />

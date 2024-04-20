@@ -59,16 +59,14 @@
 		{$t('Perfil de estudiante')}
 	</h1>
 	<Card
-		cardClass="max-w-full justify-normal xs:w-[80%] xl:w-auto"
-		divClass="flex gap-5 justify-center"
+		cardClass="max-w-full justify-normal xs:w-[70%] lg:w-[80%] xl:w-auto"
+		divClass="flex xs:flex-col lg:flex-row xs:gap-2 lg:gap-4 xl:gap-5 xs:justify-center lg:justify-start xl:justify-center xs:items-center lg:items-stretch"
+		isProfile={true}
 	>
 		<svelte:fragment slot="avatar-slot">
-			<Avatar
-				size="xl"
-				class="xs:rounded-md xs:h-40 xs:w-28 lg:w-36 2xl:h-36 2xl:w-auto 2xl:rounded-full"
-			/>
+			<Avatar size="xl" class="xs:rounded-sm xs:h-36 xs:w-28 xl:w-36 2xl:w-auto 2xl:rounded-full" />
 		</svelte:fragment>
-		<div class="flex xs:flex-col 2xl:flex-row xl:gap-2 flex-wrap items-stretch">
+		<div class="flex xs:flex-col xl:flex-row xl:gap-2 flex-wrap items-stretch">
 			<div class="flex flex-col gap-5 mb-4">
 				<StudentData
 					>{$t('Código')}:
@@ -124,18 +122,20 @@
 		</div>
 	</Card>
 
-	<Button class="xs:w-[40%] xl:w-[30%] mt-4" on:click={gotoReports}>
+	<Button class="xs:w-[40%] xl:w-[30%] xs:mt-4 xl:mt-6" on:click={gotoReports}>
 		{$t('Reportes')}<ArrowRightOutline class="w-3.5 h-3.5 ms-2 text-white" />
 	</Button>
 
-	<Table
-		{filters}
-		{isCreatable}
-		{isDeletable}
-		{isFilterable}
-		{isUpdatable}
-		items={evaluations}
-		{refreshItems}
-		{tableName}
-	/>
+	<div class="w-full">
+		<Table
+			{filters}
+			{isCreatable}
+			{isDeletable}
+			{isFilterable}
+			{isUpdatable}
+			items={evaluations}
+			{refreshItems}
+			{tableName}
+		/>
+	</div>
 </section>

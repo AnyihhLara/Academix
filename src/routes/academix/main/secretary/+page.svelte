@@ -29,13 +29,13 @@
 	};
 </script>
 
-<section class="px-4 pt-3 pb-6">
-	<h1 class="text-center text-2xl mt-1 mb-2 font-semibold text-primary-950 dark:text-primary-100">
+<section class="space-y-5 pt-3 pb-6 px-2">
+	<h1 class="text-center xs:text-xl lg:text-2xl mt-1 mb-2 font-semibold text-primary-950 dark:text-primary-100">
 		{$t('Módulos Secretaría')}
 	</h1>
 	<div class="flex justify-center items-center">
 		<div
-			class="xs:flex xs:flex-col xs:gap-4 xs:w-[80%] xl:grid xl:grid-cols-2 3xl:grid-cols-3 lg:w-auto"
+			class="xs:flex xs:flex-col xs:gap-4 xs:w-[80%] xl:grid xl:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4 lg:w-auto"
 		>
 			<Card on:click={gotoStudents}>
 				<span slot="title">{$t('Listado de estudiantes')}</span>

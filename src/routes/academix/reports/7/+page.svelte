@@ -7,6 +7,8 @@
 	import yearService from '$lib/services/YearService.js';
 	import { currentSchoolYear, pdfHeaders, t } from '$lib/stores/stores.js';
 	import { generatePDF } from '$lib';
+	import DownloadPdfButton from '$lib/components/shared/DownloadPDFButton.svelte';
+	import Title from '$lib/components/shared/Title.svelte';
 
 	onMount(async () => {
 		let yearServ = yearService.getInstance();
@@ -132,10 +134,8 @@
 </script>
 
 <section>
-	<h1 class="text-center text-2xl mb-4 pt-3 font-semibold text-primary-950 dark:text-primary-100">
-		{$t(reportName)}
-	</h1>
-	<div class="flex items-center mx-5 gap-5">
+	<Title divClass="mb-4 ml-6 pt-4">{$t(reportName)}</Title>
+	<div class="flex items-center justify-start ml-5 gap-5">
 		<Label for="start-date">
 			{$t('Fecha Inicial')}
 			<Input bind:value={startDate} id="start-date" type="date" />
@@ -173,9 +173,7 @@
 	{#if validDate && startDate && endDate && selectedYear && selectedGroup && failedStudentsByGroup}
 		<section class="mt-6 mx-3 pb-2">
 			{#if failedStudentsByGroup.school_years.length > 0}
-				<div class="flex justify-end pr-6">
-					<Button on:click={downloadReport7} size="sm">{$t('Descargar PDF')}</Button>
-				</div>
+				<DownloadPdfButton on:click={downloadReport7} />
 				{#each failedStudentsByGroup.school_years as data}
 					<h2 class="font-bold block mb-3 ml-3 text-secondary-950 dark:text-secondary-100 text-xl">
 						{$t('Curso')}: {data.school_year}

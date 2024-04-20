@@ -1,12 +1,14 @@
 <script>
 	import { onMount } from 'svelte';
 	import reportService from '$lib/services/ReportService.js';
-	import { Button, Label, Select } from 'flowbite-svelte';
+	import { Label, Select } from 'flowbite-svelte';
 	import Table from '$lib/components/shared/Table.svelte';
 	import studentService from '$lib/services/StudentService.js';
 	import { pdfHeaders, t } from '$lib/stores/stores.js';
 	import { generatePDF } from '$lib';
 	import dayjs from 'dayjs';
+	import DownloadPdfButton from '$lib/components/shared/DownloadPDFButton.svelte';
+	import Title from '$lib/components/shared/Title.svelte';
 
 	onMount(() => {
 		refreshItems();
@@ -70,10 +72,8 @@
 </script>
 
 <section class="px-2 pt-3 pb-8">
-	<div class="flex items-center justify-between mx-5 mt-1 gap-4">
-		<h1 class="text-center text-2xl mb-4 pt-3 font-semibold text-primary-950 dark:text-primary-100">
-			{$t(reportName)}
-		</h1>
+	<div class="flex items-center justify-between mx-5 mt-1 gap-4 pb-4">
+		<Title divClass="mt-1">{$t(reportName)}</Title>
 		<div class="flex items-center gap-2">
 			<Label>{$t('Estudiante')}:</Label>
 			<Select
@@ -89,9 +89,7 @@
 		</div>
 	</div>
 	{#if student}
-		<div class="flex justify-end pr-8">
-			<Button on:click={downloadReport6} size="sm">{$t('Descargar PDF')}</Button>
-		</div>
+		<DownloadPdfButton on:click={downloadReport6} />
 		<section class="mt-4 mx-3" key={student.student_code}>
 			<h2 class="font-bold block mb-3 ml-3 text-secondary-950 dark:text-secondary-100 text-xl">
 				{student.student_name}

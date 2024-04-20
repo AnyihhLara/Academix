@@ -3,9 +3,10 @@
 	import reportService from '$lib/services/ReportService.js';
 	import { onMount } from 'svelte';
 	import { pdfHeaders, t } from '$lib/stores/stores.js';
-	import { Button } from 'flowbite-svelte';
 	import dayjs from 'dayjs';
 	import { generatePDF } from '$lib';
+	import DownloadPdfButton from '$lib/components/shared/DownloadPDFButton.svelte';
+	import Title from '$lib/components/shared/Title.svelte';
 
 	onMount(() => {
 		refreshItems();
@@ -55,13 +56,9 @@
 </script>
 
 <section>
-	<h1 class="text-center text-2xl mb-4 pt-3 font-semibold text-primary-950 dark:text-primary-100">
-		{$t(reportName)}
-	</h1>
+	<Title>{$t(reportName)}</Title>
 	{#if dataBySchoolYear.length > 0}
-		<div class="flex justify-end pr-8">
-			<Button on:click={downloadReport9} size="sm">{$t('Descargar PDF')}</Button>
-		</div>
+		<DownloadPdfButton on:click={downloadReport9} />
 		{#each dataBySchoolYear as schoolYearData}
 			<section class="mt-6 mx-3" key={schoolYearData.schoolYear}>
 				<h2 class="font-bold block mb-3 ml-3 text-secondary-950 dark:text-secondary-100 text-xl">

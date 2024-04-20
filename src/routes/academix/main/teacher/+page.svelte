@@ -17,9 +17,9 @@
 	};
 </script>
 
-<section class="px-4 pt-3 pb-4 xs:pb-0">
+<section class="px-2 pt-3 pb-4 xs:pb-2">
 	<h1
-		class="text-center text-2xl xl:mt-2 mb-4 font-semibold text-primary-950 dark:text-primary-100"
+		class="text-center xs:text-xl lg:text-2xl xl:mt-2 mb-4 font-semibold text-primary-950 dark:text-primary-100"
 	>
 		{$t('Módulos Profesor')}
 	</h1>

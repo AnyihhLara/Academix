@@ -1,8 +1,7 @@
 <script>
 	import '../app.css';
 	// import { Footer, FooterCopyright } from 'flowbite-svelte';
-	import { t } from '$lib/stores/stores.js';
-	$: copyrightMessage = $t('Todos los derechos reservados') + '.';
+	// $: copyrightMessage = $t('Todos los derechos reservados') + '.';
 </script>
 
 <div
@@ -20,4 +19,3 @@
 		/>
 	</Footer> -->
 </div>
-

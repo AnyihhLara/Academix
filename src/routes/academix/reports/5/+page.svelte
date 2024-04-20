@@ -1,5 +1,5 @@
 <script>
-	import { Button, Label, Select } from 'flowbite-svelte';
+	import { Label, Select } from 'flowbite-svelte';
 	import Table from '$lib/components/shared/Table.svelte';
 	import { onMount } from 'svelte';
 	import reportService from '$lib/services/ReportService.js';
@@ -8,6 +8,8 @@
 	import { currentSchoolYear, pdfHeaders, t } from '$lib/stores/stores.js';
 	import { generatePDF } from '$lib';
 	import dayjs from 'dayjs';
+	import DownloadPdfButton from '$lib/components/shared/DownloadPDFButton.svelte';
+	import Title from '$lib/components/shared/Title.svelte';
 
 	onMount(async () => {
 		let yearServ = yearService.getInstance();
@@ -50,7 +52,7 @@
 
 		if (dataByGroup) data = dataByGroup;
 		else if (dataByYear) data = dataByYear;
-		
+
 		const reportData = [
 			data.students
 				.map((studentData) => {
@@ -90,10 +92,8 @@
 </script>
 
 <section class="px-2 pt-6 pb-8">
-	<div class="flex items-center justify-between mx-6 gap-4">
-		<h1 class="text-center text-2xl font-semibold text-primary-950 dark:text-primary-100">
-			{$t(reportName)}
-		</h1>
+	<div class="flex items-center justify-between mx-6 gap-4 pb-4">
+		<Title divClass="">{$t(reportName)}</Title>
 		{#if years}
 			<div class="flex justify-center items-center gap-3">
 				<Label>{$t('Año')}</Label>
@@ -118,9 +118,7 @@
 		{/if}
 	</div>
 	{#if selectedYear}
-		<div class="flex justify-end pr-6 pt-4">
-			<Button on:click={downloadReport5} size="sm">{$t('Descargar PDF')}</Button>
-		</div>
+		<DownloadPdfButton on:click={downloadReport5} />
 	{/if}
 
 	{#if selectedYear && !selectedGroup && dataByYear}

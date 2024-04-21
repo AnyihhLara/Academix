@@ -111,33 +111,30 @@
 </script>
 
 <section class="px-2 pt-6 pb-8">
-	<div class="flex items-center justify-between mx-6 gap-4 pb-4">
-		<Title divClass="">{$t(reportName)}</Title>
-		{#if years}
-			<div class="flex justify-center items-center gap-3 mt-2">
-				<Label>{$t('Año')}</Label>
+	<Title divClass="ml-6 pb-2">{$t(reportName)}</Title>
+	{#if years}
+		<div class="flex justify-start items-center gap-3 mt-2 ml-8 mb-4">
+			<Label>{$t('Año')}</Label>
+			<Select
+				placeholder={$t('Seleccione un año:')}
+				items={years}
+				bind:value={selectedYear}
+				on:change={setTableName}
+				class="w-96 h-10"
+			/>
+
+			{#if selectableGroups}
+				<Label>{$t('Grupo')}</Label>
 				<Select
-					placeholder={$t('Seleccione un año:')}
-					items={years}
-					bind:value={selectedYear}
+					placeholder={$t('Seleccione un grupo:')}
+					items={selectableGroups}
+					bind:value={selectedGroup}
 					on:change={setTableName}
 					class="w-96 h-10"
 				/>
-			</div>
-			{#if selectableGroups}
-				<div class="flex justify-center items-center gap-3 mt-2">
-					<Label>{$t('Grupo')}</Label>
-					<Select
-						placeholder={$t('Seleccione un grupo:')}
-						items={selectableGroups}
-						bind:value={selectedGroup}
-						on:change={setTableName}
-						class="w-96 h-10"
-					/>
-				</div>
 			{/if}
-		{/if}
-	</div>
+		</div>
+	{/if}
 	{#if (dataByYear && dataByYear.school_years.length > 0) || (dataByGroup && dataByGroup.school_years.length > 0)}
 		<DownloadPdfButton on:click={downloadReport8} />
 	{/if}

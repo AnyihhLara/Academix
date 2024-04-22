@@ -1,5 +1,12 @@
 <script>
-	import { Avatar, DarkMode, Dropdown, DropdownHeader, DropdownItem, NavBrand } from 'flowbite-svelte';
+	import {
+		Avatar,
+		DarkMode,
+		Dropdown,
+		DropdownHeader,
+		DropdownItem,
+		NavBrand
+	} from 'flowbite-svelte';
 	import { BuildingSolid, MoonSolid, SunSolid } from 'flowbite-svelte-icons';
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
@@ -14,7 +21,6 @@
 		} catch (e) {
 			console.log(e);
 		} finally {
-			$locale = 'es';
 			await goto('/auth/login', { invalidateAll: true });
 		}
 	}

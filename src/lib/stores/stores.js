@@ -9,10 +9,11 @@ import UnenrollmentReasonForm from '$lib/components/forms/UnenrollmentReasonForm
 import YearForm from '$lib/components/forms/YearForm.svelte';
 import UserForm from '$lib/components/forms/UserForm.svelte';
 import RoleForm from '$lib/components/forms/RoleForm.svelte';
-//i18n
-import translations from '../utils/translations';
 
 export const currentSchoolYear = writable('2022-2023');
+
+//i18n
+import translations from '../utils/translations';
 
 export const locale = writable('es');
 export const locales = Object.keys(translations);

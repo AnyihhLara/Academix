@@ -45,6 +45,19 @@ class UserService extends BaseService {
 		};
 		return await this.handleReq(this.url(user_id.toString()), undefined, 'PUT', user);
 	}
+
+	async changeLanguage(user_id, preferred_language) {
+		const user = {
+			preferred_language: preferred_language
+		};
+
+		return await this.handleReq(this.url(`${user_id.toString()}/language`), undefined, 'PUT', user);
+	}
+
+	async getPreferredLanguage(user_id) {
+		return await this.handleReq(this.url(`${user_id.toString()}/language`), undefined, 'GET');
+	}
+
 }
 
 export default UserService;

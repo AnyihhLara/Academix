@@ -22,7 +22,7 @@
 			lastname: '',
 			sex: '',
 			municipality: '',
-			user_id: $page.data.user.user_id,
+			user_id: $page.data.user.id_user,
 			year: '',
 			group_number: '',
 			academic_situation: '',
@@ -42,7 +42,7 @@
 	};
 
 	const refreshItems = () => {
-		studentServ.getStudentByUser($page.data.id_user).then((i) => {
+		studentServ.getStudentByUser($page.data.user.id_user).then((i) => {
 			student = i;
 
 			let evaluationServ = evaluationService.getInstance();

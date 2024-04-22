@@ -26,8 +26,9 @@ class StudentsGroupService extends BaseService {
 		return await this.handleReq(undefined, undefined, 'POST', students_group);
 	}
 
-	async getStudentsGroup(students_group_id) {
-		return await this.handleReq(this.url(students_group_id.toString()), undefined, 'GET');
+	async getStudentsGroup(students_group_id, year_id) {
+		const queryParams = this.makeParams({ year_id });
+		return await this.handleReq(this.url(students_group_id.toString()), queryParams, 'GET');
 	}
 
 	async deleteStudentsGroup(year_id, group_id) {

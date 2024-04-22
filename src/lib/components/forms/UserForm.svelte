@@ -13,43 +13,47 @@
 			let roleServ = roleService.getInstance();
 			roles = await roleServ.getRoles();
 			roles = roles.map(({ role_id, role_name }) => ({ value: role_id, name: role_name }));
-			students = await studentServ.getStudents();
 		}
+		await resetForm();
 	});
 
 	export let action;
 	export let item = null;
 	let tableName = 'Usuario',
 		defaultClass = 'mt-2',
-		user = { username: '', password: '', role: null, student_id: null };
+		user = { username: '', password: '', role: null, student_id: null, email: null };
 	let roles, students;
 	let userServ = userService.getInstance();
 	let studentServ = studentService.getInstance();
 	const dispatch = createEventDispatcher();
 
 	let selectedRole;
-	$: if (user.role) {
+	$: if (user.role && roles) {
 		selectedRole = roles.find(({ value }) => value === user.role);
 	}
 
 	let selectableStudents;
-	$: if (selectedRole && selectedRole.name === 'Estudiante') {
+	$: if (selectedRole && selectedRole.name === 'Estudiante' && students) {
 		selectableStudents = students.filter(({ user_id }) => user_id === null);
 		selectableStudents = selectableStudents.map(({ student_id, student_code }) => ({
 			value: student_id,
 			name: student_code
 		}));
+
+		if (user.student_id) {
+			selectableStudents.push({value: item.student_id, name: item.code});
+		}
 	}
 
 	async function createItem() {
-		let { user_id } = await userServ.createUser(user.username, user.password, user.role);
+		let { user_id } = await userServ.createUser(user.username, user.password, user.role, user.email);
 
 		if (user.student_id) await assignStudentToUser(user.student_id, user_id);
 		dispatch('created');
 	}
 
 	async function updateItem() {
-		await userServ.updateUser(item.user_id, user.username, user.password, user.role);
+		await userServ.updateUser(item.user_id, user.username, user.password, user.role, user.email);
 
 		if (item.code !== item.user_id && item.code !== '-') {
 			let { student_id } = students.find(({ student_code }) => student_code === item.code);
@@ -84,15 +88,32 @@
 
 	async function resetForm() {
 		if (item) {
+			let {
+				user_name,
+				role_id,
+				preferred_language,
+				role_name,
+				student_id,
+				student_code,
+				email
+			} = await userServ.getUser(item.user_id);
+			item.user_name = user_name;
+			item.role_id = role_id;
+			item.preferred_language = preferred_language;
+			item.role_name = role_name;
+			item.student_id = student_id;
+			item.code = student_code;
+			item.email = email;
+
 			user.username = item.user_name;
 			user.password = '';
-			if (item.code === '-') user.student_id = null;
-			else user.student_id = item.code;
-			const role = roles.find(({ name }) => name === item.role_name);
-			if (role) user.role = role.value;
-			else user.role = null;
-		} else user = { username: '', password: '', role: null, student_id: null };
-
+			user.role = item.role_id;
+			user.role_name = item.role_name;
+			user.student_id = item.student_id;
+			user.email = item.email;
+		} else {
+			user = { username: '', password: '', role: null, student_id: null, email: null };
+		}
 		students = await studentServ.getStudents();
 	}
 </script>
@@ -114,7 +135,19 @@
 	<div>
 		<PasswordInput bind:password={user.password} />
 	</div>
-
+	<div>
+		<Label for="email"
+		>{$t('Correo electrónico')}
+			<Input
+				bind:value={user.email}
+				class={defaultClass}
+				id="email"
+				placeholder={$t('Correo electrónico')}
+				required
+				type="email"
+			/>
+		</Label>
+	</div>
 	<div>
 		<Label
 			>{$t('Rol')}
@@ -127,7 +160,7 @@
 			/>
 		</Label>
 	</div>
-	{#if selectedRole && selectedRole.name === 'Estudiante'}
+	{#if selectedRole && selectedRole.name === 'Estudiante' && !(selectableStudents.length === 0)}
 		<div>
 			<Label
 				>{$t('Estudiante')}
@@ -140,5 +173,8 @@
 				/>
 			</Label>
 		</div>
+	{/if}
+	{#if selectedRole && selectedRole.name === 'Estudiante' && (selectableStudents.length === 0)}
+		<Label>No hay estudiante disponible que no tenga usuario asignado</Label>
 	{/if}
 </GenericForm>

@@ -1,8 +1,13 @@
 import { redirect } from '@sveltejs/kit';
 
 export async function load({ locals }) {
-	console.log('TEACHER/');
-	if (!locals.user || locals.user.role !== 'Profesor') {
+	console.log('ACADEMIX/');
+
+	if (!locals.user) {
 		throw redirect(302, locals.view);
 	}
+	return {
+		user: locals.user,
+		view: locals.view
+	};
 }

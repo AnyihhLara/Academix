@@ -1,15 +1,6 @@
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
-export const getCookieSettings = (opts) => ({
-	httpOnly: true,
-	path: '/',
-	sameSite: true,
-	secure: true,
-	maxAge: 60 * 60 * 24,
-	...opts
-});
-
 export function generatePDF(dataArray, title, download = true, open = false) {
 	const doc = new jsPDF();
 	doc.setFont('Helvetica', 'normal');

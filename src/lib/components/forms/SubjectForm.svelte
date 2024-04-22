@@ -48,14 +48,11 @@
 	async function resetForm() {
 		console.log('reset');
 		if (item) {
-			let { subject_id, subject_name, planned_hours, year } = await subjectServ.getSubject(
-				item.subject_id
-			);
-			item.subject_id = subject_id;
+			let { subject_name, planned_hours, year } = await subjectServ.getSubject(item.subject_id);
 			item.subject_name = subject_name;
 			item.planned_hours = planned_hours;
 			item.year = year;
-			console.log(item);
+			
 			subject.name = item.subject_name;
 			subject.plannedHours = item.planned_hours;
 			subject.year = item.year;

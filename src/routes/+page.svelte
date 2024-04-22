@@ -1,14 +1,10 @@
 <script>
-	import { loggedIn, view } from '$lib/stores/stores.js';
-	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
 
-	export let data;
 
-	onMount(async () => {
-		if ($view === '/' || !$loggedIn || !data.token) {
-			$view = '/auth/login';
-		}
-		await goto($view);
-	});
+	onMount(() => {
+		goto($page.data.view)
+	})
 </script>

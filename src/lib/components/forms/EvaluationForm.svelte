@@ -31,6 +31,7 @@
 				name: subject_name
 			}));
 		}
+		await resetForm();
 	});
 
 	export let action;
@@ -71,8 +72,22 @@
 		dispatch('deleted');
 	}
 
-	function resetForm() {
-		evaluation = { evaluationType: '', student: '', subject: '', evaluationDate: '' };
+	async function resetForm() {
+		if (item) {
+			let { student_id, evaluation_date, subject_id, evaluation_type_id } =
+				await evaluationServ.getEvaluation(item.evaluation_id);
+			item.student_id = student_id;
+			item.evaluation_date = evaluation_date;
+			item.subject_id = subject_id;
+			item.evaluation_type_id = evaluation_type_id;
+
+			evaluation.student = item.student_id;
+			evaluation.subject = item.subject_id;
+			evaluation.evaluationDate = item.evaluation_date;
+			evaluation.evaluationType = item.evaluation_type_id;
+		} else {
+			evaluation = { name: '' };
+		}
 	}
 	function isValidEvaluationDate(evaluationDate) {
 		let actualDate = new Date().toISOString().split('T')[0];

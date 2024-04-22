@@ -38,6 +38,7 @@
 				})
 			);
 		}
+		await resetForm();
 	});
 	export let action;
 	export let item = null;
@@ -113,18 +114,54 @@
 		dispatch('deleted');
 	}
 
-	function resetForm() {
-		student = {
-			code: '',
-			name: '',
-			lastname: '',
-			sex: '',
-			municipality: '',
-			academicSituation: null,
-			unenrollmentReason: null,
-			academicYear: null,
-			group: null
-		};
+	async function resetForm() {
+		if (item) {
+			let {
+				student_code,
+				student_name,
+				lastname,
+				sex,
+				municipality,
+				academic_situation_id,
+				unenrollment_reason_id,
+				year_id,
+				group_id,
+				user_id
+			} = await studentServ.getStudent(item.student_id);
+			item.student_code = student_code;
+			item.student_name = student_name;
+			item.lastname = lastname;
+			item.sex = sex;
+			item.municipality = municipality;
+			item.academic_situation_id = academic_situation_id;
+			item.unenrollment_reason_id = unenrollment_reason_id;
+			item.year_id = year_id;
+			item.group_id = group_id;
+			item.user_id = user_id;
+
+			student.code = item.student_code;
+			student.name = item.student_name;
+			student.lastname = item.lastname
+			student.sex = item.sex;
+			student.municipality = item.municipality;
+			student.academicSituation = item.academic_situation_id;
+			student.unenrollmentReason = item.unenrollment_reason_id;
+			student.academicYear = item.year_id;
+			student.group = item.group_id;
+			student.user_id = item.user_id;
+		} else {
+			student = {
+				code: '',
+				name: '',
+				lastname: '',
+				sex: '',
+				municipality: '',
+				academicSituation: null,
+				unenrollmentReason: null,
+				academicYear: null,
+				group: null
+			};
+		}
 	}
 
 	function isValidCode(studentCode) {
@@ -183,24 +220,24 @@
 	</div>
 	<div>
 		<Label
-			>{$t("Sexo")}
+			>{$t('Sexo')}
 			<Select
 				bind:value={student.sex}
 				class={defaultClass}
 				items={sexes}
-				placeholder={$t("Selecciona el sexo del estudiante")}
+				placeholder={$t('Selecciona el sexo del estudiante')}
 				required
 			/>
 		</Label>
 	</div>
 	<div>
 		<Label for="municipality">
-			{$t("Municipio")}
+			{$t('Municipio')}
 			<Input
 				bind:value={student.municipality}
 				class={defaultClass}
 				id="municipality"
-				placeholder={$t("Municipio del estudiante")}
+				placeholder={$t('Municipio del estudiante')}
 				required
 				type="text"
 			/>
@@ -208,13 +245,13 @@
 	</div>
 	<div>
 		<Label
-			>{$t("Año")}
+			>{$t('Año')}
 			<Select
 				bind:value={student.academicYear}
 				class={defaultClass}
 				disabled={disabledYear}
 				items={years}
-				placeholder={$t("Primero selecciona el año académico del estudiante...")}
+				placeholder={$t('Primero selecciona el año académico del estudiante...')}
 				readonly={disabledYear}
 				required
 			/>
@@ -223,12 +260,12 @@
 	{#if selectableGroups}
 		<div>
 			<Label
-				>{$t("Grupo")}
+				>{$t('Grupo')}
 				<Select
 					bind:value={student.group}
 					class={defaultClass}
 					items={selectableGroups}
-					placeholder={$t("...luego selecciona el grupo del estudiante")}
+					placeholder={$t('...luego selecciona el grupo del estudiante')}
 					required
 				/>
 			</Label>
@@ -236,12 +273,12 @@
 	{/if}
 	<div>
 		<Label
-			>{$t("Situación académica")}
+			>{$t('Situación académica')}
 			<Select
 				bind:value={student.academicSituation}
 				class={defaultClass}
 				items={academicSituations}
-				placeholder={$t("Selecciona la situación académica del estudiante")}
+				placeholder={$t('Selecciona la situación académica del estudiante')}
 				required
 			/>
 		</Label>
@@ -249,12 +286,12 @@
 	{#if situation && situation.name === 'Baja'}
 		<div>
 			<Label
-				>{$t("Causa de Baja")}
+				>{$t('Causa de Baja')}
 				<Select
 					bind:value={student.unenrollmentReason}
 					class={defaultClass}
 					items={unenrollmentReasons}
-					placeholder={$t("Selecciona la causa de baja del estudiante")}
+					placeholder={$t('Selecciona la causa de baja del estudiante')}
 					required
 				/>
 			</Label>

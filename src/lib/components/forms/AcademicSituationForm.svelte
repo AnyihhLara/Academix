@@ -34,13 +34,11 @@
 	}
 
 	async function resetForm() {
-		console.log('reset');
 		if (item) {
-			let { academic_situation_id, academic_situation_name } =
-				await academicSituationServ.getAcademicSituation(item.academic_situation_id);
-			item.academic_situation_id = academic_situation_id;
+			let { academic_situation_name } = await academicSituationServ.getAcademicSituation(
+				item.academic_situation_id
+			);
 			item.academic_situation_name = academic_situation_name;
-			console.log(item);
 			academicSituation.name = item.academic_situation_name;
 		} else {
 			academicSituation = { name: '' };

@@ -38,10 +38,10 @@
 		class="text-center xs:text-xl lg:text-2xl mb-4 font-semibold text-primary-950 dark:text-primary-100"
 	>
 		{$t('Módulos Reportes')}:
-		{$t($page.data.role)}
+		{$t($page.data.user.role)}
 	</h1>
 	<div class="flex justify-center items-center">
-		{#if $page.data.role !== 'Estudiante'}
+		{#if $page.data.user.role !== 'Estudiante'}
 			<div
 				class="xs:flex xs:flex-col xs:gap-4 xs:w-[80%] xl:grid xl:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4 lg:w-auto"
 			>

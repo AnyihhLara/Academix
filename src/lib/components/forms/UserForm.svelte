@@ -85,7 +85,7 @@
 			await userServ.deleteUser(item.user_id);
 			dispatch('deleted');
 		} else {
-			throw new Error('No se puede eliminar un admin');
+			throw new Error($t('No se puede eliminar un administrador'));
 		}
 	}
 

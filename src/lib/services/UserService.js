@@ -58,6 +58,17 @@ class UserService extends BaseService {
 		return await this.handleReq(this.url(`${user_id.toString()}/language`), undefined, 'GET');
 	}
 
+	async emailNewUser(username, role, email) {
+		const emailInfo = {
+			email: email,
+			subject: 'Bienvenido a Academix',
+			text: `Hola, se le informa que ha sido creada su cuenta de ${role.name} en Academix con el nombre de usuario ${username}. \nGracias por su atención. \nSaludos.`
+		};
+		this.service = '/email';
+		const res = await this.handleReq(this.url('submit'), undefined, 'POST', emailInfo);
+		this.service = '/user';
+		return res;
+	}
 }
 
 export default UserService;

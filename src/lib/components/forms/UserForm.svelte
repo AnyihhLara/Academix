@@ -57,12 +57,11 @@
 			user.role,
 			user.email
 		);
-		console.log(
-			await userServ.emailNewUser(
+
+		await userServ.emailNewUser(
 				user.username,
 				roles.find(({ value }) => value === user.role),
 				user.email
-			)
 		);
 
 		if (user.student_id) await assignStudentToUser(user.student_id, user_id);

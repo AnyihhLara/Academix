@@ -19,6 +19,7 @@
 
 	export let action;
 	export let item = null;
+
 	let tableName = 'Usuarios',
 		defaultClass = 'mt-2',
 		user = { username: '', password: '', role: null, student_id: null, email: null };
@@ -30,6 +31,10 @@
 	let selectedRole;
 	$: if (user.role && roles) {
 		selectedRole = roles.find(({ value }) => value === user.role);
+	}
+	let disabledRole = false;
+	$: if (user && user.role === 4) {
+		disabledRole = true;
 	}
 
 	let selectableStudents;
@@ -76,8 +81,12 @@
 	}
 
 	async function deleteItem() {
-		await userServ.deleteUser(item.user_id);
-		dispatch('deleted');
+		if (item && item.role === 'Administrador') {
+			await userServ.deleteUser(item.user_id);
+			dispatch('deleted');
+		} else {
+			throw new Error('No se puede eliminar un admin');
+		}
 	}
 
 	async function assignStudentToUser(student_id, user_id) {
@@ -162,6 +171,7 @@
 				items={roles}
 				placeholder={$t('Selecciona el rol del usuario')}
 				required
+				disabled={disabledRole}
 			/>
 		</Label>
 	</div>

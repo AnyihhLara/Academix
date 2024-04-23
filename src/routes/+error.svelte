@@ -17,9 +17,9 @@
 				)}</span
 			>
 		</ErrorPage>
-	{:else if $page.error.message === 'Error: 401'}
+	{:else if $page.error.message === 'Error: 403'}
 		<ErrorPage>
-			<span slot="error-number">401</span>
+			<span slot="error-number">403</span>
 			<span slot="error-title">{$t('Acceso Denegado.')}</span>
 			<span slot="error-info"
 				>{$t(

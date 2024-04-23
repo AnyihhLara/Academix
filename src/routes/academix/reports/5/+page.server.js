@@ -10,5 +10,5 @@ export async function load({ locals }) {
 			locals.user.role !== 'Profesor' &&
 			locals.user.role !== 'Estudiante')
 	)
-		throw new error(401)
+		throw new error(403)
 }

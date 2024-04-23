@@ -6,7 +6,7 @@ export async function load({ locals }) {
         throw redirect(302, locals.view);
 
    else if( locals.user.role !== 'Secretario') {
-		error(401)
-        throw new error(401)
+		error(403)
+        throw new error(403)
 	}
 }

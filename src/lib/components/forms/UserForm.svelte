@@ -19,7 +19,7 @@
 
 	export let action;
 	export let item = null;
-	let tableName = 'Usuario',
+	let tableName = 'Usuarios',
 		defaultClass = 'mt-2',
 		user = { username: '', password: '', role: null, student_id: null, email: null };
 	let roles, students;
@@ -41,17 +41,24 @@
 		}));
 
 		if (user.student_id) {
-			selectableStudents.push({value: item.student_id, name: item.code});
+			selectableStudents.push({ value: item.student_id, name: item.code });
 		}
 	}
 
 	async function createItem() {
-		let { user_id } = await userServ.createUser(user.username, user.password, user.role, user.email);
-		console.log(await userServ.emailNewUser(
+		let { user_id } = await userServ.createUser(
 			user.username,
-			roles.find(({ value }) => value === user.role),
+			user.password,
+			user.role,
 			user.email
-		));
+		);
+		console.log(
+			await userServ.emailNewUser(
+				user.username,
+				roles.find(({ value }) => value === user.role),
+				user.email
+			)
+		);
 
 		if (user.student_id) await assignStudentToUser(user.student_id, user_id);
 		dispatch('created');
@@ -93,15 +100,8 @@
 
 	async function resetForm() {
 		if (item) {
-			let {
-				user_name,
-				role_id,
-				preferred_language,
-				role_name,
-				student_id,
-				student_code,
-				email
-			} = await userServ.getUser(item.user_id);
+			let { user_name, role_id, preferred_language, role_name, student_id, student_code, email } =
+				await userServ.getUser(item.user_id);
 			item.user_name = user_name;
 			item.role_id = role_id;
 			item.preferred_language = preferred_language;
@@ -142,7 +142,7 @@
 	</div>
 	<div>
 		<Label for="email"
-		>{$t('Correo electrónico')}
+			>{$t('Correo electrónico')}
 			<Input
 				bind:value={user.email}
 				class={defaultClass}
@@ -165,7 +165,7 @@
 			/>
 		</Label>
 	</div>
-	{#if selectedRole && selectedRole.name === 'Estudiante' && !(selectableStudents.length === 0)}
+	{#if selectedRole && selectedRole.name === 'Estudiante' && selectableStudents && !(selectableStudents.length === 0)}
 		<div>
 			<Label
 				>{$t('Estudiante')}
@@ -179,7 +179,7 @@
 			</Label>
 		</div>
 	{/if}
-	{#if selectedRole && selectedRole.name === 'Estudiante' && (selectableStudents.length === 0)}
+	{#if selectedRole && selectedRole.name === 'Estudiante' && selectableStudents && selectableStudents.length === 0}
 		<Label>No hay estudiante disponible que no tenga usuario asignado</Label>
 	{/if}
 </GenericForm>

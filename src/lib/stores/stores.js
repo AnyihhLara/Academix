@@ -132,7 +132,8 @@ export const tables = readable([
 		tableColumns: [
 			{ label: 'Nombre de usuario', key: 'user_name' },
 			{ label: 'Rol', key: 'role_name' },
-			{ label: 'Identificador', key: 'code' }
+			{ label: 'Identificador', key: 'code' },
+			{ label: 'Correo electrónico', key: 'email' }
 		]
 	},
 	{

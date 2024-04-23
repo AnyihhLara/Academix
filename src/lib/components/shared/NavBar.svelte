@@ -22,6 +22,7 @@
 			console.log(e);
 		} finally {
 			await goto('/auth/login', { invalidateAll: true });
+			$locale = 'es';
 		}
 	}
 </script>

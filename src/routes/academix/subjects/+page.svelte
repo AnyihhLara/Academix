@@ -32,7 +32,7 @@
 	};
 </script>
 
-{#if $page.data.role === 'Secretario'}
+{#if $page.data.user.role === 'Secretario'}
 	<Table {tableName} items={subjects} {filters} {isFilterable} {refreshItems} {isDeletable} />
 {:else}
 	<Table

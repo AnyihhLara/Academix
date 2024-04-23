@@ -7,13 +7,14 @@
 
 	onMount(async () => {
 		let userServ = userService.getInstance();
+
 		let { get_preferred_language } = await userServ.getPreferredLanguage($page.data.user.id_user);
 
 		if (get_preferred_language) {
 			$locale = get_preferred_language;
 		} else {
 			$locale = 'es';
-			await changeLanguage($page.data.user.id_user, $locale);
+			await changeLanguage($locale);
 		}
 	});
 	let userServ = userService.getInstance();

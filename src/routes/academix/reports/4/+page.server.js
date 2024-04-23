@@ -1,4 +1,4 @@
-import { redirect } from '@sveltejs/kit';
+import { error } from '@sveltejs/kit';
 
 export async function load({ locals }) {
 	if (
@@ -7,5 +7,5 @@ export async function load({ locals }) {
 			locals.user.role !== 'Profesor' &&
 			locals.user.role !== 'Estudiante')
 	)
-		throw redirect(302, locals.view);
+		throw new error(401)
 }

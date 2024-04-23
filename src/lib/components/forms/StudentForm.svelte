@@ -75,7 +75,6 @@
 	}
 
 	async function createItem() {
-		isValidCode(student.code);
 		await studentServ.createStudent(
 			student.name,
 			student.lastname,
@@ -92,7 +91,6 @@
 	}
 
 	async function updateItem() {
-		isValidCode(student.code);
 		await studentServ.updateStudent(
 			item.student_id,
 			student.name,
@@ -141,7 +139,7 @@
 
 			student.code = item.student_code;
 			student.name = item.student_name;
-			student.lastname = item.lastname
+			student.lastname = item.lastname;
 			student.sex = item.sex;
 			student.municipality = item.municipality;
 			student.academicSituation = item.academic_situation_id;
@@ -161,18 +159,6 @@
 				academicYear: null,
 				group: null
 			};
-		}
-	}
-
-	function isValidCode(studentCode) {
-		let valid = /\D/;
-		if (valid.test(studentCode))
-			throw new Error('El código del estudiante solo puede contener números.');
-		if (studentCode.length < 11) {
-			throw new Error('El código del estudiante tiene que tener 11 dígitos.');
-		}
-		if (studentCode.length > 11) {
-			throw new Error('El código del estudiante no puede tener más de 11 dígitos.');
 		}
 	}
 </script>

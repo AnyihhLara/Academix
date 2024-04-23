@@ -1,8 +1,9 @@
-import { redirect } from '@sveltejs/kit';
+import { error } from '@sveltejs/kit';
 
 export async function load({ locals }) {
 	console.log('SECRETARY/');
 	if (!locals.user || locals.user.role !== 'Secretario') {
-		throw redirect(302, locals.view);
+		error(401)
+        throw new error(401)
 	}
 }

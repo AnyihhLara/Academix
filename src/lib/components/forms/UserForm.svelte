@@ -81,7 +81,7 @@
 	}
 
 	async function deleteItem() {
-		if (item && item.role === 'Administrador') {
+		if (user && user.role !== 4) {
 			await userServ.deleteUser(item.user_id);
 			dispatch('deleted');
 		} else {
@@ -168,10 +168,10 @@
 			<Select
 				bind:value={user.role}
 				class={defaultClass}
+				disabled={disabledRole}
 				items={roles}
 				placeholder={$t('Selecciona el rol del usuario')}
 				required
-				disabled={disabledRole}
 			/>
 		</Label>
 	</div>

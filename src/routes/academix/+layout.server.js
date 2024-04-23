@@ -1,10 +1,10 @@
-import { error } from '@sveltejs/kit';
+import { redirect } from '@sveltejs/kit';
 
 export async function load({ locals }) {
 	console.log('ACADEMIX/');
 
 	if (!locals.user) {
-		throw new error(401)
+		throw redirect(302, locals.view);
 	}
 	return {
 		user: locals.user,

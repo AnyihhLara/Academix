@@ -24,10 +24,18 @@
 					role_name = user.role_name;
 				}
 			} catch (e) {
+				console.log(e);
+
 				error = e.message;
 				login.username = '';
 				login.password = '';
 			}
+			console.log(error);
+
+			if (error && error !== 'Usuario o contraseña incorrectos') {
+				error = 'Algo salió mal';
+			}
+			console.log(error);
 		}
 		let routes = authServ.getAuthorizedRoutes(role_name);
 		if (routes.length > 0) {
@@ -35,7 +43,6 @@
 		} else {
 			await goto('/');
 		}
-
 	};
 </script>
 
@@ -49,8 +56,8 @@
 		<Button class="w-full" type="submit">{$t('Ingrese a su cuenta')}</Button>
 	</div>
 	{#if error}
-		<div class="text-center mt-4">
-			<span class="text-red-600 font-medium dark:text-red-300">{$t('Usuario o contraseña incorrectos')}</span>
+		<div class="text-center mt-7">
+			<span class="text-red-600 font-medium dark:text-red-300">{$t(error)}</span>
 		</div>
 	{/if}
 </form>

@@ -2,6 +2,7 @@ export default {
     en: {
         "Acumulado": "Cumulative",
         "Administrador": "Administrator",
+        'Algo salió mal': 'Something went wrong',
         "Anual": "Annual",
         "Añadir": "Add",
         "Año académico": "Academic year",
@@ -57,8 +58,8 @@ export default {
         "Iniciar sesión": "Login",
         "Ingrese a su cuenta": "Enter your account",
         "La fecha de la evaluación no puede ser mayor que la fecha actual.": "The evaluation date cannot be greater than the current date.",
-        "La fecha final no puede ser después de la fecha actual":"The end date cannot be after the current date",
-        "La fecha inicial no puede ser después de la fecha actual":"The start date cannot be after the current date",
+        "La fecha final no puede ser después de la fecha actual": "The end date cannot be after the current date",
+        "La fecha inicial no puede ser después de la fecha actual": "The start date cannot be after the current date",
         "La fecha inicial no puede ser mayor ni igual que la fecha final.": "The start date cannot be greater than or equal to the end date.",
         "Listado de asignaturas": "List of subjects",
         "Listado de causas de baja existentes": "List of existing unenrollment reasons",

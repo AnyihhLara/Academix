@@ -55,7 +55,7 @@ class BaseService {
 					resolve(responseData);
 				})
 				.catch((err) => {
-					console.error(err.message);
+					reject(err);
 				});
 		});
 	}
